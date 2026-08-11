@@ -1,113 +1,87 @@
 @import "tailwindcss";
 
+/* ============================================================
+   ClutchD token layer — single source of truth (DESIGN.md §2-4)
+   Raw semantic custom properties live in :root; the Tailwind theme
+   block below maps them into the utility namespace so every utility
+   value used in components traces to a token.
+   ============================================================ */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Color — DESIGN.md §2 */
+  --surface-primary: #ffffff;
+  --surface-soft: #f7f7f7;
+  --surface-cool: #eef0f3;
+  --surface-tint: #f0f1f9;
+  --text-primary: #0a0e3d;
+  --text-secondary: #5b616e;
+  --border-default: rgba(91, 97, 110, 0.2);
+  --accent-primary: #1e29b6;
+  --accent-hover: #192295;
+  --accent-active: #131b76;
+  --accent-focus-ring: #3a46df;
+  --depth-navy-1: #0d124f;
+  --depth-navy-2: #111869;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Typography — DESIGN.md §3 (self-hosted via @fontsource-variable) */
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+}
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Tailwind v4 namespace — semantic tokens → utilities (inline: values
+   are inlined into utilities, no runtime var indirection) */
+@theme inline {
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-cool: var(--surface-cool);
+  --color-surface-tint: var(--surface-tint);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-default: var(--border-default);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-focus-ring: var(--accent-focus-ring);
+  --color-depth-navy-1: var(--depth-navy-1);
+  --color-depth-navy-2: var(--depth-navy-2);
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* Base layer */
+@layer base {
+  /* 320px horizontal-overflow guard — clip (not hidden) so sticky
+     positioning is never broken by a scroll container ancestor */
+  html,
+  body {
+    overflow-x: clip;
   }
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  /* Smooth anchor scrolling only when the user has not asked for
+     reduced motion (DESIGN.md §6) */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
-}
 
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  /* Selection — very light blue tint of the primary hue (DESIGN.md §2) */
+  ::selection {
+    background-color: var(--surface-tint);
+    color: var(--text-primary);
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  /* Visible focus ring on every interactive element (DESIGN.md §8) */
+  :focus-visible {
+    outline: 2px solid var(--accent-focus-ring);
+    outline-offset: 2px;
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
