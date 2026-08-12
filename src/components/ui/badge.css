@@ -1,0 +1,26 @@
+/* Live-dot pulse — the ONE meaningful auto animation in the system
+   (DESIGN.md §6: slop animation forbidden; this pulse signals a live
+   state, e.g. "fleet online"). CSS-only, GPU-composited: transform +
+   opacity only, never layout properties. Honors prefers-reduced-motion. */
+@keyframes live-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.55);
+    opacity: 0.35;
+  }
+}
+
+.live-dot {
+  transform-origin: center;
+  animation: live-pulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
