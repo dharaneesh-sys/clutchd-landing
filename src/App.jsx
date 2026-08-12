@@ -1,18 +1,12 @@
 import Header from './components/layout/Header.jsx'
 import Footer from './components/layout/Footer.jsx'
 import Hero from './components/sections/Hero.jsx'
-
-// Landing shell (T5). Header + Footer are live; section bodies are populated
-// by T6-T13. Anchor ids here so nav/menu resolve immediately.
-const SECTIONS = [
-  'workflow',
-  'audiences',
-  'ecosystem',
-  'trust',
-  'marketplace',
-  'intelligence',
-  'early-access',
-]
+import Ecosystem from './components/sections/Ecosystem.jsx'
+import Audiences from './components/sections/Audiences.jsx'
+import Workflow from './components/sections/Workflow.jsx'
+import Trust from './components/sections/Trust.jsx'
+import Marketplace from './components/sections/Marketplace.jsx'
+import Intelligence from './components/sections/Intelligence.jsx'
 
 export default function App() {
   return (
@@ -20,9 +14,13 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        {SECTIONS.map((id) => (
-          <section key={id} id={id} aria-labelledby={`${id}-heading`} className="min-h-[40vh] scroll-mt-20" />
-        ))}
+        <Ecosystem />
+        <Audiences />
+        <Workflow />
+        <Trust />
+        <Marketplace />
+        <Intelligence />
+        <section id="early-access" aria-label="Early access" className="min-h-[40vh] scroll-mt-20" />
       </main>
       <Footer />
     </div>
