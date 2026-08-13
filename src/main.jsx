@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 // Self-hosted fonts (DESIGN.md §3) — @fontsource-variable, no CDN
-import '@fontsource-variable/geist'
-import '@fontsource-variable/geist-mono'
+// Latin-only subsets (T8): package ships no per-subset CSS, so latin
+// @font-face blocks live in fonts-latin.css (page is English-only).
+import './fonts-latin.css'
 import './index.css'
 import App from './App.jsx'
 
