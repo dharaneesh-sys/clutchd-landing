@@ -7,6 +7,7 @@ import Workflow from './components/sections/Workflow.jsx'
 import Trust from './components/sections/Trust.jsx'
 import Marketplace from './components/sections/Marketplace.jsx'
 import Intelligence from './components/sections/Intelligence.jsx'
+import EarlyAccess from './components/sections/EarlyAccess.jsx'
 
 export default function App() {
   return (
@@ -20,7 +21,7 @@ export default function App() {
         <Trust />
         <Marketplace />
         <Intelligence />
-        <section id="early-access" aria-label="Early access" className="min-h-[40vh] scroll-mt-20" />
+        <EarlyAccess />
       </main>
       <Footer />
     </div>

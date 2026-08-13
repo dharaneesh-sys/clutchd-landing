@@ -19,6 +19,10 @@
   --accent-hover: #192295;
   --accent-active: #131b76;
   --accent-focus-ring: #3a46df;
+  /* Error-state text (form validation, T13) — red is not in the banned
+     families (gold/orange/brown/green) and is required for distinguishable
+     error feedback (AA). */
+  --accent-danger: #b3261e;
   --depth-navy-1: #0d124f;
   --depth-navy-2: #111869;
 
@@ -41,6 +45,7 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-active: var(--accent-active);
   --color-accent-focus-ring: var(--accent-focus-ring);
+  --color-accent-danger: var(--accent-danger);
   --color-depth-navy-1: var(--depth-navy-1);
   --color-depth-navy-2: var(--depth-navy-2);
 
