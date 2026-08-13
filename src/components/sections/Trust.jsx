@@ -78,15 +78,15 @@ export default function Trust() {
             <dl className="flex flex-col gap-2 font-sans text-sm">
               <div className="flex items-center justify-between">
                 <dt className="text-text-secondary">Labour</dt>
-                <dd className="font-medium text-text-primary">₹ —</dd>
+                <dd className="font-medium text-text-primary">₹850</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-text-secondary">Parts</dt>
-                <dd className="font-medium text-text-primary">₹ —</dd>
+                <dd className="font-medium text-text-primary">₹1,200</dd>
               </div>
               <div className="flex items-center justify-between border-t border-border-default pt-2">
                 <dt className="font-semibold text-text-primary">Total</dt>
-                <dd className="font-semibold text-text-primary">₹ —</dd>
+                <dd className="font-semibold text-text-primary">₹2,050</dd>
               </div>
             </dl>
             <Badge className="self-start px-2.5 py-0.5 text-[9px]">Approved</Badge>

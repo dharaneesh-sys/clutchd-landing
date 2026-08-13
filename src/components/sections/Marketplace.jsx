@@ -84,7 +84,7 @@ export default function Marketplace() {
               </span>
             </div>
             <h3 className="font-sans text-lg font-semibold text-text-primary">Brake pads — front</h3>
-            <p className="font-sans text-sm text-text-secondary">from ₹ —</p>
+            <p className="font-sans text-sm text-text-secondary">from ₹1,200</p>
             <span className="self-start rounded-full bg-surface-tint px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-accent-primary">
               Fits your vehicle
             </span>

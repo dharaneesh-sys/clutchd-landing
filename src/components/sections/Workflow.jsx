@@ -6,13 +6,19 @@ import useReveal from '../../hooks/useReveal.js'
 // 6-step job lifecycle with the REAL backend status vocabulary
 // (ClutchD-reference.md:251-277): searching → accepted → en_route →
 // in_progress → completed.
+// Label ↔ status mapping (display label on the left, raw API status on the right):
+//   Searching → searching
+//   Accepted → accepted
+//   En route → en_route
+//   In progress → in_progress
+//   Completed → completed
 const STEPS = [
-  { n: 1, title: 'Request', body: 'Share the problem and your location.', status: null },
-  { n: 2, title: 'Match', body: 'ClutchD finds verified nearby providers.', status: 'searching' },
-  { n: 3, title: 'Accept', body: 'A mechanic takes the job.', status: 'accepted' },
-  { n: 4, title: 'En route', body: 'Track arrival with live ETA.', status: 'en_route' },
-  { n: 5, title: 'In progress', body: 'Approve the estimate as the work happens.', status: 'in_progress' },
-  { n: 6, title: 'Done', body: 'Pay securely, review, and the service joins your vehicle’s digital history.', status: 'completed' },
+  { n: 1, title: 'Request', body: 'Share the problem and your location.', label: null },
+  { n: 2, title: 'Match', body: 'ClutchD finds verified nearby providers.', label: 'Searching' },
+  { n: 3, title: 'Accept', body: 'A mechanic takes the job.', label: 'Accepted' },
+  { n: 4, title: 'En route', body: 'Track arrival with live ETA.', label: 'En route' },
+  { n: 5, title: 'In progress', body: 'Approve the estimate as the work happens.', label: 'In progress' },
+  { n: 6, title: 'Done', body: 'Pay securely, review, and the service joins your vehicle’s digital history.', label: 'Completed' },
 ]
 
 function Step({ step }) {
@@ -23,9 +29,9 @@ function Step({ step }) {
       </span>
       <h3 className="font-sans text-lg font-semibold text-text-primary">{step.title}</h3>
       <p className="font-sans text-sm leading-relaxed text-text-secondary">{step.body}</p>
-      {step.status && (
+      {step.label && (
         <Badge variant="accent" className="px-2.5 py-0.5 text-[9px]">
-          {step.status}
+          {step.label}
         </Badge>
       )}
     </div>
@@ -74,9 +80,9 @@ export default function Workflow() {
                 </span>
                 <h3 className="font-sans text-lg font-semibold text-text-primary">{s.title}</h3>
                 <p className="mt-1 font-sans text-sm leading-relaxed text-text-secondary">{s.body}</p>
-                {s.status && (
+                {s.label && (
                   <Badge variant="accent" className="mt-2 px-2.5 py-0.5 text-[9px]">
-                    {s.status}
+                    {s.label}
                   </Badge>
                 )}
               </li>
