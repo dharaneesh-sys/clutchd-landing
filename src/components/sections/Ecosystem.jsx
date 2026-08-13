@@ -3,8 +3,9 @@ import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import useReveal from '../../hooks/useReveal.js'
 
-// 9-node connected data flow (user brief §18). Hover/focus a node highlights
-// its connected edges — a real affordance, not decoration.
+// 9-node connected data flow (user brief §18). Visual chain visualization —
+// not interactive controls; intentionally out of tab order. Hover (mouse)
+// highlights connections.
 const NODES = [
   'Driver',
   'Vehicle',
@@ -49,13 +50,9 @@ export default function Ecosystem() {
               const isConnected = hovered === i - 1 || hovered === i + 1
               return (
                 <Fragment key={node}>
-                  <button
-                    type="button"
-                    aria-label={node}
+                  <span
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
-                    onFocus={() => setHovered(i)}
-                    onBlur={() => setHovered(null)}
                     className={[
                       'rounded-full border px-4 py-2 text-center font-sans text-sm font-medium outline-none transition-colors',
                       isHovered
@@ -66,7 +63,7 @@ export default function Ecosystem() {
                     ].join(' ')}
                   >
                     {node}
-                  </button>
+                  </span>
                   {i < NODES.length - 1 && (
                     <span
                       aria-hidden="true"
@@ -84,7 +81,7 @@ export default function Ecosystem() {
             })}
           </div>
           <p className="mt-6 text-center font-sans text-sm text-text-secondary">
-            Hover or focus a node to see how it connects to the next step in the chain.
+            Hover a node to see how it connects to the next step in the chain.
           </p>
         </div>
       </Container>
