@@ -9,11 +9,9 @@ import './badge.css'
  *   live    — cool surface, navy text + pulsing accent dot (live affordance;
  *             the pulse is the system's one meaningful auto animation)
  *
- * `dot` renders a static accent dot for default/accent variants.
- *
  * API:
  *   <Badge>Beta</Badge>
- *   <Badge variant="accent" dot>New</Badge>
+ *   <Badge variant="accent">New</Badge>
  *   <Badge variant="live">Fleet online</Badge>
  */
 const VARIANTS = {
@@ -24,7 +22,6 @@ const VARIANTS = {
 
 export default function Badge({
   variant = 'default',
-  dot = false,
   className = '',
   children,
   ...rest
@@ -40,15 +37,10 @@ export default function Badge({
       ].join(' ')}
       {...rest}
     >
-      {(isLive || dot) && (
+      {isLive && (
         <span
           aria-hidden="true"
-          className={[
-            'h-1.5 w-1.5 shrink-0 rounded-full bg-accent-primary',
-            isLive ? 'live-dot' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
+          className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-primary live-dot"
         />
       )}
       {children}

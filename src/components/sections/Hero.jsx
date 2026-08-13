@@ -35,9 +35,12 @@ function ServiceCard() {
           </div>
         ))}
       </div>
-      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
-        Service request · live
-      </p>
+      <div className="mt-2 flex items-center justify-between">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
+          Service request · live
+        </p>
+        <Badge variant="accent">Preview</Badge>
+      </div>
 
       {/* ETA chip */}
       <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface-tint px-4 py-3">

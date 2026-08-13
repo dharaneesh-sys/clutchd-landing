@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Badge from '../ui/Badge.jsx'
