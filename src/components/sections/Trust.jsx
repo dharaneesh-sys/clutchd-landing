@@ -45,6 +45,7 @@ export default function Trust() {
           eyebrow="TRUST"
           title="Know exactly who you're dealing with"
           lede="Five commitments that make automotive care something you can rely on."
+          id="trust-heading"
         />
         <div
           ref={ref}

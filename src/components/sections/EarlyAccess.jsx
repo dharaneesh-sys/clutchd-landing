@@ -50,6 +50,7 @@ export default function EarlyAccess() {
               eyebrow="EARLY ACCESS"
               title="ClutchD is rolling out in Coimbatore"
               lede="Be among the first to try one connected ecosystem for automotive care."
+              id="early-access-heading"
             />
 
             <form onSubmit={handleSubmit} noValidate className="flex w-full max-w-md flex-col gap-2">

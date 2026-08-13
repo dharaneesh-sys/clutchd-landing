@@ -32,6 +32,7 @@ export default function Ecosystem() {
           eyebrow="THE ECOSYSTEM"
           title="Every service, connected"
           lede="ClutchD puts drivers, mechanics, garages, fleets, parts, payments and service history on one system — so the vehicle's story never starts over."
+          id="ecosystem-heading"
         />
         <div
           ref={ref}

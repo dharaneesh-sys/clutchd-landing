@@ -79,6 +79,7 @@ export default function Intelligence() {
               eyebrow="INTELLIGENCE"
               title="Maintenance that happens before things break"
               lede="From reactive breakdowns to proactive care — ClutchD turns vehicle data into early warnings and planned service."
+              id="intelligence-heading"
             />
             <ul className="flex flex-col gap-4">
               {ITEMS.map(({ icon: Icon, title, body }) => (

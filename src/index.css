@@ -89,4 +89,23 @@
     outline: 2px solid var(--accent-focus-ring);
     outline-offset: 2px;
   }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    background-color: var(--accent-primary);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: top 150ms ease;
+  }
+
+  .skip-link:focus-visible {
+    top: 1rem;
+  }
 }

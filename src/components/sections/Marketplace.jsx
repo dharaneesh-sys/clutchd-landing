@@ -28,6 +28,7 @@ export default function Marketplace() {
           eyebrow="MARKETPLACE"
           title="Service and parts, on the same system"
           lede="Diagnose → find the required parts → check availability → order → get it serviced → keep the record. One workflow, no hopping between apps."
+          id="marketplace-heading"
         />
         <div
           ref={ref}

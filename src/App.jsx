@@ -12,6 +12,9 @@ import EarlyAccess from './components/sections/EarlyAccess.jsx'
 export default function App() {
   return (
     <div id="top" className="min-h-[100dvh] bg-surface-primary text-text-primary">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Header />
       <main>
         <Hero />

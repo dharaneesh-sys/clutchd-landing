@@ -45,7 +45,8 @@ export default function Workflow() {
         <SectionHeading
           eyebrow="HOW IT WORKS"
           title="From breakdown to back on the road"
-          lede="Six real job states, from the moment you request help to the moment your vehicle’s history is updated."
+          lede="Six real job states, from the moment you request help to the moment your vehicle's history is updated."
+          id="workflow-heading"
         />
         <div
           ref={ref}

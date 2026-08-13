@@ -2,7 +2,7 @@
  * SectionHeading — eyebrow (overline) + h2 + optional lede (DESIGN.md §3/§5).
  * Used by every content section so the type scale and rhythm stay consistent.
  */
-export default function SectionHeading({ eyebrow, title, lede, align = 'left' }) {
+export default function SectionHeading({ eyebrow, title, lede, align = 'left', id }) {
   const wrap = align === 'center' ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'
   return (
     <div className={wrap}>
@@ -11,7 +11,7 @@ export default function SectionHeading({ eyebrow, title, lede, align = 'left' })
           {eyebrow}
         </p>
       )}
-      <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
+      <h2 id={id} className="mt-3 font-sans text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
         {title}
       </h2>
       {lede && <p className="mt-4 font-sans text-lg leading-relaxed text-text-secondary">{lede}</p>}
