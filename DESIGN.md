@@ -31,10 +31,12 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 | Accent/focus-ring | `--accent-focus-ring` | `#3A46DF` | Focus ring — lighter tint of the same hue (derived, L55%, 6.7:1 on white) |
 | Depth/navy-1 | `--depth-navy-1` | `#0D124F` | Deep navy depth layer (primary hue, L18%) |
 | Depth/navy-2 | `--depth-navy-2` | `#111869` | Deeper navy depth layer (primary hue, L24%) |
+| Status/success | `--status-success` | `#1B7F4D` | Success/positive states — tokenized exception to the banned green family (muted green, same-hue discipline) |
 
 ### Rules
 
 - **Banned families — never used anywhere:** gold (`#b8860b`/`#d4a011`), orange (`#f97316`/`#ea580c`), brown, green (`#10b981`/`#059669`), and black-first/dark-first direction. This is a light-first system; the only dark values are the navy text and navy depth layers above.
+- Success/positive states use `--status-success` only — the single tokenized exception to the banned green family. Never use a raw green.
 - Accent blue is functional only — CTAs, links, focus. Never decorative (coinbase do/don't).
 - Surface hierarchy creates depth through tonal shift (white → soft → cool → tint) plus hairline borders; shadows stay minimal (coinbase minimal-shadow system).
 - Never introduce a color not in this table. Extend the table first.
@@ -50,10 +52,10 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 | Level | Font | Size | Weight | Line Height | Tracking | Usage |
 |-------|------|------|--------|-------------|----------|-------|
-| Display Hero | Geist | 80px / 5rem | 400 | 1.00 | -0.02em | Hero headline (coinbase display) |
+| Display Hero | Geist | 60px / 3.75rem | 600 | 1.00 | -0.02em | Hero headline (coinbase display) |
 | Display Secondary | Geist | 64px / 4rem | 400 | 1.00 | -0.02em | Sub-hero, section intro |
 | Display Third | Geist | 52px / 3.25rem | 400 | 1.00 | -0.015em | Third-tier display |
-| Section Heading | Geist | 36px / 2.25rem | 400 | 1.11 | -0.01em | Feature sections |
+| Section Heading | Geist | 36px / 2.25rem | 600 | 1.11 | -0.01em | Feature sections |
 | Card Title | Geist | 32px / 2rem | 400 | 1.13 | 0 | Card headings |
 | Feature Title | Geist | 18px / 1.125rem | 600 | 1.33 | 0 | Feature emphasis |
 | Body | Geist | 18px / 1.125rem | 400 | 1.56 | 0 | Standard reading |
@@ -69,6 +71,7 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 - Body text never below 14px.
 - Headings that wrap to 4+ lines are too large — use `clamp()`.
 - Display headings use ultra-tight 1.00 line-height (coinbase signature).
+- Shipped values are authoritative (verified 2026-08-13).
 
 ## 4. Spacing & Layout
 
@@ -151,10 +154,25 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Accessibility**: proper `aria-expanded`/`aria-controls`, keyboard operable.
 - **Motion**: 250ms height/opacity via transform+opacity only.
 
-### Early-Access Form
-- **Structure**: email `<input>` + pill submit CTA, inline in hero and in a closing CTA section.
-- **States**: default, focus (ring), error (inline message, `--status-error`), success (confirmation text).
-- **Accessibility**: `<label>`, `type="email"`, `required`, `aria-describedby` for error.
+### Testimonial Card
+- **Structure**: quote + name + role + star rating (5-star row, filled stars in accent).
+- **Surface**: tonal-shift surface (`--surface-soft` / `--surface-cool`) with hairline border (`--border-default`).
+- **Spacing**: `--space-6` padding.
+- **Layout**: grid; 1-column stack below 768px.
+
+### Stats Strip
+- **Structure**: number + label pairs in a horizontal row (lazyweb trust grammar).
+- **Numerals**: Geist Mono for the numbers (mono numerals).
+- **Surface**: tonal-shift surfaces (alternating section field).
+- **Spacing**: `--space-8` between items.
+- **Layout**: responsive row → 1-column stack below 768px.
+
+### EarlyAccessForm (shared)
+- **Source**: extracted from `EarlyAccess.jsx` (closing CTA section); shared by hero and section variants.
+- **Variants**: `variant="hero"` — inline, compact, inside the hero; `variant="section"` — full, current closing CTA layout.
+- **States**: idle → submitting (spinner, input disabled) → success (confirmation text) / error (inline message, `--status-error`).
+- **Validation**: `EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/`; error message "Enter a valid email address".
+- **Accessibility**: `<label>`, `type="email"`, `required`, `aria-describedby` for error, `aria-invalid`, `aria-live="polite"` status region.
 - **Debt**: client-side only — no backend (see Section 8).
 
 ## 6. Motion & Interaction
@@ -216,3 +234,13 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 ---
 
 *Token sources: coinbase.md (Layer B) for palette structure, pill radius, type scale, spacing scale, minimal-shadow depth; soft-skill.md (Layer A) for double-bezel surfaces, macro-whitespace, button-in-button, custom-bezier motion, scroll reveals; pinned decisions (2026-08-11) for PRIMARY `#1E29B6`, light canvas, deep navy, and the banned color families. Derived shades are same-hue HSL steps of `#1E29B6`.*
+
+---
+
+## 2026-08-13 — Design-system gate update
+
+First task of the IMPROVEMENTS.md plan: no code may use a token/primitive before it is documented here.
+
+- **§2 Color**: added `--status-success` (`#1B7F4D`) — success/positive states tokenized explicitly. Green stays banned as a family; this is the single tokenized exception (same-hue discipline, derived from a muted green — not `#10b981`/`#059669`). Counterpart to the existing `--accent-danger` error token.
+- **§3 Typography**: resolved spec-drift — Display Hero and Section Heading rows updated to shipped CSS values (Hero 60px/600, SectionHeading 36px/600). Shipped values are authoritative (verified 2026-08-13). Note: the task brief said "60px / 5rem"; 60px = 3.75rem, so the row documents `60px / 3.75rem` to avoid introducing a new drift.
+- **§5 Components**: added Testimonial Card and Stats Strip primitives (needed by T4); renamed Early-Access Form → **EarlyAccessForm (shared)** with `variant` prop (`hero`/`section`), states, `aria-live` region, and validation regex (needed by T5). FAQ Accordion and Trust Bar left as-is.

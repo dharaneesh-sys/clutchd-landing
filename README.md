@@ -1,16 +1,40 @@
-# React + Vite
+# ClutchD Landing
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+ClutchD is one connected ecosystem for automotive care: on-demand verified
+mechanics, roadside help, a parts marketplace, real-time tracking, and a
+digital service history. This repository holds the static landing page for
+ClutchD, live in Coimbatore.
 
-Currently, two official plugins are available:
+## Design system
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Design tokens, components, and motion rules live in `DESIGN.md`. Read it
+before touching any styles. The design-system gate: no new token, primitive,
+or motion rule may be used in code before it is documented in `DESIGN.md`.
 
-## React Compiler
+## Commands
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Command           | Description                  |
+| ----------------- | ---------------------------- |
+| `npm run dev`     | Start the Vite dev server    |
+| `npm run build`   | Production build to `dist/`  |
+| `npm run lint`    | Run oxlint                   |
+| `npm run preview` | Preview the production build |
 
-## Expanding the Oxlint configuration
+## Deployment
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Deployment to GitHub Pages via GitHub Actions (`.github/workflows/ci.yml`,
+planned in T13). `dist/` is the deployable artifact.
+
+## Project structure
+
+```
+src/
+├── components/
+│   ├── sections/   # Page sections (Hero, Trust, Workflow, ...)
+│   ├── ui/         # Primitives (Button, Badge, Container, ...)
+│   ├── layout/     # Header, Footer, MobileMenu
+│   └── brand/      # Logo, LogoMark
+├── hooks/
+│   └── useReveal.js
+└── main.jsx
+```
