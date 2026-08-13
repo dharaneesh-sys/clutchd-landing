@@ -1,7 +1,8 @@
-import { Star, MapPin, Wrench, CheckCircle2, Clock, ShieldCheck } from 'lucide-react'
+import { Star, MapPin, Wrench, CheckCircle2, Clock } from 'lucide-react'
 import Badge from '../ui/Badge.jsx'
 import Button from '../ui/Button.jsx'
 import Container from '../ui/Container.jsx'
+import EarlyAccessForm from '../ui/EarlyAccessForm.jsx'
 import useReveal from '../../hooks/useReveal.js'
 
 const STEPS = [
@@ -97,7 +98,7 @@ function ServiceCard() {
           <Wrench className="h-4 w-4 text-text-secondary" />
           <span className="font-sans text-sm text-text-primary">Brake pad replacement</span>
         </div>
-        <span className="font-sans text-sm font-semibold text-text-primary">Est. ₹—</span>
+        <span className="font-sans text-sm font-semibold text-text-primary">Est. ₹1,450</span>
       </div>
     </div>
   )
@@ -135,19 +136,14 @@ export default function Hero() {
             in real time, and keep your vehicle&apos;s complete service history in one place.
           </p>
 
+          <EarlyAccessForm variant="hero" />
+
           <div className="flex flex-wrap items-center gap-3">
-            <Button variant="primary" size="lg" onClick={() => (window.location.hash = '#early-access')}>
-              Get early access
-            </Button>
             <Button variant="secondary" size="lg" onClick={() => (window.location.hash = '#workflow')}>
               How it works
             </Button>
           </div>
 
-          <div className="flex items-center gap-2 font-sans text-sm text-text-secondary">
-            <ShieldCheck className="h-4 w-4 text-accent-primary" />
-            Verified providers · Transparent estimates · Secure payments
-          </div>
         </div>
 
         {/* Right: product mockup (pure CSS/SVG) */}
