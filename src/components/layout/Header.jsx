@@ -6,7 +6,7 @@ import MobileMenu from './MobileMenu.jsx'
 
 const NAV = [
   { label: 'How it works', href: '#workflow' },
-  { label: 'For you', href: '#audiences' },
+  { label: "Who it's for", href: '#audiences' },
   { label: 'Ecosystem', href: '#ecosystem' },
   { label: 'Trust', href: '#trust' },
   { label: 'Marketplace', href: '#marketplace' },
