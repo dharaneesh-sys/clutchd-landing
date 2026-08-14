@@ -38,7 +38,7 @@ export default function TrustBar() {
                 <Icon className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="font-sans text-lg font-semibold text-text-primary">{title}</h3>
+                <h2 className="font-sans text-lg font-semibold text-text-primary">{title}</h2>
                 <p className="font-sans text-sm text-text-secondary">{sub}</p>
               </div>
             </div>
