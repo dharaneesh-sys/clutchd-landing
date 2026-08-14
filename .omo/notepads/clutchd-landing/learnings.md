@@ -128,6 +128,12 @@
 
 ## 2026-08-14 README.md expanded (features/tech-stack/getting-started/deploy/a11y/docs) from verified repo state; DESIGN.md §8 accent contrast corrected 8.6:1 → 10.3:1 (measured 10.25:1).
 
+## 2026-08-14 doc debt triage done — stale §8 row removed, §5 primitives documented, git-integration gap logged
+- DESIGN.md §8 Accepted Debt: removed stale row "Early-access form capture requires Netlify host (deploy pending)" — P6 migration landed, form capture verified live. Tamil + tailnet rows kept.
+- DESIGN.md §5: added Badge (pill tag — 3 variants default/accent/live, aria-hidden live dot, matches §3 Overline scale), Container (page frame — max-w-[80rem], px-4/sm:px-6/lg:px-8, polymorphic as prop), SectionHeading (mono accent eyebrow + 30/36px/600 h2 + optional lede, align left/center, id for aria-labelledby). All three describe the shipped components verbatim (pre-plan primitives that F1 flagged as missing §5 entries).
+- issues.md: logged Netlify git-integration gap (repo_url=None, provider=None, CLI-only deploys) with the one-time dashboard unblock path + verification step.
+- Docs-only; build + lint green (0/0). Review approved.
+
 ## 2026-08-14 F4 re-run (lane-c) — APPROVE
 - F4 a11y + heuristic re-run on prod build (port 4175) after skip-link fix: VERDICT APPROVE. Skip link now works end-to-end (Tab → Enter → hash #main resolves, main top=0, next Tab lands on hero email input inside main). Keyboard 28/28 (identical order, all visible rings), SR landmarks valid, reduced-motion clean, contrast unchanged (navy 18.37 / secondary 6.21 / accent on white 10.25, worst-case accent-on-tint 9.11 / footer 5.80), H1–H10 all PASS, 0 console/page errors. Review only — no code touched. Evidence: .omo/evidence/clutchd-landing/F4-a11y.md.
 

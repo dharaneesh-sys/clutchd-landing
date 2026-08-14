@@ -184,6 +184,22 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Motion**: fade/slide-in on mount only, `prefers-reduced-motion` respected (no animation under reduced motion).
 - **Layout**: full-width bottom bar → stacks on mobile; dismiss button always reachable.
 
+### Badge (pill tag)
+- **Structure**: inline pill `<span>` — mono overline text (10px / 600 / +0.2em tracking, uppercase) + optional leading dot; `--space-3` horizontal / `--space-1` vertical padding; full pill radius.
+- **Variants**: `default` (cool surface, secondary text — neutral metadata); `accent` (tint surface, accent text — branded label); `live` (cool surface, navy text + pulsing accent dot — the system's one meaningful auto animation).
+- **Accessibility**: non-interactive `<span>`; the live dot is `aria-hidden="true"` (decorative).
+- **Layout**: inline cluster, wraps with text flow.
+
+### Container (page frame)
+- **Structure**: centered page frame — `max-w-[80rem]` (1280px max content width, DESIGN.md §4 grid), horizontal padding from the spacing scale (16px mobile → 24px ≥640px → 32px ≥1024px), `mx-auto`.
+- **Variants**: polymorphic `as` prop (default `div`; sections may pass `as="section"` etc.).
+- **Layout**: single column; never introduces horizontal scroll.
+
+### SectionHeading
+- **Structure**: eyebrow (mono overline, accent, uppercase) + `<h2>` (Section Heading scale — 30/36px, weight 600, tight tracking) + optional lede (Body scale, secondary).
+- **Variants**: `align="left"` (default, `max-w-2xl`) / `align="center"` (centered `max-w-2xl`).
+- **Accessibility**: accepts `id` (wired to the section's `aria-labelledby`); exactly one `<h2>` per instance.
+
 ## 6. Motion & Interaction
 
 ### Timing
@@ -236,7 +252,6 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 
 | Item | Location | Why accepted | Owner / Exit |
 |------|----------|--------------|--------------|
-| Early-access form capture requires Netlify host (deploy pending) | Hero + closing CTA form | EarlyAccessForm now POSTs to Netlify Forms (P1), but the site still deploys to GitHub Pages until the P6 migration — submissions will error until then | P6 migration (Netlify deploy) lands the real capture path |
 | Tamil locale not covered | Whole page | Product targets Tamil users but i18n is out of scope for the landing wave | Future i18n pass (T17+ or post-launch) |
 | No links to the live app (tailnet) yet | Nav + CTAs | Live app URL not provisioned for this landing | Add link when the tailnet app URL is stable |
 
