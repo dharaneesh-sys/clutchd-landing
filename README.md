@@ -78,16 +78,16 @@ src/
 
 ## Deployment
 
-GitHub Pages via GitHub Actions (`.github/workflows/ci.yml`), live at
-https://dharaneesh-sys.github.io/clutchd-landing/.
+Netlify (production), connected to this GitHub repo — build `npm run build`,
+publish `dist/` (see `netlify.toml`). Live URL: https://clutchd-193.netlify.app/
+(site name `clutchd` was taken, so Netlify assigned `clutchd-193`).
 
-The workflow triggers on push and pull requests to `main`. The `build` job
-runs `npm ci`, `npm run lint`, and `npm run build`, then uploads `dist/` as a
-Pages artifact (`actions/upload-pages-artifact@v3`). The `deploy` job only runs
-for the `main` branch and publishes with `actions/deploy-pages@v4`.
+`.github/workflows/ci.yml` is the quality gate: on push/PR to `main` it runs
+`npm ci`, `npm run lint`, and `npm run build`. GitHub Pages is retired (P6);
+Netlify deploys from git automatically.
 
-`vite.config.js` sets `base: '/clutchd-landing/'` so asset URLs resolve under
-the Pages subpath.
+`vite.config.js` sets `base: '/'` — assets are root-relative (correct for a
+root-domain host).
 
 ## Accessibility & performance
 

@@ -1,0 +1,35 @@
+# ClutchD landing — security headers (P7)
+# Netlify applies these to every response under the matching path.
+# CSP rationale:
+#   - default-src 'self': the app loads only same-origin assets (Vite bundle,
+#     fonts, images, JSON-LD data blocks).
+#   - script-src https://gc.zgo.at: GoatCounter count.js host (P2 — confirmed).
+#   - style-src 'unsafe-inline': the F2 inlineCss plugin inlines the CSS bundle
+#     into a <style> tag, and a few components set inline style attributes —
+#     a hash would break on every build, so unsafe-inline is the pragmatic choice
+#     (no user-generated styles reach this page).
+#   - connect-src https://gc.zgo.at + https://clutchd.goatcounter.com: GoatCounter
+#     serves the script from gc.zgo.at but sends its event beacon to the
+#     data-goatcounter host (clutchd.goatcounter.com/count) — missing the beacon
+#     host silently kills analytics (spec-review finding).
+#   - Confirmed 2026-08-14: user created the GoatCounter account with site code
+#     'clutchd' — script tag in index.html uses data-goatcounter="https://
+#     clutchd.goatcounter.com/count". These hosts are now final, not placeholders.
+#   - form-action 'self': P1 EarlyAccessForm POSTs FormData to the current path
+#     (window.location.pathname) for Netlify Forms.
+#   - frame-ancestors 'none' + X-Frame-Options DENY: block clickjacking.
+# HSTS note: Netlify already sends HSTS on *.netlify.app, so this header only
+# becomes load-bearing once a custom domain lands (then re-verify the value).
+# Cross-Origin-Resource-Policy is intentionally NOT set — CORP same-origin would
+# block social crawlers (Twitter/WhatsApp) from fetching og.png.
+# COOP note: no popups today (form POST is a fetch, unaffected). If an OAuth
+# sign-in popup is ever added, COOP same-origin would sever the opener — revisit.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://gc.zgo.at https://clutchd.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin

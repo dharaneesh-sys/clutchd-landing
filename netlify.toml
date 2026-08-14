@@ -1,0 +1,13 @@
+# ClutchD landing — Netlify configuration (P6)
+# Build: npm run build → publish dist/ (Vite base '/' → root-relative assets)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Site-wide security headers (P7) live in public/_headers — Netlify applies
+# them to every response automatically. Deployment: connect this GitHub repo
+# in the Netlify dashboard (build command + publish dir above) or run
+# `netlify deploy --prod` from the CLI after `netlify login`.

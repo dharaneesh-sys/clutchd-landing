@@ -26,8 +26,8 @@ function inlineCss() {
       let out = html
       let css = ''
       for (const m of links) {
-        // href is base-prefixed (e.g. /clutchd-landing/assets/x.css) — strip
-        // the base before resolving against outDir
+        // href is base-prefixed (e.g. /assets/x.css with base '/') — strip the
+        // base before resolving against outDir
         const href = m[1]
         const rel = href.startsWith(base) ? href.slice(base.length) : href.replace(/^\//, '')
         const cssPath = resolve(outDir, rel)
@@ -56,7 +56,11 @@ function inlineCss() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/clutchd-landing/',
+  // P6: Netlify serves the site at the domain root (no subpath), so assets
+  // are root-relative. The inlineCss plugin below strips the base prefix
+  // from CSS hrefs and emits font preloads — both paths re-verified after
+  // this change (fonts would silently 404 otherwise).
+  base: '/',
   plugins: [react(), tailwindcss(), inlineCss()],
   build: {
     rollupOptions: {

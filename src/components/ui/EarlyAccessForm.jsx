@@ -7,16 +7,29 @@
  *   "hero"    — inline, compact: no visible label (aria-label on input),
  *     input + pill CTA in a single flex gap-2 row, smaller padding, max-w-sm.
  *
- * States: idle → submitting (spinner, input disabled) → success / error.
- * Validation: EMAIL_RE; error message "Enter a valid email address".
- * Accessibility: unique per-instance ids via useId(), aria-describedby for
- * the error, aria-invalid, aria-live="polite" status region.
- * Debt: client-side only — no backend (DESIGN.md §8).
+ * States: idle → submitting (spinner, input disabled) → success / error /
+ *   duplicate. Error covers validation + server/network failures.
+ *
+ * Submission (Netlify Forms, P1): POST FormData to the current page path with
+ *   Accept: application/json — fields form-name=early-access, email, honeypot
+ *   bot-field (empty). Netlify detects the form via the hidden static form in
+ *   index.html (data-netlify="true"). Non-2xx or network failure → error state;
+ *   never fake success.
+ *
+ * Soft dedupe: localStorage['clutchd-signups'] array of lowercased emails;
+ *   a repeat submit in the same browser → "already on the list" message.
+ *   Per-browser only (Netlify Forms free tier has no read API).
+ *
+ * Accessibility: unique per-instance ids via useId(), aria-describedby for the
+ *   error, aria-invalid, aria-live="polite" status region.
  */
 import { useId, useState } from 'react'
 import Button from './Button.jsx'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const FORM_NAME = 'early-access'
+const HONEYPOT_NAME = 'bot-field'
+const STORAGE_KEY = 'clutchd-signups'
 
 const VARIANTS = {
   hero: {
@@ -33,15 +46,36 @@ const VARIANTS = {
   },
 }
 
+function getStoredEmails() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    const parsed = raw ? JSON.parse(raw) : []
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    // storage unavailable (private mode / SSR) — dedupe degrades gracefully
+    return []
+  }
+}
+
+function rememberEmail(email) {
+  try {
+    const emails = getStoredEmails()
+    if (!emails.includes(email)) emails.push(email)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(emails))
+  } catch {
+    // storage unavailable — still submitted server-side, just not deduped
+  }
+}
+
 export default function EarlyAccessForm({ variant = 'section', className = '' }) {
   const id = useId().replace(/:/g, '')
   const emailId = `early-email-${id}`
   const errorId = `early-email-error-${id}`
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error | duplicate
   const [errorMsg, setErrorMsg] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (status === 'submitting') return
     const value = email.trim()
@@ -50,9 +84,30 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
       setErrorMsg('Enter a valid email address')
       return
     }
-    // Client-side validation only — no backend call (accepted debt, see DESIGN.md).
+    if (getStoredEmails().includes(value.toLowerCase())) {
+      setStatus('duplicate')
+      return
+    }
     setStatus('submitting')
-    window.setTimeout(() => setStatus('success'), 600)
+    try {
+      const formData = new FormData()
+      formData.append('form-name', FORM_NAME)
+      formData.append('email', value)
+      formData.append(HONEYPOT_NAME, '')
+      const res = await fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      })
+      if (!res.ok) throw new Error(`Form submission failed: ${res.status}`)
+      rememberEmail(value.toLowerCase())
+      setStatus('success')
+    } catch (err) {
+      // Log for debugging deployed CSP/network failures (never fake success).
+      console.error('EarlyAccessForm submit failed:', err)
+      setStatus('error')
+      setErrorMsg('Something went wrong — please try again.')
+    }
   }
 
   const isSubmitting = status === 'submitting'
@@ -78,7 +133,7 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
           value={email}
           onChange={(e) => {
             setEmail(e.target.value)
-            if (status === 'error') setStatus('idle')
+            if (status === 'error' || status === 'duplicate') setStatus('idle')
           }}
           aria-describedby={showError ? errorId : undefined}
           aria-invalid={showError}
@@ -118,6 +173,11 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
         {status === 'success' && (
           <p className="mt-2 font-sans text-sm text-accent-primary">
             You&apos;re on the list — we&apos;ll email you when ClutchD opens near you.
+          </p>
+        )}
+        {status === 'duplicate' && (
+          <p className="mt-2 font-sans text-sm text-accent-primary">
+            You&apos;re already on the list — we&apos;ll email you when ClutchD opens near you.
           </p>
         )}
       </div>

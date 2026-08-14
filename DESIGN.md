@@ -170,10 +170,11 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 ### EarlyAccessForm (shared)
 - **Source**: extracted from `EarlyAccess.jsx` (closing CTA section); shared by hero and section variants.
 - **Variants**: `variant="hero"` — inline, compact, inside the hero; `variant="section"` — full, current closing CTA layout.
-- **States**: idle → submitting (spinner, input disabled) → success (confirmation text) / error (inline message, `--status-error`).
+- **States**: idle → submitting (spinner, input disabled) → success / error / duplicate. Error covers both validation and server/network failures (inline message, `--accent-danger`). Duplicate = soft-dedupe message ("You're already on the list").
 - **Validation**: `EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/`; error message "Enter a valid email address".
+- **Submission (Netlify Forms, P1)**: POST `FormData` to `window.location.pathname` with `Accept: application/json`; fields `form-name=early-access`, `email`, honeypot `bot-field` (empty string). Netlify detects the form via a hidden static form in `index.html` (`name="early-access"`, `data-netlify="true"`, `netlify-honeypot="bot-field"`). Non-2xx or network failure → error state — never fake success.
+- **Soft dedupe**: `localStorage['clutchd-signups']` array of lowercased emails; a repeat submit in the same browser → duplicate message. Per-browser only (Netlify Forms free tier has no read API for server-side dedupe).
 - **Accessibility**: `<label>`, `type="email"`, `required`, `aria-describedby` for error, `aria-invalid`, `aria-live="polite"` status region.
-- **Debt**: client-side only — no backend (see Section 8).
 
 ## 6. Motion & Interaction
 
@@ -227,7 +228,7 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 
 | Item | Location | Why accepted | Owner / Exit |
 |------|----------|--------------|--------------|
-| Early-access form has no backend (client-side only) | Hero + closing CTA form | Landing is a static Vite SPA; no API exists yet in this wave | T3+ wires a mailto/endpoint or a real submission path |
+| Early-access form capture requires Netlify host (deploy pending) | Hero + closing CTA form | EarlyAccessForm now POSTs to Netlify Forms (P1), but the site still deploys to GitHub Pages until the P6 migration — submissions will error until then | P6 migration (Netlify deploy) lands the real capture path |
 | Tamil locale not covered | Whole page | Product targets Tamil users but i18n is out of scope for the landing wave | Future i18n pass (T17+ or post-launch) |
 | No links to the live app (tailnet) yet | Nav + CTAs | Live app URL not provisioned for this landing | Add link when the tailnet app URL is stable |
 

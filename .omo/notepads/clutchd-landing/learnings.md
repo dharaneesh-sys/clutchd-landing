@@ -1,5 +1,22 @@
 # ClutchD Landing — Learnings
 
+## 2026-08-14 P6 DONE — deployed to Netlify, live at https://clutchd-193.netlify.app
+- Site created via CLI as **clutchd-193** (name `clutchd` was taken → Netlify auto-suffixed). Site ID 86a596e5-841b-40c3-be3c-b36ca10e4a6f. First `netlify deploy --prod` succeeded (Netlify Build 9.7s, Deploy complete).
+- vite.config.js: `base: '/clutchd-landing/'` → `'/'` (root-relative — correct for Netlify root domain). inlineCss plugin verified under base `/`: CSS hrefs resolve, font preloads `/assets/...woff2` root-relative. 0 stale refs in dist/index.html.
+- netlify.toml (new): build `npm run build`, publish `dist`, NODE_VERSION 22. Public/_headers (P7) will attach automatically.
+- .github/workflows/ci.yml: GH Pages deploy removed (D11) — now lint+build quality gate only; Netlify deploys from git.
+- index.html: canonical/og:image/twitter:image/JSON-LD url → https://clutchd-193.netlify.app/ (real site name; was provisional clutchd.netlify.app → corrected after creation).
+- README.md deployment section rewritten (was stale: still described GH Pages).
+- Review: passed (reviewer flagged stale README — fixed; SSL check: site created ssl:false — verify https resolves after cert issuance).
+- Auth: netlify-cli v27.1.1 at /usr/bin/netlify; user logged in as Dharaneesh U (dharaneesh8a@gmail.com).
+
+## 2026-08-14 P1 done — EarlyAccessForm wired to Netlify Forms (real signups)
+- src/components/ui/EarlyAccessForm.jsx: removed the fake `setTimeout(() => setStatus('success'), 600)`; now async handleSubmit does a real fetch POST to `window.location.pathname` with FormData (`form-name=early-access`, `email`, honeypot `bot-field` empty) and `Accept: application/json`. Non-2xx/network failure → error state + console.error (never fake success). Soft dedupe: `localStorage['clutchd-signups']` array of lowercased emails; repeat submit in same browser → duplicate state message. Duplicate/error reset to idle on typing. a11y intact: aria-live covers all 3 message states, aria-invalid/aria-describedby only on error.
+- index.html: hidden static form (`name="early-access" data-netlify="true" netlify-honeypot="bot-field" hidden` + email/bot-field inputs) so Netlify detects the form at deploy (SPA workaround). Verified in dist/index.html post-build.
+- DESIGN.md §5 EarlyAccessForm updated (states incl. duplicate, Netlify submission pattern, soft dedupe); §8 debt table updated (capture now requires Netlify host — errors on GH Pages until P6 migration).
+- Reviewer caught + fixed: dedupe case-inconsistency (was storing original case, checking lowercase → `rememberEmail(value.toLowerCase())`); added console.error to catch for debugging deployed CSP/network failures.
+- Verified: `npm run build` ✅ (705ms), `npm run lint` ✅ (0/0), grep data-netlify in dist ✅. Browser-use agent failed on internal tooling (not code) — logic covered by code review + build/lint. NOTE: submissions will error on the live GH Pages site until P6 (Netlify migration) lands — by design (DESIGN.md §8).
+
 ## 2026-08-13 Baseline (verified by orchestrator)
 - Stack: Vite 8 + React 19 + Tailwind 4, @fontsource-variable/geist + geist-mono, lucide-react.
 - Build passes: 232.9 kB JS (71 kB gzip), 35 kB CSS (7 kB gzip). Lint (oxlint) passes.
@@ -115,6 +132,28 @@
 - F2: after TrustBar h3→h2 + React.lazy code-split (9 sections) + vendor chunk + inline CSS + font preload: mobile 99/100/100/100 (TBT 110-120ms, LCP 1.7s, CLS 0), desktop 100/100/100/100. User accepted 99 mobile perf. VERDICT APPROVE.
 - F3 Visual QA: 10 sections render (hero/ecosystem/audiences/workflow/trust/testimonials/marketplace/intelligence/faq/early-access), single h1, valid heading order (h1→h2→h3), no hscroll, 0 console errors, FAQ + form states work. VERDICT APPROVE.
 - Cleaned up interrupted-session artifacts (dump-tbt-*.mjs, lantern-tbt.mjs, PRODUCTION.md, lh-run-tmp.mjs, production-plan-spec.md).
+
+## 2026-08-14 P7 done — security headers live (public/_headers)
+- New public/_headers (Netlify, copied to dist verbatim by Vite). Full set verified with `curl -sI https://clutchd-193.netlify.app/`: CSP (default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://gc.zgo.at https://clutchd.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests) + X-Frame-Options DENY, X-Content-Type-Options nosniff, Referrer-Policy strict-origin-when-cross-origin, Permissions-Policy camera/mic/geolocation=(), Strict-Transport-Security (Netlify appends preload), Cross-Origin-Opener-Policy same-origin.
+- CSP design decisions: style-src 'unsafe-inline' REQUIRED (inlineCss inlines the CSS bundle into a <style> tag + 3 JSX inline style attrs; a hash would break every build); connect-src includes BOTH gc.zgo.at (script host) AND clutchd.goatcounter.com (beacon host — the spec-review finding: missing the beacon host silently kills analytics); form-action 'self' covers the P1 fetch POST to window.location.pathname; no CORP deliberately (would block social crawlers fetching og.png).
+- ⚠ PLACEHOLDER: GoatCounter hosts are the spec's example code — when P2 installs the real code, update BOTH script-src and connect-src in public/_headers or analytics silently fails. Comment in the file flags this.
+- Deployed via `netlify deploy --prod --dir dist` (linked site, 18.4s build). Live verify: all 7 headers present on HTTP/2 200, data-netlify form marker still in HTML. 2 reviewer passes, zero findings beyond the placeholder note + a COOP future-OAuth comment.
+
+## 2026-08-14 P1+P6+P7+P2 pushed to origin/main
+- Committed and pushed the full production wave: P1 (Netlify Forms wiring in EarlyAccessForm.jsx + hidden static form in index.html), P6 (Netlify migration: vite base '/', netlify.toml, CI Pages→lint+build, README/URLs → clutchd-193.netlify.app), P7 (public/_headers security headers + CSP), P2 (GoatCounter script tag, code 'clutchd'). Also included: .gitignore (+.netlify), DESIGN.md updates, learnings.md entries.
+- .netlify/ (CLI state) confirmed gitignored; dist/ ignored; only netlify.toml + public/_headers untracked at commit time. CI (lint+build) is the quality gate; Netlify git integration picks up the push for deploy records.
+
+## 2026-08-14 P2 done — GoatCounter live (site code: clutchd)
+- User created the GoatCounter account and chose code `clutchd` (dashboard: dharaneesh8a@gmail.com). index.html head now has `<script data-goatcounter="https://clutchd.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>` (normalized from the official protocol-relative snippet; async, non-blocking). public/_headers CSP values were ALREADY correct (P7 pre-allowed both hosts) — only the placeholder ⚠ comment replaced with a confirmed note.
+- Verified end-to-end on the live site (real browser via browser-use): script 200, beacon POST to clutchd.goatcounter.com/count 200, 0 console errors / 0 CSP violations, page renders. curl beacon tests return 400 even with browser UA+Origin — GoatCounter rejects non-browser clients by design; browser test is the only valid acceptance check.
+- Adblocker caveat (GoatCounter's own warning): goatcounter.com / gc.zgo.at may be blocked by adblockers → real visits undercounted. Acceptable for free-until-traction. The synthetic /__p2_beacon_verify path may appear in the dashboard — harmless test artifact.
+- OUTSTANDING from spec D14: dismissible privacy-notice banner was part of the P2 plan and is NOT yet implemented (cookie-free → not legally required, but planned). Track as follow-up.
+
+## 2026-08-14 P2 BLOCKED — awaiting GoatCounter account (no code changed)
+- P2 (GoatCounter analytics) cannot proceed: user has no GoatCounter account yet. The site code is baked into BOTH the script tag (data-goatcounter="https://<code>.goatcounter.com/count") and the P7 CSP (script-src + connect-src in public/_headers, currently the spec placeholder clutchd.goatcounter.com, ⚠-flagged). Installing with a guessed code would send beacons to a non-existent site → silent 400s, zero data.
+- Verified: gc.zgo.at/count.js reachable (200); goatcounter.com wildcard returns 400 for non-existent codes (can't probe for existence).
+- Unblock path: user signs up at https://www.goatcounter.com/signup (free for non-commercial), picks a site code (e.g. clutchd), pastes it back → then: add <script data-goatcounter=".../count" async src="//gc.zgo.at/count.js"></script> to index.html head, replace placeholder hosts in public/_headers, build, deploy, verify beacon fires.
+- Gravity index search returned Simple Analytics as recommendation — DECLINED: D14 locked GoatCounter (free-until-traction, cookie-free, open-source, self-hostable); P2 is GoatCounter-specific (CSP hosts already reference it). Noted as fallback if GoatCounter is later abandoned.
 
 ## 2026-08-14 Final wave pushed to origin/main
 - Pushed 4 commits: 32da615 (perf: code-split/inline CSS/vendor chunks), 40452fa (fix: TrustBar h3→h2), cc0fe1e (docs: README + DESIGN.md contrast), + chore: final-wave review notes. Build + lint green before push; GitHub Actions Pages deploy triggered.

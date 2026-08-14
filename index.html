@@ -6,7 +6,9 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1E29B6" />
-    <link rel="canonical" href="https://dharaneesh-sys.github.io/clutchd-landing/" />
+    <!-- P6: canonical/og/twitter URLs now target the Netlify host (deployed
+         from this repo). Site created as clutchd-193 (clutchd was taken). -->
+    <link rel="canonical" href="https://clutchd-193.netlify.app/" />
     <title>ClutchD — Connected automotive care</title>
     <meta
       name="description"
@@ -18,7 +20,7 @@
       property="og:description"
       content="On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history — one connected automotive ecosystem, live in Coimbatore."
     />
-    <meta property="og:image" content="https://dharaneesh-sys.github.io/clutchd-landing/og.png" />
+    <meta property="og:image" content="https://clutchd-193.netlify.app/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
@@ -31,7 +33,7 @@
       name="twitter:description"
       content="On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history — one connected automotive ecosystem, live in Coimbatore."
     />
-    <meta name="twitter:image" content="https://dharaneesh-sys.github.io/clutchd-landing/og.png" />
+    <meta name="twitter:image" content="https://clutchd-193.netlify.app/og.png" />
     <style>
       /* F2 perf: content-visibility: auto skips layout of below-fold sections
          (all 9 are code-split lazy chunks). contain-intrinsic-size keeps an
@@ -57,14 +59,30 @@
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "description": "On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history — one connected automotive ecosystem, live in Coimbatore.",
-        "url": "https://dharaneesh-sys.github.io/clutchd-landing/",
+        "url": "https://clutchd-193.netlify.app/",
         "areaServed": { "@type": "City", "name": "Coimbatore" },
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
       }
     </script>
+    <!-- P2: GoatCounter analytics (cookie-free, self-hostable). async so it
+         never blocks rendering. CSP in public/_headers allows gc.zgo.at
+         (script) + clutchd.goatcounter.com (beacon). -->
+    <script
+      data-goatcounter="https://clutchd.goatcounter.com/count"
+      async
+      src="https://gc.zgo.at/count.js"
+    ></script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- P1: hidden static form so Netlify detects the early-access form at
+         deploy (SPA workaround — Netlify scans the built HTML). The React
+         EarlyAccessForm POSTs FormData with form-name=early-access +
+         honeypot bot-field; this stub is never rendered. -->
+    <form name="early-access" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="email" name="email" />
+      <input type="text" name="bot-field" />
+    </form>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
