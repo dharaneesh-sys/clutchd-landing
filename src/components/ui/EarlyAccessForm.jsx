@@ -181,6 +181,16 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
           </p>
         )}
       </div>
+      {/* Legal microcopy (production plan): launch-only contact + privacy pointer */}
+      <p className="mt-2 font-sans text-xs leading-relaxed text-text-secondary">
+        We&apos;ll only email you about the Coimbatore launch.{' '}
+        <a
+          href="/privacy.html"
+          className="underline decoration-accent-primary/40 underline-offset-2 transition-colors hover:text-accent-primary hover:decoration-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2"
+        >
+          Privacy policy
+        </a>
+      </p>
     </form>
   )
 }

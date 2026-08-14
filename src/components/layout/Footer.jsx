@@ -37,10 +37,27 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 border-t border-border-default pt-6">
+        <div className="mt-10 flex flex-col gap-4 border-t border-border-default pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
             © 2026 ClutchD
           </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <p className="font-sans text-xs text-text-secondary" lang="ta">
+              தமிழ் விரைவில் — Tamil coming soon
+            </p>
+            <a
+              href="/privacy.html"
+              className="font-sans text-xs text-text-secondary transition-colors hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft"
+            >
+              Privacy
+            </a>
+            <a
+              href="/terms.html"
+              className="font-sans text-xs text-text-secondary transition-colors hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft"
+            >
+              Terms
+            </a>
+          </div>
         </div>
       </div>
     </footer>

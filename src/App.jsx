@@ -3,6 +3,7 @@ import Header from './components/layout/Header.jsx'
 import Footer from './components/layout/Footer.jsx'
 import Hero from './components/sections/Hero.jsx'
 import TrustBar from './components/sections/TrustBar.jsx'
+import PrivacyNotice from './components/ui/PrivacyNotice.jsx'
 
 // Below-fold sections are code-split (F2 perf: TBT/Style+Layout budget).
 // Each lazy() imports its own chunk; a Suspense boundary with a placeholder
@@ -106,6 +107,7 @@ export default function App() {
         </DeferredSection>
       </main>
       <Footer />
+      <PrivacyNotice />
     </div>
   )
 }

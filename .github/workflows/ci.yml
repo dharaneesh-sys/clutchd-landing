@@ -18,4 +18,64 @@ jobs:
       - run: npm run build
       # P6: GitHub Pages deploy removed — production deploy is now Netlify,
       # connected to this repo (build: npm run build, publish: dist). This
-      # workflow remains as the lint+build quality gate; E2E (P11) will join.
+      # workflow remains as the lint+build quality gate.      # P11: E2E smoke on the production build — serve dist/ and assert the
+      # static page shape (HTTP-level only, no Playwright dependency): index +
+      # legal pages 200, Netlify form marker + hidden form, GoatCounter script,
+      # canonical, JSON-LD, entry/vendor assets 200, and the security headers
+      # file present in dist. DOM-level assertions (skip link, sections) need a
+      # real browser — this app is client-rendered; those elements exist only
+      # after JS runs — so they stay in lane-c verification, deliberately not
+      # added as a CI dep.
+  smoke:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Serve dist and smoke-test
+        run: |
+          set -e
+          npx vite preview --port 4173 --strictPort &
+          SERVER_PID=$!
+          # wait for the preview server to accept connections
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://localhost:4173/; then break; fi
+            sleep 1
+          done
+          HTML=$(curl -sf http://localhost:4173/)
+          echo "== index status =="
+          curl -sf -o /dev/null -w '%{http_code}\n' http://localhost:4173/
+          # Fail-closed assertions: `grep -q x || exit 1` — a plain `&& echo`
+          # would be ignored by set -e and silently pass on a broken build.
+          echo "== Netlify form marker + hidden inputs =="
+          echo "$HTML" | grep -q 'data-netlify="true"' || { echo "FAIL: data-netlify marker"; exit 1; }
+          echo "ok: data-netlify"
+          echo "$HTML" | grep -q 'netlify-honeypot="bot-field"' || { echo "FAIL: honeypot"; exit 1; }
+          echo "ok: honeypot"
+          echo "== GoatCounter script =="
+          echo "$HTML" | grep -q 'gc.zgo.at/count.js' || { echo "FAIL: gc script"; exit 1; }
+          echo "ok: script"
+          echo "$HTML" | grep -q 'clutchd.goatcounter.com/count' || { echo "FAIL: gc beacon host"; exit 1; }
+          echo "ok: beacon host"
+          echo "== canonical / JSON-LD =="
+          echo "$HTML" | grep -q 'rel="canonical"' || { echo "FAIL: canonical"; exit 1; }
+          echo "ok: canonical"
+          echo "$HTML" | grep -q 'application/ld+json' || { echo "FAIL: JSON-LD"; exit 1; }
+          echo "ok: JSON-LD"
+          echo "== legal pages =="
+          for p in privacy.html terms.html; do
+            curl -sf -o /dev/null -w "$p -> %{http_code}\n" http://localhost:4173/$p || { echo "FAIL: $p"; exit 1; }
+          done
+          echo "== entry + vendor assets (no 404s) =="
+          for a in $(echo "$HTML" | grep -o 'src="/assets/[^"]*\.js"' | sed 's/src="//;s/"//' | sort -u); do
+            curl -sf -o /dev/null -w "$a -> %{http_code}\n" http://localhost:4173$a || { echo "FAIL: asset $a"; exit 1; }
+          done
+          echo "== security headers file in dist =="
+          test -f dist/_headers || { echo "FAIL: dist/_headers"; exit 1; }
+          echo "ok: dist/_headers"
+          kill $SERVER_PID 2>/dev/null || true

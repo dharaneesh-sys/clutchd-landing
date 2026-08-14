@@ -176,6 +176,14 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Soft dedupe**: `localStorage['clutchd-signups']` array of lowercased emails; a repeat submit in the same browser → duplicate message. Per-browser only (Netlify Forms free tier has no read API for server-side dedupe).
 - **Accessibility**: `<label>`, `type="email"`, `required`, `aria-describedby` for error, `aria-invalid`, `aria-live="polite"` status region.
 
+### PrivacyNotice (dismissible banner)
+- **Purpose**: transparent disclosure that the page uses GoatCounter (cookie-free analytics, no personal data). Required by the production plan (D14) — informational, not a consent gate (no cookies → no legal consent requirement).
+- **Structure**: fixed bottom banner (full-width bar, `--surface-soft` + hairline top border, or tonal card with `--border-default`); short text + inline link to `/privacy.html` + dismiss button (X or "Got it").
+- **States**: visible → dismissed. Dismissal persists in `localStorage['clutchd-privacy-notice-dismissed']` (per-browser); no server round-trip.
+- **Accessibility**: `role="region"` + `aria-label`; dismiss is a real `<button>` with a visible focus ring; text + link at 4.5:1; banner must not cover page content on mobile (safe-area / bottom padding) and must not trap focus.
+- **Motion**: fade/slide-in on mount only, `prefers-reduced-motion` respected (no animation under reduced motion).
+- **Layout**: full-width bottom bar → stacks on mobile; dismiss button always reachable.
+
 ## 6. Motion & Interaction
 
 ### Timing
