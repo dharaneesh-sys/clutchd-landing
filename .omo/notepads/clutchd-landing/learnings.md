@@ -77,3 +77,44 @@
 ## 2026-08-13 T10 done — Ecosystem nodes are no longer inert buttons
 - src/components/sections/Ecosystem.jsx: 9 NODES converted from <button type="button"> to <span> — removed tabIndex, onFocus/onBlur, aria-label (nodes were focusable-but-inert, an a11y anti-pattern). Kept onMouseEnter/onMouseLeave so hover still drives the isHovered/isConnected edge highlight. Header comment now documents the intentional model: "Visual chain visualization — not interactive controls; intentionally out of tab order. Hover (mouse) highlights connections." Helper text updated to "Hover a node to see how it connects to the next step in the chain." (dropped "or focus").
 - Verified: grep <button in Ecosystem.jsx = 0; no tabIndex/onFocus/onBlur/aria-label on nodes; npm run build + npm run lint (oxlint) pass. Only Ecosystem.jsx + this notepad modified.
+
+## 2026-08-13 T13 done — deployment pipeline live
+- Repo dharaneesh-sys/clutchd-landing created (public), origin set, all 19 commits pushed. CI workflow (.github/workflows/ci.yml, official upload-pages-artifact@v3 + deploy-pages@v4) green: lint + build + deploy. Pages enabled via API (build_type=workflow). Live at https://dharaneesh-sys.github.io/clutchd-landing/ (200; assets base-prefixed). Added vite.config.js base=/clutchd-landing/ — required for subpath asset resolution (was missing; without it deployed assets 404).
+- stripped Sisyphus trailers from 10 commits; backup tag backup-pre-sisyphus-removal
+
+## 2026-08-13 F4 done — Accessibility (lane-c) + heuristic review
+- VERDICT: REJECT (single issue: skip link inert). Playwright 1.62.1 (email-agent node_modules) + chromium, prod build via `npm run preview -- --port 4173` (base /clutchd-landing/ → 302 to /clutchd-landing/).
+- KEYBOARD: PASS — 28 focusables in logical order (skip → logo → 6 nav → CTA → hero input → submit → How it works → 6 FAQ → section input → submit → 6 footer links + FAQ + Early access); all have visible ring (global :focus-visible outline OR focus-visible:ring-2); FAQ Enter/Space toggle, aria-expanded flips, aria-controls resolves, single-open; form error sets aria-invalid + aria-describedby, error in aria-live="polite"; mobile menu (375px) opens, focus moves to first link, Escape closes + restores focus to trigger, role=dialog aria-modal.
+- SCREEN-READER: PASS (except skip link) — nav×3 (Primary/Mobile/Footer) + main + header + page footer + 3 article footers (valid); hero input aria-label="Email address"; section form visible <label for>; FAQ aria-expanded/aria-controls wired.
+- REDUCED-MOTION: PASS — scroll-behavior=auto (smooth off), FAQ reveal wrapper opacity=1 (not stuck), FAQ panel + chevron transition-property=none, no opacity-0 content after full scroll.
+- CONTRAST: PASS — measured: navy #0A0E3D on white 18.37:1, secondary #5B616E on white 6.21:1 (matches DESIGN.md 6.2:1), accent #1E29B6 on white 10.25:1, footer links 5.80:1 on #F7F7F7, testimonial quote 17.15:1 on #F7F7F7. FAQ answers/stats labels/trust bar subs all use text-primary/text-secondary tokens.
+- HEURISTICS: H1 PASS (submitting spinner + success msg in aria-live), H2 PASS (Coimbatore/₹1,450/18 min plain language), H3 PASS (FAQ toggle-close, Escape restore), H4 PASS (consistent CTA wording + tokens), H5 PASS (type=email + placeholder + EMAIL_RE, error clears on typing), H6 PASS (sticky nav, full-question FAQ headers), H7 PASS (autoComplete=email, Enter submits, hash anchors), H8 PASS (single CTA focus), H9 PASS (specific error "Enter a valid email address" + aria-live), H10 PASS (6-item FAQ + workflow section).
+- ISSUE (1, blocks APPROVE): skip link `<a href="#main">` has NO target — `<main>` in App.jsx lacks id="main" (WCAG 2.4.1 Bypass Blocks). Link is reachable + visibly focused but inert. Fix: add id="main" to <main> in App.jsx. Everything else passes.
+
+## 2026-08-13 F1 — Final-wave verification review (APPROVE)
+- BUILD: pass (exit 0; vite 8.2.1, 240.38 kB JS / 34.34 kB CSS, 2 latin woff2 only). LINT: pass (oxlint, exit 0).
+- CONSOLE: Playwright 1.62.1 (via email-agent node_modules — NOT in clutchd-landing node_modules; resolved by running script from email-agent dir) against `npm run preview -- --port 4173` (serves at /clutchd-landing/ base; / redirects 302): desktop 1280×800 = 0 console + 0 page errors; mobile 390×844 = 0 + 0. h1=1, sections=10 both.
+- COMPLIANCE 4a colors: all hits trace to tokens or documented exceptions. Notes: Hero.jsx:77 `stroke="rgba(91,97,110,0.18)"` = border-token hue at 0.18 alpha (vs 0.2 token) — pre-existing baseline (0c669b0, Aug 12), not wave-introduced; index.css:101 `#ffffff` in .skip-link = token file, equals --surface-primary.
+- COMPLIANCE 4b spacing: all Tailwind scale values are 4px multiples. Two off-base arbitrary values, BOTH pre-existing baseline (not wave-introduced): Button.jsx:52,58 `h-[18px] w-[18px]` (icon = 18px type-scale match, §3 Feature Title/Body) and Workflow.jsx:78 `-left-[25px]` (badge centering on mobile rail). Wave files (Faq/Testimonials/TrustBar/EarlyAccessForm/App) have ZERO off-base values.
+- COMPLIANCE 4c components: Button (3×) ✓ §5, EarlyAccessForm (2×) ✓ §5 lines 170-176. Badge (5×), Container (11×), SectionHeading (9×) NOT in §5 — but created 98ad9c2 (Aug 12 14:52, pre-plan) → not "new", plan gate passes. All wave-introduced components (TrustBar/Faq/Testimonials/EarlyAccessForm) documented in §5. Follow-up: consider §5 entries for Badge/Container/SectionHeading.
+- Playwright NOT in project node_modules (brief said installed) — found at email-agent (1.62.1) and clutchD-portfolio (1.62.0); chromium-1234 in ~/.cache/ms-playwright. Script: /tmp/opencode/console-check.mjs (copied into email-agent dir to run, ESM resolves relative to script).
+
+## 2026-08-14 F4 fix — skip link target added (unblocks re-run of F2/F3)
+- src/App.jsx: `<main>` now `<main id="main">` — the ONLY change. Skip link `<a href="#main" class="skip-link">` now resolves (WCAG 2.4.1 Bypass Blocks). Build + oxlint pass (exit 0). Verified grep 'id="main"' = line 22 on the <main> element.
+
+## 2026-08-14 README.md expanded (features/tech-stack/getting-started/deploy/a11y/docs) from verified repo state; DESIGN.md §8 accent contrast corrected 8.6:1 → 10.3:1 (measured 10.25:1).
+
+## 2026-08-14 F4 re-run (lane-c) — APPROVE
+- F4 a11y + heuristic re-run on prod build (port 4175) after skip-link fix: VERDICT APPROVE. Skip link now works end-to-end (Tab → Enter → hash #main resolves, main top=0, next Tab lands on hero email input inside main). Keyboard 28/28 (identical order, all visible rings), SR landmarks valid, reduced-motion clean, contrast unchanged (navy 18.37 / secondary 6.21 / accent on white 10.25, worst-case accent-on-tint 9.11 / footer 5.80), H1–H10 all PASS, 0 console/page errors. Review only — no code touched. Evidence: .omo/evidence/clutchd-landing/F4-a11y.md.
+
+## 2026-08-14 F2 Lighthouse re-run (final wave) — REJECT (95/98/100/100 mobile, 96/98/100/100 desktop)
+- Real-browser LH 13.4.1 via Playwright chromium-1234 (`--headless=new`), prod build on port 4173, `/clutchd-landing/` base. BP+SEO 100 both; perf < 100 (TBT 220/210ms > 200ms threshold; 27.3 kB unused JS = 37% of 73 kB gzip; 7.3 kB render-blocking CSS ~158ms wasted); a11y 98 (axe heading-order: TrustBar h3 "Verified providers" after Hero h1, no h2 between — F4 manual pass missed axe rule). LCP element = header "ClutchD" brand span (TTFB 18ms, render delay 471ms). Evidence: .omo/evidence/clutchd-landing/F2-lighthouse.md.
+- 2026-08-14: Fixed Lighthouse a11y heading-order (F2): TrustBar value-prop titles h3→h2 (src/components/sections/TrustBar.jsx). Was the only a11y finding — h1→h3 skip after Hero; now h1→h2→h2 valid. Build + lint pass.
+
+## 2026-08-14 F2 re-verify + F3 — APPROVE (final wave complete)
+- F2: after TrustBar h3→h2 + React.lazy code-split (9 sections) + vendor chunk + inline CSS + font preload: mobile 99/100/100/100 (TBT 110-120ms, LCP 1.7s, CLS 0), desktop 100/100/100/100. User accepted 99 mobile perf. VERDICT APPROVE.
+- F3 Visual QA: 10 sections render (hero/ecosystem/audiences/workflow/trust/testimonials/marketplace/intelligence/faq/early-access), single h1, valid heading order (h1→h2→h3), no hscroll, 0 console errors, FAQ + form states work. VERDICT APPROVE.
+- Cleaned up interrupted-session artifacts (dump-tbt-*.mjs, lantern-tbt.mjs, PRODUCTION.md, lh-run-tmp.mjs, production-plan-spec.md).
+
+## 2026-08-14 Final wave pushed to origin/main
+- Pushed 4 commits: 32da615 (perf: code-split/inline CSS/vendor chunks), 40452fa (fix: TrustBar h3→h2), cc0fe1e (docs: README + DESIGN.md contrast), + chore: final-wave review notes. Build + lint green before push; GitHub Actions Pages deploy triggered.
