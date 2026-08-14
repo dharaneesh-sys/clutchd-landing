@@ -218,7 +218,7 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 
 ### Constraints
 
-- WCAG target: **2.2 AA** — contrast floor 4.5:1 body / 3:1 large text. Verified pairs: navy `#0A0E3D` on white 18.4:1; secondary `#5B616E` on white 6.2:1; accent `#1E29B6` on white 8.6:1; focus ring `#3A46DF` on white 6.7:1.
+- WCAG target: **2.2 AA** — contrast floor 4.5:1 body / 3:1 large text. Verified pairs: navy `#0A0E3D` on white 18.4:1; secondary `#5B616E` on white 6.2:1; accent `#1E29B6` on white 10.3:1; focus ring `#3A46DF` on white 6.7:1.
 - Visible focus on every interactive element via `--accent-focus-ring`.
 - Full keyboard reachability; semantic landmarks (`<nav>`, `<main>`, `<header>`, `<footer>`); labeled form inputs; `prefers-reduced-motion` respected (Section 6).
 - Static screenshots cannot prove interaction/keyboard/screen-reader claims — those must be exercised in `/visual-qa` (designpowers lane-c).
