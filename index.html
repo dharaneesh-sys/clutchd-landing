@@ -32,6 +32,23 @@
       content="On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history — one connected automotive ecosystem, live in Coimbatore."
     />
     <meta name="twitter:image" content="https://dharaneesh-sys.github.io/clutchd-landing/og.png" />
+    <style>
+      /* F2 perf: content-visibility: auto skips layout of below-fold sections
+         (all 9 are code-split lazy chunks). contain-intrinsic-size keeps an
+         estimated box so CLS stays 0 while offscreen. */
+      #ecosystem,
+      #audiences,
+      #workflow,
+      #trust,
+      #testimonials,
+      #marketplace,
+      #intelligence,
+      #faq,
+      #early-access {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 600px;
+      }
+    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
