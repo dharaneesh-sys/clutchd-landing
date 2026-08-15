@@ -28,10 +28,13 @@ export default function Header() {
   return (
     <header
       className={[
-        'sticky top-0 z-50 w-full border-b transition-[background-color,backdrop-filter,border-color] duration-200',
+        // V8 scrolled state (DESIGN.md §6): stronger hairline + a soft
+        // shadow once the page scrolls; transform/opacity/shadow only — no
+        // padding or height change (layout animation is forbidden).
+        'sticky top-0 z-50 w-full border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-200',
         scrolled
-          ? 'border-border-default bg-surface-primary/80 backdrop-blur-md'
-          : 'border-transparent bg-surface-primary/0',
+          ? 'border-border-default bg-surface-primary/80 shadow-[0_2px_12px_rgba(13,18,79,0.05)] backdrop-blur-md'
+          : 'border-transparent bg-surface-primary/0 shadow-none',
       ].join(' ')}
     >
       <div className="mx-auto flex w-full max-w-[80rem] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">

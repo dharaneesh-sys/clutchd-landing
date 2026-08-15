@@ -104,7 +104,7 @@ export default function Faq() {
                       aria-expanded={open}
                       aria-controls={panelId}
                       onClick={() => toggle(index)}
-                      className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                      className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-200 hover:bg-surface-cool"
                     >
                       <span className="font-sans font-semibold text-text-primary">{item.q}</span>
                       <ChevronDown

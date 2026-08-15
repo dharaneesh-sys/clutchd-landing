@@ -17,6 +17,10 @@ const CATEGORIES = [
   { icon: Package, label: 'Accessories' },
 ]
 
+// V8 staggered reveal (DESIGN.md §6) — catalog strip, callout pair, and
+// catalog card enter as a sequence (80ms apart); reduced-motion instant.
+const STAGGER = 80
+
 export default function Marketplace() {
   const [ref, visible] = useReveal()
   return (
@@ -32,17 +36,16 @@ export default function Marketplace() {
           lede="Diagnose → find the required parts → check availability → order → get it serviced → keep the record. One workflow, no hopping between apps."
           id="marketplace-heading"
         />
-        <div
-          ref={ref}
-          className={[
-            'mt-12 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]',
-            visible
-              ? 'translate-y-0 opacity-100'
-              : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
-          ].join(' ')}
-        >
+        <div ref={ref} className="mt-12">
           {/* Ruled catalog strip — hairline ledger of categories (real labels) */}
-          <div className="border-y border-border-default">
+          <div
+            className={[
+              'border-y border-border-default transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]',
+              visible
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+            ].join(' ')}
+          >
             <div className="hidden divide-x divide-border-default lg:grid lg:grid-cols-6">
               {CATEGORIES.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex flex-col items-start gap-2.5 px-5 py-6">
@@ -66,7 +69,15 @@ export default function Marketplace() {
           </div>
 
           {/* Capability callouts — 2-up editorial pair */}
-          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div
+            style={{ transitionDelay: visible ? `${STAGGER}ms` : '0ms' }}
+            className={[
+              'mt-10 grid grid-cols-1 gap-8 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] md:grid-cols-2',
+              visible
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+            ].join(' ')}
+          >
             <div className="flex flex-col gap-3">
               <SectionRule variant="short" />
               <div className="mt-2 flex items-baseline gap-3">
@@ -94,7 +105,15 @@ export default function Marketplace() {
           </div>
 
           {/* Catalog card artifact — labeled Preview, illustrative */}
-          <div className="mt-10 max-w-sm border border-border-default bg-surface-primary">
+          <div
+            style={{ transitionDelay: visible ? `${STAGGER * 2}ms` : '0ms' }}
+            className={[
+              'mt-10 max-w-sm border border-border-default bg-surface-primary transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]',
+              visible
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+            ].join(' ')}
+          >
             <div className="flex items-center justify-between border-b border-border-default px-5 py-3">
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-secondary">
                 Part № CD-1042

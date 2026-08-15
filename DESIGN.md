@@ -228,6 +228,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Content per state**: Request = step 1 + origin dot; Searching = step 2 + "Searching for verified mechanics…"; Accepted = step 3 + mechanic card (Rahul K., 4.9, Verified) + ETA 18 min; En route = step 4 + route draws further + ETA 12 min; In progress = step 5 + estimate card appears (Est. ₹1,450, labeled **Preview**) + ETA 6 min; Completed = step 6 + route fully drawn + checkmark, no ETA.
 - **Accessibility**: state buttons keyboard-operable with visible focus ring; dedicated visually-hidden `aria-live="polite"` region announcing **state changes only** (manual-only — never spams a screen reader); reduced-motion = static Completed layout, no animation, no ticking.
 - **Motion**: `transform`/`opacity`/`stroke-dashoffset` only — timeline fill (color/transform), SVG route draw (stroke-dashoffset), ETA chip tick (content update, opacity crossfade); 200–300ms §6 easings; GPU-composited.
+- **Invitation cue (V8 — D14 intact)**: on initial mount only, a soft expanding ring pulses around the first (Request) state button — a single ambient hint that the demo is interactive. No autoplay, no auto-advance, no looping content motion. The cue disappears on the first interaction (any state click) and is `motion-reduce`-disabled (`animation: none`). §6-gated keyframe (`herostage-pulse`).
 - **Layout**: same footprint as the static card it replaces (`max-w-sm`, `rounded-[2rem]` shell, hairline + warm surfaces).
 
 ### EditorialCard (V3, 2026-08-15) — anatomy pattern, never a uniform grid
@@ -236,6 +237,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Surface**: `--surface-primary`/`--surface-soft` with `--border-default` hairline; tonal-shift separation, minimal shadow (§7).
 - **Rules**: exactly one `<h3>` per card (heading order h1→h2→h3 per page); every mock figure keeps its "Preview" label; decorative numerals/rules are `aria-hidden="true"`; icons never sit in a tint square (D7 — eliminated entirely).
 - **Layout**: asymmetric grids (feature + standard mix), never 3/4 identical clones; mobile falls back to `w-full` stack below 768px (§4).
+- **Interaction (V8)**: an *interactive* card (one that navigates or toggles) gets the **editorial lift** — hover border warms to `rgba(38,33,28,0.36)` (the `--border-default` hue at double alpha — same family, no new color), `hover:-translate-y-1` (4px), no shadow change (minimal-shadow §7); 200ms §6 Standard; keyboard focus uses the global ring (§8). **Informational artifacts deliberately have NO hover** — static is the designed resting state, so interactive vs informational reads as a system, not an accident (V8 acceptance: hover only where there is an interaction; never fake clickability).
 
 ### SectionRule (V3, 2026-08-15)
 - **Structure**: hairline divider using `--border-default` — `border-t border-border-default`, full-width within its column, or a short rule (`w-12`-class) under a numeral/eyebrow.
@@ -278,6 +280,8 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - `backdrop-blur` only on fixed/sticky elements (nav, overlays) — never on scrolling content.
 - `prefers-reduced-motion`: disable non-essential animation.
 - Slop animation is forbidden — motion only where it signals interaction or state.
+- **Directional route transitions (V8)**: forward navigation (PUSH/REPLACE) slides content in from the right; back/forward-button (POP) from the left; initial page load = neutral fade. 400ms §6 Emphasis. `transform`/`opacity` only; `prefers-reduced-motion` = no transition (V8).
+- **Staggered reveals (V8)**: card grids may stagger children on entry — 60–80ms per child via `transition-delay`, total ≤ 400ms. Entry-only (never on above-the-fold load-critical content); `prefers-reduced-motion` = no delay (all children appear instantly).
 
 ## 7. Depth & Surface
 
@@ -303,6 +307,7 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 - **Method:** inline SVG noise data-URI as a static background on section surfaces (e.g. `background-image: url("data:image/svg+xml,...")` with a tiny feTurbulence fractalNoise).
 - **Rules:** static only — never animated, never scroll-coupled, never GPU-animated (texture is a background, not a composited layer). Never applied to text-bearing containers where it could lower contrast below AA (grain opacity ≤ ~3–4%). Applied on alternating surfaces (primary/soft/cool) for the printed-paper feel.
 - **Tokens:** no texture token needed — the data-URI lives in the `.grain` utility (src/index.css) and is applied via class.
+- **Application (V8)**: keep the grain sparse — soft surfaces only (Trust, Audiences, Intelligence). The tactile register reads as a system when it is sparing; do not over-apply to `--surface-primary` sections or artifact cards.
 
 ## 8. Accessibility Constraints & Accepted Debt
 

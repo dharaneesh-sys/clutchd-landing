@@ -125,6 +125,10 @@ const OVERLINES = [
   'Nº04 · Fleet operator',
 ]
 
+// V8 staggered reveal (DESIGN.md §6) — 4 cards enter as a sequence, 70ms
+// apart, only when hidden→visible; reduced-motion shows them instantly.
+const STAGGER = 70
+
 export default function Audiences() {
   const [ref, visible] = useReveal()
   return (
@@ -142,12 +146,7 @@ export default function Audiences() {
         />
         <div
           ref={ref}
-          className={[
-            'mt-12 grid grid-cols-1 gap-5 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-2 lg:grid-cols-12',
-            visible
-              ? 'translate-y-0 opacity-100'
-              : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
-          ].join(' ')}
+          className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-12"
         >
           {ROLES.map((role, i) => {
             const featured = i === 0
@@ -155,9 +154,13 @@ export default function Audiences() {
             return (
               <article
                 key={role.title}
+                style={{ transitionDelay: visible ? `${i * STAGGER}ms` : '0ms' }}
                 className={[
-                  'flex flex-col rounded-2xl border border-border-default bg-surface-primary p-6 lg:p-7',
+                  'flex flex-col rounded-2xl border border-border-default bg-surface-primary p-6 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] lg:p-7',
                   wide ? 'sm:col-span-2 lg:col-span-7' : 'lg:col-span-5',
+                  visible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-6 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
                 ].join(' ')}
               >
                 {featured && <SectionRule variant="short" />}

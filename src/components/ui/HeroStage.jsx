@@ -77,8 +77,14 @@ export default function HeroStage() {
   })
   // Empty on mount — the region announces state changes only, never on load.
   const [announcement, setAnnouncement] = useState('')
+  // V8 invitation cue: true until the visitor interacts with any state — the
+  // soft ring on the Request button is mount-only and disappears on the first
+  // click (DESIGN.md §5 HeroStage; reduced-motion users start at Completed,
+  // so the cue never renders for them).
+  const [interacted, setInteracted] = useState(false)
 
   const handleSelect = (i) => {
+    setInteracted(true)
     setActive(i)
     setAnnouncement(ANNOUNCEMENTS[i])
   }
@@ -107,7 +113,7 @@ export default function HeroStage() {
               // the accessible name (label-content-name-mismatch).
               aria-label={`Show ${s.title} state (step ${i + 1})`}
               className={[
-                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
+                'relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
                 'transition-[transform,background-color,color] duration-200',
                 EASE,
                 'motion-reduce:transition-none',
@@ -124,6 +130,13 @@ export default function HeroStage() {
                 <CheckCircle2 className="h-4 w-4" />
               ) : (
                 i + 1
+              )}
+              {/* V8 invitation cue — mount-only ring on the Request state */}
+              {i === 0 && !interacted && active === 0 && (
+                <span
+                  aria-hidden="true"
+                  className="herostage-cue pointer-events-none absolute inset-0 rounded-full border-2 border-accent-primary motion-reduce:border-0"
+                />
               )}
             </button>
             {i < STEPS.length - 1 && (

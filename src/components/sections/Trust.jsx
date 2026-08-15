@@ -40,6 +40,11 @@ const PRIMITIVES = [
   },
 ]
 
+// V8 staggered reveal (DESIGN.md §6) — the five ruled rows enter as a
+// sequence (70ms apart), the estimate artifact last; reduced-motion shows
+// everything instantly.
+const STAGGER = 70
+
 export default function Trust() {
   const [ref, visible] = useReveal()
   return (
@@ -59,19 +64,20 @@ export default function Trust() {
         />
         <div
           ref={ref}
-          className={[
-            'mt-12 grid grid-cols-1 gap-12 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] md:grid-cols-2 md:gap-16',
-            visible
-              ? 'translate-y-0 opacity-100'
-              : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
-          ].join(' ')}
+          className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16"
         >
           {/* Ruled numbered list — Nº01–05 */}
           <ol className="divide-y divide-border-default">
             {PRIMITIVES.map(({ tag, title, body }, i) => (
               <li
                 key={title}
-                className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 py-5 sm:gap-x-6"
+                style={{ transitionDelay: visible ? `${i * STAGGER}ms` : '0ms' }}
+                className={[
+                  'grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 py-5 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:gap-x-6',
+                  visible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+                ].join(' ')}
               >
                 <SectionNumeral n={String(i + 1).padStart(2, '0')} className="pt-1" />
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -88,7 +94,15 @@ export default function Trust() {
           </ol>
 
           {/* Estimate document — drawn paper artifact, labeled Preview */}
-          <div className="rounded-lg border border-border-default bg-surface-primary p-6 shadow-[0_8px_24px_rgba(13,18,79,0.08)] sm:p-7 md:self-start">
+          <div
+            style={{ transitionDelay: visible ? `${PRIMITIVES.length * STAGGER}ms` : '0ms' }}
+            className={[
+              'rounded-lg border border-border-default bg-surface-primary p-6 shadow-[0_8px_24px_rgba(13,18,79,0.08)] transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:p-7 md:self-start',
+              visible
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+            ].join(' ')}
+          >
             <div className="flex items-start justify-between gap-4 border-b border-border-default pb-4">
               <h3 className="font-display text-2xl font-semibold text-text-primary">Estimate</h3>
               <Badge variant="accent">Preview</Badge>

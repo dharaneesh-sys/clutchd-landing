@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
 import Header from './components/layout/Header.jsx'
 import Footer from './components/layout/Footer.jsx'
 import PrivacyNotice from './components/ui/PrivacyNotice.jsx'
@@ -24,17 +24,29 @@ const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 // can receive programmatic focus without entering the tab order. pathname is
 // the trigger, not a value the body reads — the `void` reference documents
 // that intentional dependency for the exhaustive-deps linters.
-// V6 page transitions (DESIGN.md §6 Emphasis — "Page transition"): a keyed
-// wrapper re-mounts on pathname change so the entering page fades/slides in
-// via .page-enter (transform/opacity only, GPU-composited). prefers-reduced-
-// motion: no animation at all (CSS media guard). The keyed remount also
-// resets per-page state — intentional for a routed app. Lazy chunks are
+// V6+V8 page transitions (DESIGN.md §6 — directional): a keyed wrapper
+// re-mounts on pathname change so the entering page animates in — forward
+// navigation (PUSH/REPLACE) slides from the right, back/forward-button
+// (POP) from the left, initial load = neutral fade (transform/opacity only,
+// GPU-composited). prefers-reduced-motion: no animation (CSS media guard).
+// The keyed remount resets per-page state — intentional. Lazy chunks are
 // module-cached after first visit, so re-mounting does not re-trigger the
 // Suspense fallback on interior navigations.
 function PageTransition({ children }) {
   const { pathname } = useLocation()
+  const navType = useNavigationType()
+  // One-shot neutral fade on the very first render only (the ref is consumed
+  // during that render — an effect would flip the class after paint and
+  // re-trigger the animation). Subsequent navigations are directional.
+  const firstRender = useRef(true)
+  let cls = 'page-enter'
+  if (firstRender.current) {
+    firstRender.current = false
+  } else {
+    cls = navType === 'POP' ? 'page-enter-back' : 'page-enter-forward'
+  }
   return (
-    <div key={pathname} className="page-enter">
+    <div key={pathname} className={cls}>
       {children}
     </div>
   )
