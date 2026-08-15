@@ -194,3 +194,9 @@
 
 ## 2026-08-14 Final wave pushed to origin/main
 - Pushed 4 commits: 32da615 (perf: code-split/inline CSS/vendor chunks), 40452fa (fix: TrustBar h3→h2), cc0fe1e (docs: README + DESIGN.md contrast), + chore: final-wave review notes. Build + lint green before push; GitHub Actions Pages deploy triggered.
+
+## 2026-08-15 History rewrite — Codebuff footer removed from ALL commit messages
+- User request: remove the Codebuff attribution footer ("Generated with Codebuff 🤖" + "Co-Authored-By: Codebuff <noreply@codebuff.com>") from every commit message. EVERY commit in repo history carried it (the whole project was written under that convention), so the full history was rewritten via `git filter-branch --msg-filter` (python script stripping those two lines + collapsing trailing blanks).
+- Verified before push: tree-hash identical for every old→new pair (0 mismatches); message diffs = footer lines only (22 pairs clean); NEW history has 0 Codebuff / 0 Sisyphus / 0 Co-authored-by. Force-pushed (`--force-with-lease`), remote verified clean.
+- ⚠ ALL commit SHAs changed (46e0bec…b707ef5). Old backups (refs/original) pruned + gc'd. CI re-runs on the new head.
+- CONVENTION GOING FORWARD: this repo's commit messages must NOT include any Codebuff/agent attribution footer — the user explicitly removed it.
