@@ -1,6 +1,7 @@
-import { Car, Wrench, Building2, Truck, Check } from 'lucide-react'
+import { Car, Wrench, Building2, Truck } from 'lucide-react'
 import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
+import SectionRule from '../ui/SectionRule.jsx'
 import useReveal from '../../hooks/useReveal.js'
 
 const ROLES = [
@@ -50,13 +51,87 @@ const ROLES = [
   },
 ]
 
+// Hand-drawn line motifs (1.5px stroke, accent on paper) — decorative only.
+const MOTIFS = {
+  Drivers: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--accent-primary)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-10 w-10"
+    >
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1" />
+    </svg>
+  ),
+  Mechanics: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--accent-primary)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-8 w-8"
+    >
+      <path d="M14.5 6.5a4.2 4.2 0 0 0-5.6 5.6L3.5 17.5a2 2 0 0 0 2.8 2.8l5.4-5.4a4.2 4.2 0 0 0 5.6-5.6l-2.6 2.6-2.8-2.8 2.6-2.6Z" />
+    </svg>
+  ),
+  Garages: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--accent-primary)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-8 w-8"
+    >
+      <path d="M3 10.5 12 4l9 6.5" />
+      <path d="M5 9.5V20h14V9.5" />
+      <path d="M9.5 20v-6h5v6" />
+    </svg>
+  ),
+  Fleets: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--accent-primary)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="h-8 w-8"
+    >
+      <path d="M2.5 7h10.5v9.5H2.5z" />
+      <path d="M13 10.5h3.2l3.3 3.3v2.7H13" />
+      <circle cx="6.8" cy="17.8" r="1.7" />
+      <circle cx="16.2" cy="17.8" r="1.7" />
+    </svg>
+  ),
+}
+
+// Decorative index annotations — the h3 carries the meaning.
+const OVERLINES = [
+  'Nº01 · Primary audience',
+  'Nº02 · Service provider',
+  'Nº03 · Workshop',
+  'Nº04 · Fleet operator',
+]
+
 export default function Audiences() {
   const [ref, visible] = useReveal()
   return (
     <section
       id="audiences"
       aria-labelledby="audiences-heading"
-      className="scroll-mt-20 bg-surface-soft py-20 lg:py-28"
+      className="grain scroll-mt-20 bg-surface-soft py-20 lg:py-28"
     >
       <Container>
         <SectionHeading
@@ -68,31 +143,61 @@ export default function Audiences() {
         <div
           ref={ref}
           className={[
-            'mt-12 grid grid-cols-1 gap-5 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-2 lg:grid-cols-4',
+            'mt-12 grid grid-cols-1 gap-5 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:grid-cols-2 lg:grid-cols-12',
             visible
               ? 'translate-y-0 opacity-100'
               : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
           ].join(' ')}
         >
-          {ROLES.map(({ icon: Icon, title, bullets }) => (
-            <article
-              key={title}
-              className="flex flex-col gap-4 rounded-2xl border border-border-default bg-surface-primary p-6 transition-[transform,border-color] duration-200 hover:-translate-y-1 hover:border-accent-primary"
-            >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface-tint text-accent-primary">
-                <Icon className="h-5 w-5" />
-              </span>
-              <h3 className="font-sans text-lg font-semibold text-text-primary">{title}</h3>
-              <ul className="flex flex-col gap-2">
-                {bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-2 font-sans text-sm text-text-secondary">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-primary" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
+          {ROLES.map((role, i) => {
+            const featured = i === 0
+            const wide = i === 0 || i === 3
+            return (
+              <article
+                key={role.title}
+                className={[
+                  'flex flex-col rounded-2xl border border-border-default bg-surface-primary p-6 lg:p-7',
+                  wide ? 'sm:col-span-2 lg:col-span-7' : 'lg:col-span-5',
+                ].join(' ')}
+              >
+                {featured && <SectionRule variant="short" />}
+                <div className={`flex items-start gap-4 ${featured ? 'mt-5' : ''}`}>
+                  <span
+                    className={
+                      i === 3
+                        ? 'flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border-default'
+                        : 'shrink-0'
+                    }
+                  >
+                    {MOTIFS[role.title]}
+                  </span>
+                  <div>
+                    <p
+                      aria-hidden="true"
+                      className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-primary"
+                    >
+                      {OVERLINES[i]}
+                    </p>
+                    <h3
+                      className={`mt-1 font-display font-semibold tracking-tight text-text-primary ${
+                        featured ? 'text-2xl' : 'text-xl'
+                      }`}
+                    >
+                      {role.title}
+                    </h3>
+                  </div>
+                </div>
+                <ul className="mt-6 flex-1 divide-y divide-border-default border-t border-border-default">
+                  {role.bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-3 py-2.5">
+                      <span aria-hidden="true" className="mt-[0.55em] h-px w-4 shrink-0 bg-accent-primary" />
+                      <span className="font-sans text-sm leading-relaxed text-text-secondary">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            )
+          })}
         </div>
       </Container>
     </section>

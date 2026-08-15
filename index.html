@@ -6,6 +6,16 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1E29B6" />
+    <!-- V1: preload Fraunces display woff2 (DESIGN.md §3, D18) — Vite
+         rewrites this href to the hashed dist asset at build. font-display:
+         swap (fonts-latin.css) prevents FOIT/CLS on the headline. -->
+    <link
+      rel="preload"
+      href="/node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <!-- P6: canonical/og/twitter URLs now target the Netlify host (deployed
          from this repo). Site created as clutchd-193 (clutchd was taken). -->
     <link rel="canonical" href="https://clutchd-193.netlify.app/" />
@@ -34,23 +44,6 @@
       content="On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history — one connected automotive ecosystem, live in Coimbatore."
     />
     <meta name="twitter:image" content="https://clutchd-193.netlify.app/og.png" />
-    <style>
-      /* F2 perf: content-visibility: auto skips layout of below-fold sections
-         (all 9 are code-split lazy chunks). contain-intrinsic-size keeps an
-         estimated box so CLS stays 0 while offscreen. */
-      #ecosystem,
-      #audiences,
-      #workflow,
-      #trust,
-      #testimonials,
-      #marketplace,
-      #intelligence,
-      #faq,
-      #early-access {
-        content-visibility: auto;
-        contain-intrinsic-size: auto 600px;
-      }
-    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

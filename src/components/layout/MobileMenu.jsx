@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button.jsx'
 
 // Accessible mobile disclosure panel (WAI-ARIA menu pattern).
@@ -10,6 +11,7 @@ import Button from '../ui/Button.jsx'
 export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
   const panelRef = useRef(null)
   const firstLinkRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!open) return
@@ -49,15 +51,15 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
     >
       <nav aria-label="Mobile" className="mx-auto flex w-full max-w-[80rem] flex-col gap-1 px-4 py-4 sm:px-6">
         {items.map((item, i) => (
-          <a
-            key={item.href}
+          <Link
+            key={item.to}
             ref={i === 0 ? firstLinkRef : null}
-            href={item.href}
+            to={item.to}
             onClick={onClose}
             className="rounded-xl px-3 py-3 font-sans text-base font-medium text-text-primary transition-colors duration-200 hover:bg-surface-tint hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring"
           >
             {item.label}
-          </a>
+          </Link>
         ))}
         <div className="px-3 pt-3">
           <Button
@@ -66,7 +68,7 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
             fullWidth
             onClick={() => {
               onClose()
-              window.location.hash = '#early-access'
+              navigate('/early-access')
             }}
           >
             Get early access

@@ -18,13 +18,14 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 | Role | Token | Value | Usage |
 |------|-------|-------|-------|
-| Surface/primary | `--surface-primary` | `#FFFFFF` | Main background (coinbase pure white) |
-| Surface/soft | `--surface-soft` | `#F7F7F7` | Alternating section fields (coinbase light surface) |
-| Surface/cool | `--surface-cool` | `#EEF0F3` | Secondary button bg, subtle panels (coinbase cool gray surface) |
-| Surface/tint | `--surface-tint` | `#F0F1F9` | Very light blue canvas — tint of the primary hue (derived from `#1E29B6`, L96%) |
-| Text/primary | `--text-primary` | `#0A0E3D` | Deep navy headlines + body (primary hue, L14%) |
-| Text/secondary | `--text-secondary` | `#5B616E` | Captions, hints (coinbase muted blue) |
-| Border/default | `--border-default` | `rgba(91,97,110,0.2)` | Card borders, dividers (coinbase muted blue @ 20%) |
+| Surface/primary | `--surface-primary` | `#FCFAF6` | Main background — subtle cream paper (V-overhaul D5, 2026-08-15) |
+| Surface/soft | `--surface-soft` | `#F8F5EE` | Alternating section fields — warm soft step above cream |
+| Surface/cool | `--surface-cool` | `#F2EFE8` | Secondary button bg, subtle panels — warm cool step |
+| Surface/tint | `--surface-tint` | `#F0EFF7` | Very light warm blue-tint — tint of the primary hue, warm-adjusted from `#F0F1F9` |
+| Text/primary | `--text-primary` | `#0A0E3D` | Deep navy headlines + body (primary hue, L14%) — unchanged |
+| Text/secondary | `--text-secondary` | `#5B616E` | Captions, hints — unchanged (contrast re-verified on warm surfaces, §8) |
+| Text/ink | `--text-ink` | `#26211C` | Warm near-black — editorial pull-quotes, ledes, hero subheadline ONLY (D17, 2026-08-15) |
+| Border/default | `--border-default` | `rgba(38,33,28,0.18)` | Card borders, dividers — warm ink hairline (effective 1.434:1 on cream, no regression vs prior 1.333:1) |
 | Accent/primary | `--accent-primary` | `#1E29B6` | CTAs, links, focus — **user-pinned 2026-08-11** |
 | Accent/hover | `--accent-hover` | `#192295` | Hover state — same hue, darker (derived, L34%) |
 | Accent/active | `--accent-active` | `#131B76` | Active/pressed state — same hue, darker (derived, L27%) |
@@ -45,6 +46,7 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 ### Font Stack
 
+- **Display:** `Fraunces Variable` via `@fontsource-variable/fraunces` — characterful warm serif, multi-axis (wght 100–900 / opsz / SOFT / WONK), latin-only self-hosted. **Display-only: never body copy.** (V-overhaul D18, 2026-08-15)
 - **Primary:** `Geist Variable` via `@fontsource-variable/geist` — premium sans, weight axis 100–900. Maps coinbase's Display/Sans/Text roles onto one variable family. The soft-skill banned generic fonts (Inter, Roboto, Arial, Open Sans, Helvetica) are excluded.
 - **Mono (labels only):** `Geist Mono` via `@fontsource-variable/geist-mono` — eyebrow tags, overline, small metadata.
 
@@ -52,11 +54,11 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 | Level | Font | Size | Weight | Line Height | Tracking | Usage |
 |-------|------|------|--------|-------------|----------|-------|
-| Display Hero | Geist | 60px / 3.75rem | 600 | 1.00 | -0.02em | Hero headline (coinbase display) |
-| Display Secondary | Geist | 64px / 4rem | 400 | 1.00 | -0.02em | Sub-hero, section intro |
-| Display Third | Geist | 52px / 3.25rem | 400 | 1.00 | -0.015em | Third-tier display |
-| Section Heading | Geist | 36px / 2.25rem | 600 | 1.11 | -0.01em | Feature sections |
-| Card Title | Geist | 32px / 2rem | 400 | 1.13 | 0 | Card headings |
+| Display Hero | Fraunces | 60px / 3.75rem | 600 | 1.00 | -0.02em | Hero headline (serif) |
+| Display Secondary | Fraunces | 64px / 4rem | 400 | 1.00 | -0.02em | Sub-hero, section intro (serif) |
+| Display Third | Fraunces | 52px / 3.25rem | 400 | 1.00 | -0.015em | Third-tier display (serif) |
+| Section Heading | Fraunces | 36px / 2.25rem | 600 | 1.11 | -0.01em | Feature sections (serif) |
+| Card Title | Fraunces | 32px / 2rem | 400 | 1.13 | 0 | Card headings (serif) |
 | Feature Title | Geist | 18px / 1.125rem | 600 | 1.33 | 0 | Feature emphasis |
 | Body | Geist | 18px / 1.125rem | 400 | 1.56 | 0 | Standard reading |
 | Body Small | Geist | 16px / 1rem | 400 | 1.50 | 0 | Secondary reading |
@@ -67,7 +69,9 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 ### Rules
 
-- Max 2 font families (Geist + Geist Mono) — both from the same family, so effectively one type system.
+- **3 font families — Fraunces (display serif) + Geist (sans) + Geist Mono (labels).** [Rule amended 2026-08-15 — was "Max 2 font families".] Fraunces is **display-only**: hero h1, section titles, card titles, pull-quotes. Geist owns body/UI/labels. Geist Mono owns eyebrows/overlines/metadata. Serif never appears in body copy; sans never appears in pull-quotes.
+- Numerals: **serif numerals for the stats strip** (magazine feel), **Geist Mono for prices/labels** (the "data language" — D19, 2026-08-15).
+- Eyebrows keep Geist Mono overlines; serif section numerals (Nº01…) are the editorial annotation layer (D20).
 - Body text never below 14px.
 - Headings that wrap to 4+ lines are too large — use `clamp()`.
 - Display headings use ultra-tight 1.00 line-height (coinbase signature).
@@ -200,6 +204,60 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Variants**: `align="left"` (default, `max-w-2xl`) / `align="center"` (centered `max-w-2xl`).
 - **Accessibility**: accepts `id` (wired to the section's `aria-labelledby`); exactly one `<h2>` per instance.
 
+### PageShell (routing primitive) — V2, 2026-08-15
+- **Structure**: header + main + footer composition shared by every route (skip link first, `id="top"` on the shell wrapper, `<main>` landmark, `<PrivacyNotice/>` last).
+- **Focus management on route change**: scroll-to-top (instant, no animated scroll) + move focus to the page's `<h1>` (target gets `tabindex="-1"`). Satisfies WCAG 2.4.1 bypass + 2.4.3 focus order.
+- **Layout**: every route renders inside the same shell so header/footer persist; interior pages own their `<h1>`.
+- **Motion**: no motion on route shell itself; route content transitions are §6-gated (V6).
+
+### RouteFallback (Suspense loading state) — V2, 2026-08-15
+- **Structure**: route-level skeleton while a lazy page chunk loads — editorial, never a blank flash: mono overline "Loading" + static hairline-ruled placeholder block.
+- **Motion**: static (no pulse/spinner) — the swap to content is instant; reduced-motion unaffected.
+- **Layout**: fills the main region; same height rhythm as a page top.
+
+### 404 Page (catch-all route) — V2, 2026-08-15
+- **Structure**: mono overline "Error 404" + serif display heading (editorial: "This page took a wrong turn.") + body copy + secondary Button → `/`.
+- **Accessibility**: `<main>` landmark, one `<h1>`, descriptive link text.
+- **Layout**: centered, macro-whitespace rhythm (§4).
+
+### HeroStage (interactive) — V2, 2026-08-15
+- **Purpose**: replaces the static ServiceCard mockup on Home hero (V-overhaul D2). Pure CSS/SVG craft (D4), warm paper surfaces, tokens only.
+- **States**: **Request → Searching → Accepted → En route → In progress → Completed** — the 6 *displayed* step titles; the 5 backend statuses are `searching`/`accepted`/`en_route`/`in_progress`/`completed` ("Request" is a step title, never a status — reused from Workflow).
+- **Behavior**: **manual-only controls (D14)** — real `<button>`s, one per state; stage sits at Request until a visitor clicks. **No auto-advance, no toggle.**
+- **Content per state**: Request = step 1 + origin dot; Searching = step 2 + "Searching for verified mechanics…"; Accepted = step 3 + mechanic card (Rahul K., 4.9, Verified) + ETA 18 min; En route = step 4 + route draws further + ETA 12 min; In progress = step 5 + estimate card appears (Est. ₹1,450, labeled **Preview**) + ETA 6 min; Completed = step 6 + route fully drawn + checkmark, no ETA.
+- **Accessibility**: state buttons keyboard-operable with visible focus ring; dedicated visually-hidden `aria-live="polite"` region announcing **state changes only** (manual-only — never spams a screen reader); reduced-motion = static Completed layout, no animation, no ticking.
+- **Motion**: `transform`/`opacity`/`stroke-dashoffset` only — timeline fill (color/transform), SVG route draw (stroke-dashoffset), ETA chip tick (content update, opacity crossfade); 200–300ms §6 easings; GPU-composited.
+- **Layout**: same footprint as the static card it replaces (`max-w-sm`, `rounded-[2rem]` shell, hairline + warm surfaces).
+
+### EditorialCard (V3, 2026-08-15) — anatomy pattern, never a uniform grid
+- **Purpose**: the editorial card family replaces the uniform `rounded-2xl` + `h-11 w-11 tint square` grammar. Cards are **varied by design** — no two sections share the same card anatomy (V3 acceptance).
+- **Anatomy options (choose per section, mix freely)**: feature card (large serif title + lede, spanning 2 grid cells), standard card (serif card title + body, hairline border), ruled card (AnnotatedList inside), artifact card (drawn object: estimate document, instrument gauge, catalog card).
+- **Surface**: `--surface-primary`/`--surface-soft` with `--border-default` hairline; tonal-shift separation, minimal shadow (§7).
+- **Rules**: exactly one `<h3>` per card (heading order h1→h2→h3 per page); every mock figure keeps its "Preview" label; decorative numerals/rules are `aria-hidden="true"`; icons never sit in a tint square (D7 — eliminated entirely).
+- **Layout**: asymmetric grids (feature + standard mix), never 3/4 identical clones; mobile falls back to `w-full` stack below 768px (§4).
+
+### SectionRule (V3, 2026-08-15)
+- **Structure**: hairline divider using `--border-default` — `border-t border-border-default`, full-width within its column, or a short rule (`w-12`-class) under a numeral/eyebrow.
+- **Accessibility**: decorative only — always `aria-hidden="true"` when purely visual; the rule itself never carries text.
+- **Usage**: section annotations, ledger separators, numeral + rule lockups (with SectionNumeral).
+
+### SectionNumeral (V3, 2026-08-15)
+- **Structure**: editorial annotation `Nº01`-style — serif (`font-display`), `--text-secondary`, small/medium size, `aria-hidden="true"` (visual annotation, not content — V3 acceptance).
+- **Usage**: numbered editorial lists (Trust Nº01–05), step rails (Workflow), catalog ledgers (Marketplace), section numerals beside eyebrow/rule (D20).
+- **Rules**: rendered only when decorative; if the number is meaningful content, it belongs in the visible text, not a numeral annotation.
+
+### EditorialQuote (V3, 2026-08-15)
+- **Structure**: pull-quote — oversized serif opening mark (typographic `“`, `font-display`, accent or secondary), serif quote body (`font-display`, `--text-ink` on light surfaces — verified AA §8), attribution block (name in sans semibold + role in mono/secondary).
+- **Accessibility**: wrapped in `<blockquote>`; attribution in `<footer>` or `<cite>`; quote is real content (not aria-hidden).
+- **Surface**: sits directly on the section surface with a `SectionRule` above — no enclosing card box required (breaks uniform-card grammar).
+- **Layout**: `max-w-2xl`+ measure for readability; centered variant allowed for single quotes.
+
+### AnnotatedList (V3, 2026-08-15)
+- **Structure**: ruled editorial list — rows separated by `--border-default` hairlines (`divide-y divide-border-default`), each row: serif item title + optional mono annotation (right-aligned `--text-secondary`) + optional body.
+- **Usage**: trust commitments (Trust), workflow rail (How-it-works), category ledger (Marketplace), intelligence item rows.
+- **Accessibility**: real list semantics (`<ol>`/`<ul>` + `<li>`); decorative numerals `aria-hidden`; each row's text is content.
+- **Layout**: full-width within its column; rows `py-4`-class rhythm; hover state (warm border + subtle lift, §6) only when the row is interactive.
+
 ## 6. Motion & Interaction
 
 ### Timing
@@ -239,11 +297,17 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 - **Double-bezel** (soft-skill): major cards and the hero visual use an outer shell (hairline border, `p-1.5`, `rounded-[2rem]`) wrapping an inner core (own background, inset highlight `inset 0 1px 1px rgba(255,255,255,0.15)`, concentric radius).
 - **Navy depth layers** `#0D124F` / `#111869` give the hero visual and section accents their dimensional weight — never black.
 
+### Paper Texture (V-overhaul, 2026-08-15)
+
+- **Method:** inline SVG noise data-URI as a static background on section surfaces (e.g. `background-image: url("data:image/svg+xml,...")` with a tiny feTurbulence fractalNoise).
+- **Rules:** static only — never animated, never scroll-coupled, never GPU-animated (texture is a background, not a composited layer). Never applied to text-bearing containers where it could lower contrast below AA (grain opacity ≤ ~3–4%). Applied on alternating surfaces (primary/soft/cool) for the printed-paper feel.
+- **Tokens:** no texture token needed — the data-URI lives in the `.grain` utility (src/index.css) and is applied via class.
+
 ## 8. Accessibility Constraints & Accepted Debt
 
 ### Constraints
 
-- WCAG target: **2.2 AA** — contrast floor 4.5:1 body / 3:1 large text. Verified pairs: navy `#0A0E3D` on white 18.4:1; secondary `#5B616E` on white 6.2:1; accent `#1E29B6` on white 10.3:1; focus ring `#3A46DF` on white 6.7:1.
+- WCAG target: **2.2 AA** — contrast floor 4.5:1 body / 3:1 large text. Verified pairs on warm surfaces (re-verified 2026-08-15 for V-overhaul palette; all text pairs ≥ AA on every surface — primary `#FCFAF6`, soft `#F8F5EE`, cool `#F2EFE8`, tint `#F0EFF7`): navy `#0A0E3D` 16.0–17.6:1; secondary `#5B616E` 5.4–6.0:1; ink `#26211C` 13.9–15.3:1; accent `#1E29B6` 8.9–9.8:1; focus ring `#3A46DF` 5.9–6.5:1; white-on-accent (CTA label) 10.25:1; danger `#B3261E` 5.7–6.3:1. Warm hairline `rgba(38,33,28,0.18)` effective 1.434:1 on cream — decorative separator only (tonal shift is the primary separator, §7), no regression vs prior 1.333:1.
 - Visible focus on every interactive element via `--accent-focus-ring`.
 - Full keyboard reachability; semantic landmarks (`<nav>`, `<main>`, `<header>`, `<footer>`); labeled form inputs; `prefers-reduced-motion` respected (Section 6).
 - Static screenshots cannot prove interaction/keyboard/screen-reader claims — those must be exercised in `/visual-qa` (designpowers lane-c).

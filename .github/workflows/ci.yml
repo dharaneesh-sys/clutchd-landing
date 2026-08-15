@@ -78,4 +78,17 @@ jobs:
           echo "== security headers file in dist =="
           test -f dist/_headers || { echo "FAIL: dist/_headers"; exit 1; }
           echo "ok: dist/_headers"
+          # V2: SPA fallback — Netlify serves deep links via public/_redirects
+          # (/* /index.html 200). Assert the file shipped + the deep link
+          # resolves to the app shell (vite preview appType: 'spa' provides
+          # history fallback locally; the real Netlify deep-link check happens
+          # at V7 live verification).
+          echo "== _redirects present in dist =="
+          test -f dist/_redirects || { echo "FAIL: dist/_redirects"; exit 1; }
+          echo "ok: dist/_redirects"
+          echo "== deep link /marketplace =="
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:4173/marketplace)
+          test "$CODE" = "200" || { echo "FAIL: /marketplace -> $CODE"; exit 1; }
+          curl -sf http://localhost:4173/marketplace | grep -q '<div id="root">' || { echo "FAIL: deep link did not serve app shell"; exit 1; }
+          echo "ok: /marketplace 200 via app shell"
           kill $SERVER_PID 2>/dev/null || true

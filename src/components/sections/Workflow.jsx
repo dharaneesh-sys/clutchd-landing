@@ -1,6 +1,6 @@
 import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
-import Badge from '../ui/Badge.jsx'
+import SectionNumeral from '../ui/SectionNumeral.jsx'
 import useReveal from '../../hooks/useReveal.js'
 
 // 6-step job lifecycle with the REAL backend status vocabulary
@@ -18,21 +18,19 @@ const STEPS = [
   { n: 3, title: 'Accept', body: 'A mechanic takes the job.', label: 'Accepted' },
   { n: 4, title: 'En route', body: 'Track arrival with live ETA.', label: 'En route' },
   { n: 5, title: 'In progress', body: 'Approve the estimate as the work happens.', label: 'In progress' },
-  { n: 6, title: 'Done', body: 'Pay securely, review, and the service joins your vehicle’s digital history.', label: 'Completed' },
+  { n: 6, title: 'Done', body: 'Pay securely, review, and the service joins your vehicle\'s digital history.', label: 'Completed' },
 ]
 
 function Step({ step }) {
   return (
     <div className="flex flex-col items-center gap-3 text-center">
-      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border-default bg-surface-tint font-mono text-sm font-semibold text-accent-primary">
-        {step.n}
-      </span>
-      <h3 className="font-sans text-lg font-semibold text-text-primary">{step.title}</h3>
+      <SectionNumeral n={step.n} className="font-display text-lg italic text-text-primary" />
+      <h3 className="font-display text-lg font-semibold text-text-primary">{step.title}</h3>
       <p className="font-sans text-sm leading-relaxed text-text-secondary">{step.body}</p>
       {step.label && (
-        <Badge variant="accent" className="px-2.5 py-0.5 text-[9px]">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
           {step.label}
-        </Badge>
+        </span>
       )}
     </div>
   )
@@ -62,28 +60,28 @@ export default function Workflow() {
               : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
           ].join(' ')}
         >
-          {/* Desktop: horizontal rail */}
+          {/* Desktop: horizontal rail with finer hairline */}
           <div className="relative hidden md:block">
-            <div aria-hidden="true" className="absolute left-0 right-0 top-5 h-0.5 bg-border-default" />
+            <div aria-hidden="true" className="absolute left-0 right-0 top-4 h-px bg-border-default" />
             <div className="relative grid grid-cols-6 gap-4">
               {STEPS.map((s) => (
                 <Step key={s.n} step={s} />
               ))}
             </div>
           </div>
-          {/* Mobile: vertical rail */}
-          <ol className="relative ml-5 flex flex-col gap-8 border-l-2 border-border-default md:hidden">
+          {/* Mobile: vertical rail with finer border */}
+          <ol className="relative ml-5 flex flex-col gap-8 border-l border-border-default md:hidden">
             {STEPS.map((s) => (
               <li key={s.n} className="relative pl-6">
-                <span className="absolute -left-[25px] top-0 flex h-10 w-10 items-center justify-center rounded-full border border-border-default bg-surface-tint font-mono text-sm font-semibold text-accent-primary">
-                  {s.n}
+                <span className="absolute -left-[25px] top-0 flex h-10 w-10 items-center justify-center rounded-full border border-border-default bg-surface-primary">
+                  <SectionNumeral n={s.n} className="font-display text-sm italic text-text-primary" />
                 </span>
-                <h3 className="font-sans text-lg font-semibold text-text-primary">{s.title}</h3>
+                <h3 className="font-display text-lg font-semibold text-text-primary">{s.title}</h3>
                 <p className="mt-1 font-sans text-sm leading-relaxed text-text-secondary">{s.body}</p>
                 {s.label && (
-                  <Badge variant="accent" className="mt-2 px-2.5 py-0.5 text-[9px]">
+                  <span className="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
                     {s.label}
-                  </Badge>
+                  </span>
                 )}
               </li>
             ))}

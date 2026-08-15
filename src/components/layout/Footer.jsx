@@ -1,14 +1,13 @@
+import { Link } from 'react-router-dom'
 import Logo from '../brand/Logo.jsx'
 
 const NAV = [
-  { label: 'How it works', href: '#workflow' },
-  { label: "Who it's for", href: '#audiences' },
-  { label: 'Ecosystem', href: '#ecosystem' },
-  { label: 'Trust', href: '#trust' },
-  { label: 'Marketplace', href: '#marketplace' },
-  { label: 'Intelligence', href: '#intelligence' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Early access', href: '#early-access' },
+  { label: 'Home', to: '/' },
+  { label: 'How it works', to: '/how-it-works' },
+  { label: 'Marketplace', to: '/marketplace' },
+  { label: 'For providers', to: '/for-providers' },
+  { label: 'FAQ', to: '/faq' },
+  { label: 'Early access', to: '/early-access' },
 ]
 
 export default function Footer() {
@@ -26,13 +25,13 @@ export default function Footer() {
 
           <nav aria-label="Footer" className="flex flex-col gap-2">
             {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
+              <Link
+                key={item.to}
+                to={item.to}
                 className="font-sans text-sm text-text-secondary transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

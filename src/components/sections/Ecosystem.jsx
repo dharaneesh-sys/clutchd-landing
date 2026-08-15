@@ -67,13 +67,32 @@ export default function Ecosystem() {
                   {i < NODES.length - 1 && (
                     <span
                       aria-hidden="true"
-                      className={[
-                        'select-none text-lg font-bold',
-                        hovered === i || hovered === i + 1 ? 'text-accent-primary' : 'text-border-default',
-                      ].join(' ')}
+                      className="flex items-center select-none"
                     >
-                      <span className="hidden md:inline">→</span>
-                      <span className="md:hidden">↓</span>
+                      <span className="hidden md:block">
+                        <svg role="img" aria-hidden="true" width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <title>Connects to next step</title>
+                          <path
+                            d="M0 6H20M20 6L16 2M20 6L16 10"
+                            stroke={hovered === i || hovered === i + 1 ? "var(--accent-primary)" : "var(--border-default)"}
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      <span className="md:hidden">
+                        <svg role="img" aria-hidden="true" width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <title>Connects to next step</title>
+                          <path
+                            d="M6 0V20M6 20L2 16M6 20L10 16"
+                            stroke={hovered === i || hovered === i + 1 ? "var(--accent-primary)" : "var(--border-default)"}
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
                     </span>
                   )}
                 </Fragment>

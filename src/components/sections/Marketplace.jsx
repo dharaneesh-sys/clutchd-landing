@@ -1,6 +1,8 @@
-import { Wrench, Disc, Zap, Route, Filter, Package, SlidersHorizontal, ArrowLeftRight, Star } from 'lucide-react'
+import { Wrench, Disc, Zap, Route, Filter, Package, Star } from 'lucide-react'
 import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
+import SectionNumeral from '../ui/SectionNumeral.jsx'
+import SectionRule from '../ui/SectionRule.jsx'
 import Badge from '../ui/Badge.jsx'
 import useReveal from '../../hooks/useReveal.js'
 
@@ -39,55 +41,93 @@ export default function Marketplace() {
               : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
           ].join(' ')}
         >
-          {/* Category chips (real labels) */}
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map(({ icon: Icon, label }) => (
-              <span
-                key={label}
-                className="inline-flex items-center gap-2 rounded-full border border-border-default bg-surface-soft px-4 py-2 font-sans text-sm text-text-primary"
-              >
-                <Icon className="h-4 w-4 text-accent-primary" />
-                {label}
-              </span>
-            ))}
+          {/* Ruled catalog strip — hairline ledger of categories (real labels) */}
+          <div className="border-y border-border-default">
+            <div className="hidden divide-x divide-border-default lg:grid lg:grid-cols-6">
+              {CATEGORIES.map(({ icon: Icon, label }) => (
+                <div key={label} className="flex flex-col items-start gap-2.5 px-5 py-6">
+                  <Icon aria-hidden="true" className="h-5 w-5 text-accent-primary" />
+                  <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-primary">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="divide-y divide-border-default lg:hidden">
+              {CATEGORIES.map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-3 px-1 py-3.5">
+                  <Icon aria-hidden="true" className="h-4 w-4 text-accent-primary" />
+                  <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-primary">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Capability callouts */}
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div className="flex flex-col gap-3 rounded-2xl border border-border-default bg-surface-soft p-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface-tint text-accent-primary">
-                <SlidersHorizontal className="h-5 w-5" />
-              </span>
-              <h3 className="font-sans text-lg font-semibold text-text-primary">Fitment check</h3>
+          {/* Capability callouts — 2-up editorial pair */}
+          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              <SectionRule variant="short" />
+              <div className="mt-2 flex items-baseline gap-3">
+                <SectionNumeral n={1} />
+                <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
+                  Fitment check
+                </h3>
+              </div>
               <p className="font-sans text-sm leading-relaxed text-text-secondary">
                 Pick your make, model, and year — and only see parts that actually fit your vehicle.
               </p>
             </div>
-            <div className="flex flex-col gap-3 rounded-2xl border border-border-default bg-surface-soft p-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface-tint text-accent-primary">
-                <ArrowLeftRight className="h-5 w-5" />
-              </span>
-              <h3 className="font-sans text-lg font-semibold text-text-primary">Vendor comparison</h3>
+            <div className="flex flex-col gap-3">
+              <SectionRule variant="short" />
+              <div className="mt-2 flex items-baseline gap-3">
+                <SectionNumeral n={2} />
+                <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
+                  Vendor comparison
+                </h3>
+              </div>
               <p className="font-sans text-sm leading-relaxed text-text-secondary">
                 Compare prices across verified suppliers before you order — no more phoning around.
               </p>
             </div>
           </div>
 
-          {/* Product card mock — labeled Preview, illustrative */}
-          <div className="mt-8 flex max-w-sm flex-col gap-3 rounded-2xl border border-border-default bg-surface-soft p-6">
-            <div className="flex items-center justify-between">
+          {/* Catalog card artifact — labeled Preview, illustrative */}
+          <div className="mt-10 max-w-sm border border-border-default bg-surface-primary">
+            <div className="flex items-center justify-between border-b border-border-default px-5 py-3">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-secondary">
+                Part № CD-1042
+              </span>
               <Badge variant="accent">Preview</Badge>
-              <span className="inline-flex items-center gap-1 font-sans text-xs text-text-secondary">
-                <Star className="h-3.5 w-3.5 fill-accent-primary text-accent-primary" />
+            </div>
+            <div className="flex flex-col gap-1.5 px-5 py-5">
+              <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
+                Brake pads — front
+              </h3>
+              <p className="font-mono text-sm text-text-secondary">from ₹1,200</p>
+            </div>
+            <div className="flex items-center justify-between border-t border-border-default px-5 py-3">
+              <span className="inline-flex items-center gap-1.5 border border-accent-primary px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-accent-primary">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--accent-primary)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-3 w-3"
+                >
+                  <path d="M4 12.5l5 5L20 6.5" />
+                </svg>
+                Fits your vehicle
+              </span>
+              <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                <Star aria-hidden="true" className="h-3 w-3 fill-accent-primary text-accent-primary" />
                 4.8
               </span>
             </div>
-            <h3 className="font-sans text-lg font-semibold text-text-primary">Brake pads — front</h3>
-            <p className="font-sans text-sm text-text-secondary">from ₹1,200</p>
-            <span className="self-start rounded-full bg-surface-tint px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-accent-primary">
-              Fits your vehicle
-            </span>
           </div>
         </div>
       </Container>

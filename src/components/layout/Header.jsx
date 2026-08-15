@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import Logo from '../brand/Logo.jsx'
 import Button from '../ui/Button.jsx'
 import MobileMenu from './MobileMenu.jsx'
 
 const NAV = [
-  { label: 'How it works', href: '#workflow' },
-  { label: "Who it's for", href: '#audiences' },
-  { label: 'Ecosystem', href: '#ecosystem' },
-  { label: 'Trust', href: '#trust' },
-  { label: 'Marketplace', href: '#marketplace' },
-  { label: 'Intelligence', href: '#intelligence' },
+  { label: 'How it works', to: '/how-it-works' },
+  { label: 'Marketplace', to: '/marketplace' },
+  { label: 'For providers', to: '/for-providers' },
+  { label: 'FAQ', to: '/faq' },
 ]
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const triggerRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -35,24 +35,29 @@ export default function Header() {
       ].join(' ')}
     >
       <div className="mx-auto flex w-full max-w-[80rem] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <a href="#top" className="shrink-0" aria-label="ClutchD home">
+        <Link to="/" className="shrink-0" aria-label="ClutchD home">
           <Logo />
-        </a>
+        </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
           {NAV.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="font-sans text-sm font-medium text-text-secondary transition-colors duration-200 hover:text-accent-primary"
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                [
+                  'font-sans text-sm font-medium transition-colors duration-200 hover:text-accent-primary',
+                  isActive ? 'text-accent-primary' : 'text-text-secondary',
+                ].join(' ')
+              }
             >
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
         <div className="hidden lg:block">
-          <Button variant="primary" size="sm" onClick={() => (window.location.hash = '#early-access')}>
+          <Button variant="primary" size="sm" onClick={() => navigate('/early-access')}>
             Get early access
           </Button>
         </div>

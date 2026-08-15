@@ -13,7 +13,7 @@ const ITEMS = [
   {
     icon: Gauge,
     title: 'Vehicle health insights',
-    body: 'A live view of your vehicle’s systems, from battery to brakes.',
+    body: 'A live view of your vehicle\'s systems, from battery to brakes.',
   },
   {
     icon: AlertTriangle,
@@ -27,29 +27,42 @@ const ITEMS = [
   },
 ]
 
+// Instrument-style health card — hairline-ruled rows, gauge bars, mono readings.
 // Labeled illustrative Preview card — mock data is not a product claim.
 function HealthCard() {
   return (
-    <div className="flex max-w-sm flex-col gap-4 rounded-2xl border border-border-default bg-surface-primary p-6">
-      <div className="flex items-center justify-between">
-        <h3 className="font-sans text-lg font-semibold text-text-primary">Vehicle health</h3>
+    <div className="flex max-w-sm flex-col border border-border-default bg-surface-primary">
+      <div className="flex items-center justify-between border-b border-border-default px-5 py-3">
+        <h3 className="font-display text-lg font-semibold text-text-primary">Vehicle health</h3>
         <Badge variant="accent">Preview</Badge>
       </div>
-      <dl className="flex flex-col gap-3 font-sans text-sm">
-        <div className="flex items-center justify-between rounded-xl bg-surface-tint px-4 py-3">
-          <dt className="text-text-secondary">Battery</dt>
-          <dd className="inline-flex items-center gap-2 font-medium text-text-primary">
-            <Check className="h-4 w-4 text-accent-primary" />
-            78% · healthy
+      <dl className="flex flex-col">
+        <div className="flex items-center justify-between border-b border-border-default px-5 py-4">
+          <dt className="font-sans text-sm text-text-secondary">Battery</dt>
+          <dd className="flex items-center gap-3">
+            <span className="relative h-1.5 w-16 overflow-hidden rounded-full bg-surface-cool">
+              <span className="absolute inset-y-0 left-0 rounded-full bg-accent-primary" style={{ width: '78%' }} />
+            </span>
+            <span className="font-mono text-xs text-text-primary">78%</span>
+            <span className="inline-flex items-center gap-1 text-accent-primary">
+              <Check aria-hidden="true" className="h-3 w-3" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.15em]">healthy</span>
+            </span>
           </dd>
         </div>
-        <div className="flex items-center justify-between rounded-xl bg-surface-soft px-4 py-3">
-          <dt className="text-text-secondary">Brake wear</dt>
-          <dd className="font-medium text-text-primary">due soon</dd>
+        <div className="flex items-center justify-between border-b border-border-default px-5 py-4">
+          <dt className="font-sans text-sm text-text-secondary">Brake wear</dt>
+          <dd className="flex items-center gap-3">
+            <span className="relative h-1.5 w-16 overflow-hidden rounded-full bg-surface-cool">
+              <span className="absolute inset-y-0 left-0 rounded-full bg-accent-active" style={{ width: '62%' }} />
+            </span>
+            <span className="font-mono text-xs text-text-primary">62%</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">due soon</span>
+          </dd>
         </div>
-        <div className="flex items-center justify-between rounded-xl bg-surface-soft px-4 py-3">
-          <dt className="text-text-secondary">Next service</dt>
-          <dd className="font-medium text-text-primary">in 2 months</dd>
+        <div className="flex items-center justify-between px-5 py-4">
+          <dt className="font-sans text-sm text-text-secondary">Next service</dt>
+          <dd className="font-mono text-xs text-text-primary">in 2 months</dd>
         </div>
       </dl>
     </div>
@@ -62,7 +75,7 @@ export default function Intelligence() {
     <section
       id="intelligence"
       aria-labelledby="intelligence-heading"
-      className="scroll-mt-20 bg-surface-soft py-20 lg:py-28"
+      className="grain scroll-mt-20 bg-surface-soft py-20 lg:py-28"
     >
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
@@ -81,14 +94,13 @@ export default function Intelligence() {
               lede="From reactive breakdowns to proactive care — ClutchD turns vehicle data into early warnings and planned service."
               id="intelligence-heading"
             />
-            <ul className="flex flex-col gap-4">
+            {/* Ruled list — divide-y hairlines, serif titles, no tint squares */}
+            <ul className="divide-y divide-border-default border-t border-border-default">
               {ITEMS.map(({ icon: Icon, title, body }) => (
-                <li key={title} className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-surface-tint text-accent-primary">
-                    <Icon className="h-4 w-4" />
-                  </span>
+                <li key={title} className="flex items-start gap-3 py-4">
+                  <Icon aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent-primary" />
                   <div>
-                    <h3 className="font-sans font-semibold text-text-primary">{title}</h3>
+                    <h3 className="font-display font-semibold text-text-primary">{title}</h3>
                     <p className="mt-0.5 font-sans text-sm leading-relaxed text-text-secondary">{body}</p>
                   </div>
                 </li>

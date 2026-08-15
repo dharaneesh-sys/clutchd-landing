@@ -7,14 +7,15 @@
    value used in components traces to a token.
    ============================================================ */
 :root {
-  /* Color — DESIGN.md §2 */
-  --surface-primary: #ffffff;
-  --surface-soft: #f7f7f7;
-  --surface-cool: #eef0f3;
-  --surface-tint: #f0f1f9;
+  /* Color — DESIGN.md §2 (warm palette, V-overhaul 2026-08-15) */
+  --surface-primary: #fcfaf6;
+  --surface-soft: #f8f5ee;
+  --surface-cool: #f2efe8;
+  --surface-tint: #f0eff7;
   --text-primary: #0a0e3d;
   --text-secondary: #5b616e;
-  --border-default: rgba(91, 97, 110, 0.2);
+  --text-ink: #26211c;
+  --border-default: rgba(38, 33, 28, 0.18);
   --accent-primary: #1e29b6;
   --accent-hover: #192295;
   --accent-active: #131b76;
@@ -27,6 +28,7 @@
   --depth-navy-2: #111869;
 
   /* Typography — DESIGN.md §3 (self-hosted via @fontsource-variable) */
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 }
@@ -40,6 +42,7 @@
   --color-surface-tint: var(--surface-tint);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-ink: var(--text-ink);
   --color-border-default: var(--border-default);
   --color-accent-primary: var(--accent-primary);
   --color-accent-hover: var(--accent-hover);
@@ -49,8 +52,36 @@
   --color-depth-navy-1: var(--depth-navy-1);
   --color-depth-navy-2: var(--depth-navy-2);
 
+  --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+}
+
+/* Paper grain (DESIGN.md §7) — static inline SVG noise data-URI, applied to
+   section surfaces. Never animated, never scroll-coupled, never on
+   text-bearing containers where it could drop contrast below AA. */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Page transitions (DESIGN.md §6 Emphasis — "Page transition") — V6.
+   Enter-only fade/slide on route change; transform/opacity only (GPU-
+   composited). Reduced motion: no animation at all. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter {
+    animation: page-enter 400ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
 }
 
 /* Base layer */
