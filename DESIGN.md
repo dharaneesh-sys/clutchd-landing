@@ -214,7 +214,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 ### RouteFallback (Suspense loading state) — V2, 2026-08-15
 - **Structure**: route-level skeleton while a lazy page chunk loads — editorial, never a blank flash: mono overline "Loading" + static hairline-ruled placeholder block.
 - **Motion**: static (no pulse/spinner) — the swap to content is instant; reduced-motion unaffected.
-- **Layout**: fills the main region; same height rhythm as a page top.
+- **Layout**: `min-h-[calc(100dvh-4.5rem)]` — fills the viewport below the sticky header so the shell's footer stays below the fold while a lazy chunk loads (V7: without this, the fallback→page swap shifted the footer down, CLS 0.53 on interior routes; Home was 0 only by timing). CLS 0 on every route.
 
 ### 404 Page (catch-all route) — V2, 2026-08-15
 - **Structure**: mono overline "Error 404" + serif display heading (editorial: "This page took a wrong turn.") + body copy + secondary Button → `/`.
