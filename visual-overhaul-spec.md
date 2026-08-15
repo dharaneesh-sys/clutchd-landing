@@ -156,7 +156,7 @@ Six routed pages + the two existing static legal pages. Section distribution kee
 | Mobile perf ~87–93 (LH throttled) vs ≥99 single-page baseline | Client-rendered SPA + react-router JS eval on 4× CPU throttle; desktop = 100/100/100/100 (Home + interior), CLS 0 both | Revisit with SSR/prerender when conversion work starts |
 | React Router + 6 pages adds JS | Route-level lazy() keeps per-route cost low | Total-JS monitor vs 240 kB baseline |
 | `vite preview` lacks SPA fallback | Local smoke asserts `_redirects` presence; real deep-link verified on Netlify | Live curl + browser-use check at V7 |
-| GoatCounter route-change tracking uncertain | `count.js` default is hash-polling; pushState may need a ping | Verify at V7; add route-change hook + debt note if needed |
+| GoatCounter route-change tracking — SOLVED (V7) | `count.js` hash-polls by default; pushState nav fired 0 beacons (live-verified). Fixed: `useGoatCounterRouteChange` in App.jsx pings `goatcounter.count({ path })` on pathname change, skip-first-run (count.js counts the initial load) | None |
 | `public/og.png` navy brand card may not match warm identity | Regenerated only if visibly off | rsvg-convert (T7 workflow) at V7 if needed |
 | Editorial asymmetry reduces uniformity | Intentional anti-slop choice | None (by design) |
 

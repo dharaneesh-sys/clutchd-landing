@@ -169,6 +169,11 @@
 - Unblock path: user signs up at https://www.goatcounter.com/signup (free for non-commercial), picks a site code (e.g. clutchd), pastes it back → then: add <script data-goatcounter=".../count" async src="//gc.zgo.at/count.js"></script> to index.html head, replace placeholder hosts in public/_headers, build, deploy, verify beacon fires.
 - Gravity index search returned Simple Analytics as recommendation — DECLINED: D14 locked GoatCounter (free-until-traction, cookie-free, open-source, self-hostable); P2 is GoatCounter-specific (CSP hosts already reference it). Noted as fallback if GoatCounter is later abandoned.
 
+## 2026-08-15 V7 GoatCounter SPA route-change gap found + fixed (live-verified)
+- Live probe (Playwright, real browser against clutchd-193.netlify.app): count.js fires a pageview ONLY on full page loads — SPA pushState navigation fired 0 new beacons (spec §4 predicted this exact gap).
+- Fix: src/App.jsx `useGoatCounterRouteChange(pathname)` — pings `goatcounter.count({ path: location.pathname + location.search })` on every pathname change with a skip-first-run ref (count.js already counts the initial load — would double-count). No-op when window.goatcounter is absent (adblocker).
+- Live re-verified: 1 beacon per nav — initial=1, /marketplace=2, /how-it-works=3, direct /faq=4, HeroStage reload=5. 0 console errors. Design-gate: added §5 PageShell note (V7) documenting the ping.
+
 ## 2026-08-15 V7 perf deep-dive — 4 real regressions found + fixed (probe-driven, not guessing)
 - CLS 0.53 → 0: root cause = the F2-era inline `content-visibility: auto` + `contain-intrinsic-size: auto 600px` block in index.html. The overhaul's editorial sections are TALLER than the 600px estimate → scroll-time layout shift. That pattern is also superseded by route-level splitting (sections mount eagerly in their lazy page chunk). REMOVED the block → CLS 0, perf 0.71 → 0.92.
 - SEO 92 → 100: `/_redirects` SPA fallback (`/* /index.html 200`) made `/robots.txt` serve index.html → Lighthouse "85 errors". Fixed with real public/robots.txt (Allow: /).

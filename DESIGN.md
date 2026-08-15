@@ -208,6 +208,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Structure**: header + main + footer composition shared by every route (skip link first, `id="top"` on the shell wrapper, `<main>` landmark, `<PrivacyNotice/>` last).
 - **Focus management on route change**: scroll-to-top (instant, no animated scroll) + move focus to the page's `<h1>` (target gets `tabindex="-1"`). Satisfies WCAG 2.4.1 bypass + 2.4.3 focus order.
 - **Layout**: every route renders inside the same shell so header/footer persist; interior pages own their `<h1>`.
+- **Analytics (V7)**: GoatCounter pings `count({ path })` on every route change (BrowserRouter pushState never fires count.js's hash-poll) — skip-first-run so the initial load isn't double-counted; no-op when the beacon script is blocked.
 - **Motion**: no motion on route shell itself; route content transitions are §6-gated (V6).
 
 ### RouteFallback (Suspense loading state) — V2, 2026-08-15
