@@ -103,15 +103,26 @@ export function T(key) {
   return resolveMap(getInitialLang())[key]
 }
 
+// Shared language subscribers (Wave XII-1b): every mounted `useT()` consumer
+// registers its setState so a `setLang` call in one component (the header
+// toggle) re-renders every other consumer. Subscription lives in an effect so
+// mount still resolves via `getInitialLang()` (URL param → localStorage).
+const languageListeners = new Set()
+
 /** Hook: active string map + language + setter. `t` is stable per language. */
 export function useT() {
   const [lang, setLangState] = useState(getInitialLang)
   const t = useMemo(() => resolveMap(lang), [lang])
 
+  useEffect(() => {
+    languageListeners.add(setLangState)
+    return () => languageListeners.delete(setLangState)
+  }, [])
+
   const setLang = useCallback((next) => {
     const normalized = normalizeLang(next)
     persistLang(normalized)
-    setLangState(normalized)
+    for (const listener of languageListeners) listener(normalized)
   }, [])
 
   // Keep <html lang> in sync with the active language.

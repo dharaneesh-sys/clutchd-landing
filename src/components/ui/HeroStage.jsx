@@ -24,49 +24,31 @@
 import { Fragment, useState } from 'react'
 import { CheckCircle2, Clock, MapPin, Star, Wrench } from 'lucide-react'
 import Badge from './Badge.jsx'
+import { useT } from '../../lib/i18n.js'
 
 const STEPS = [
-  { key: 'request', title: 'Request' },
-  { key: 'searching', title: 'Searching' },
-  { key: 'accepted', title: 'Accepted' },
-  { key: 'en_route', title: 'En route' },
-  { key: 'in_progress', title: 'In progress' },
-  { key: 'completed', title: 'Completed' },
-]
-
-// Header line above the map — the current step title.
-const HEADERS = [
-  'Service request',
-  'Searching for verified mechanics…',
-  'Mechanic accepted',
-  'Mechanic en route',
-  'Work in progress',
-  'Service completed',
+  { key: 'request', titleKey: 'heroStage.0.step' },
+  { key: 'searching', titleKey: 'heroStage.1.step' },
+  { key: 'accepted', titleKey: 'heroStage.2.step' },
+  { key: 'en_route', titleKey: 'heroStage.3.step' },
+  { key: 'in_progress', titleKey: 'heroStage.4.step' },
+  { key: 'completed', titleKey: 'heroStage.5.step' },
 ]
 
 // Route draw progress per state (0 = origin only, 1 = fully drawn).
 const PROGRESS = [0, 0.15, 0.35, 0.6, 0.85, 1]
 
 // ETA chip content — states 2–4 only (Accepted / En route / In progress).
-const ETA = {
-  2: { label: 'Arriving in', value: '18 min' },
-  3: { label: 'Arriving in', value: '12 min' },
-  4: { label: 'Remaining', value: '6 min' },
+const ETA_KEYS = {
+  2: { labelKey: 'heroStage.eta.2.label', valueKey: 'heroStage.eta.2.value' },
+  3: { labelKey: 'heroStage.eta.3.label', valueKey: 'heroStage.eta.3.value' },
+  4: { labelKey: 'heroStage.eta.4.label', valueKey: 'heroStage.eta.4.value' },
 }
-
-// aria-live announcements — state changes ONLY (manual clicks).
-const ANNOUNCEMENTS = [
-  'Status: Request. Waiting for your service request.',
-  'Status: Searching, searching for verified mechanics.',
-  'Status: Accepted. Rahul K. accepted the job. Arriving in 18 minutes.',
-  'Status: En route. Mechanic arriving in 12 minutes.',
-  'Status: In progress. Brake pad replacement underway. Estimated ₹1,450.',
-  'Status: Completed. Service complete.',
-]
 
 const EASE = 'ease-[cubic-bezier(0.32,0.72,0,1)]'
 
 export default function HeroStage() {
+  const { t } = useT()
   // Manual-only (D14): start at Request; reduced-motion users get the static
   // Completed layout immediately (no interaction needed, no animation).
   const [active, setActive] = useState(() => {
@@ -86,11 +68,12 @@ export default function HeroStage() {
   const handleSelect = (i) => {
     setInteracted(true)
     setActive(i)
-    setAnnouncement(ANNOUNCEMENTS[i])
+    setAnnouncement(t[`heroStage.${i}.announcement`])
   }
 
   const progress = PROGRESS[active]
-  const eta = ETA[active]
+  const etaKey = ETA_KEYS[active]
+  const eta = etaKey ? { label: t[etaKey.labelKey], value: t[etaKey.valueKey] } : null
   const completed = active === STEPS.length - 1
 
   return (
@@ -102,7 +85,7 @@ export default function HeroStage() {
 
       {/* Step rail — one real button per state */}
       <fieldset className="m-0 flex min-w-0 items-center gap-2 border-0 p-0">
-        <legend className="sr-only">Demo status steps</legend>
+        <legend className="sr-only">{t['heroStage.legend']}</legend>
         {STEPS.map((s, i) => (
           <Fragment key={s.key}>
             <button
@@ -111,7 +94,9 @@ export default function HeroStage() {
               aria-pressed={active === i}
               // Visible text is the step number (or check icon) — keep it in
               // the accessible name (label-content-name-mismatch).
-              aria-label={`Show ${s.title} state (step ${i + 1})`}
+              aria-label={t['heroStage.stepAriaLabel']
+                .replace('{title}', t[s.titleKey])
+                .replace('{n}', String(i + 1))}
               className={[
                 'relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
                 'transition-[transform,background-color,color] duration-200',
@@ -160,9 +145,9 @@ export default function HeroStage() {
       {/* Header — current step title + honest-mock Preview badge */}
       <div className="mt-2 flex items-center justify-between">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
-          {HEADERS[active]}
+          {t[`heroStage.${active}.header`]}
         </p>
-        <Badge variant="accent">Preview</Badge>
+        <Badge variant="accent">{t['heroStage.previewBadge']}</Badge>
       </div>
 
       {/* ETA chip (Accepted → In progress) / success chip (Completed) */}
@@ -179,8 +164,8 @@ export default function HeroStage() {
         <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface-tint px-4 py-3">
           <CheckCircle2 className="h-5 w-5 text-accent-primary" />
           <div>
-            <p className="font-sans text-xs text-text-secondary">Service complete</p>
-            <p className="font-sans text-lg font-semibold text-text-primary">All done</p>
+            <p className="font-sans text-xs text-text-secondary">{t['heroStage.serviceComplete']}</p>
+            <p className="font-sans text-lg font-semibold text-text-primary">{t['heroStage.allDone']}</p>
           </div>
         </div>
       )}
@@ -189,15 +174,15 @@ export default function HeroStage() {
       {active >= 2 && (
         <div className="mt-4 flex items-center gap-3 rounded-2xl border border-border-default bg-surface-soft px-4 py-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-primary text-sm font-semibold text-white">
-            RK
+            {t['heroStage.mechanicInitials']}
           </div>
           <div className="flex-1">
-            <p className="font-sans text-sm font-semibold text-text-primary">Rahul K.</p>
+            <p className="font-sans text-sm font-semibold text-text-primary">{t['heroStage.mechanicName']}</p>
             <div className="flex items-center gap-1">
               <Star className="h-3.5 w-3.5 fill-accent-primary text-accent-primary" />
-              <span className="font-sans text-xs text-text-secondary">4.9 · Verified</span>
+              <span className="font-sans text-xs text-text-secondary">{t['heroStage.mechanicRating']}</span>
               <Badge variant="accent" className="ml-1 px-2 py-0.5 text-[9px]">
-                Verified
+                {t['heroStage.verifiedBadge']}
               </Badge>
             </div>
           </div>
@@ -251,13 +236,13 @@ export default function HeroStage() {
           <div className="flex items-center gap-2">
             <Wrench className="h-4 w-4 text-text-secondary" />
             <div>
-              <p className="font-sans text-sm text-text-primary">Brake pad replacement</p>
+              <p className="font-sans text-sm text-text-primary">{t['heroStage.jobTitle']}</p>
               <Badge variant="accent" className="mt-1 px-2 py-0.5 text-[9px]">
-                Preview
+                {t['heroStage.previewBadge']}
               </Badge>
             </div>
           </div>
-          <span className="font-mono text-sm font-semibold text-text-primary">Est. ₹1,450</span>
+          <span className="font-mono text-sm font-semibold text-text-primary">{t['heroStage.estimate']}</span>
         </div>
       )}
     </div>

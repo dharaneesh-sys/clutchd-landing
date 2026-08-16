@@ -3,16 +3,19 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import Logo from '../brand/Logo.jsx'
 import Button from '../ui/Button.jsx'
+import LanguageToggle from '../ui/LanguageToggle.jsx'
 import MobileMenu from './MobileMenu.jsx'
+import { useT } from '../../lib/i18n.js'
 
 const NAV = [
-  { label: 'How it works', to: '/how-it-works' },
-  { label: 'Marketplace', to: '/marketplace' },
-  { label: 'For providers', to: '/for-providers' },
-  { label: 'FAQ', to: '/faq' },
+  { key: 'nav.howItWorks', to: '/how-it-works' },
+  { key: 'nav.marketplace', to: '/marketplace' },
+  { key: 'nav.forProviders', to: '/for-providers' },
+  { key: 'nav.faq', to: '/faq' },
 ]
 
 export default function Header() {
+  const { t } = useT()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const triggerRef = useRef(null)
@@ -54,11 +57,11 @@ export default function Header() {
         ].join(' ')}
       >
         <div className="mx-auto flex w-full max-w-[80rem] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <Link to="/" className="shrink-0" aria-label="ClutchD home">
+          <Link to="/" className="shrink-0" aria-label={t['nav.logoAriaLabel']}>
             <Logo />
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+          <nav aria-label={t['nav.primaryAriaLabel']} className="hidden items-center gap-8 lg:flex">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
@@ -70,14 +73,15 @@ export default function Header() {
                   ].join(' ')
                 }
               >
-                {item.label}
+                {t[item.key]}
               </NavLink>
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-3 lg:flex">
+            <LanguageToggle />
             <Button variant="primary" size="sm" onClick={() => navigate('/early-access')}>
-              Get early access
+              {t['nav.cta']}
             </Button>
           </div>
 
@@ -87,7 +91,7 @@ export default function Header() {
             className="inline-flex h-11 w-11 items-center justify-center rounded-full text-text-primary transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-primary lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? t['nav.closeMenuAriaLabel'] : t['nav.openMenuAriaLabel']}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

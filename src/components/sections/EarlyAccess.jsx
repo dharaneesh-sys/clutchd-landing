@@ -2,8 +2,10 @@ import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import EarlyAccessForm from '../ui/EarlyAccessForm.jsx'
 import useReveal from '../../hooks/useReveal.js'
+import { useT } from '../../lib/i18n.js'
 
 export default function EarlyAccess() {
+  const { t } = useT()
   const [ref, visible] = useReveal()
 
   return (
@@ -24,9 +26,9 @@ export default function EarlyAccess() {
             ].join(' ')}
           >
             <SectionHeading
-              eyebrow="EARLY ACCESS"
-              title="ClutchD is rolling out in Coimbatore"
-              lede="Be among the first to try one connected ecosystem for automotive care."
+              eyebrow={t['earlyAccess.eyebrow']}
+              title={t['earlyAccess.title']}
+              lede={t['earlyAccess.lede']}
               id="early-access-heading"
             />
 

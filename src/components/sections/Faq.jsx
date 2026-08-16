@@ -3,33 +3,9 @@ import { ChevronDown } from 'lucide-react'
 import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import useReveal from '../../hooks/useReveal.js'
+import { useT } from '../../lib/i18n.js'
 
-const FAQ_ITEMS = [
-  {
-    q: 'How does ClutchD matching work?',
-    a: 'ClutchD finds verified nearby providers for your request, and you can track the match in real time.',
-  },
-  {
-    q: 'How do estimates and pricing work?',
-    a: 'You see the price before work starts and approve the estimate before the wrench lifts.',
-  },
-  {
-    q: 'How are providers verified?',
-    a: 'Every mechanic and garage passes identity and skill verification (KYC) before joining the network.',
-  },
-  {
-    q: 'Where is ClutchD available?',
-    a: 'Currently rolling out in Coimbatore, with more cities planned.',
-  },
-  {
-    q: 'What payment methods are supported?',
-    a: 'Pay securely through the platform with Stripe and Razorpay.',
-  },
-  {
-    q: 'What does "Preview" mean?',
-    a: 'Some screens and figures on this page are illustrative previews of the product; real numbers update as ClutchD rolls out.',
-  },
-]
+const FAQ_KEYS = ['faq.0', 'faq.1', 'faq.2', 'faq.3', 'faq.4', 'faq.5']
 
 // Panel body — conditionally rendered so no layout property is ever animated
 // (DESIGN.md §6: transform/opacity/filter only). Fades + slides in on mount
@@ -62,6 +38,7 @@ function FaqPanel({ open, buttonId, panelId, children }) {
 // Single-open accordion (DESIGN.md §5 FAQ Accordion). Real <button> disclosure
 // headers; chevron rotates on transform only.
 export default function Faq() {
+  const { t } = useT()
   const [ref, visible] = useReveal()
   const [openIndex, setOpenIndex] = useState(null)
 
@@ -84,19 +61,19 @@ export default function Faq() {
           ].join(' ')}
         >
           <SectionHeading
-            eyebrow="FAQ"
-            title="Questions, answered"
-            lede="Everything you need to know about how ClutchD works before you book."
+            eyebrow={t['faq.eyebrow']}
+            title={t['faq.title']}
+            lede={t['faq.lede']}
             id="faq-heading"
           />
 
           <div className="divide-y divide-border-default rounded-2xl border border-border-default">
-            {FAQ_ITEMS.map((item, index) => {
+            {FAQ_KEYS.map((base, index) => {
               const open = openIndex === index
               const buttonId = `faq-button-${index}`
               const panelId = `faq-panel-${index}`
               return (
-                <div key={item.q}>
+                <div key={base}>
                   <h3>
                     <button
                       id={buttonId}
@@ -106,7 +83,7 @@ export default function Faq() {
                       onClick={() => toggle(index)}
                       className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-200 hover:bg-surface-cool"
                     >
-                      <span className="font-sans font-semibold text-text-primary">{item.q}</span>
+                      <span className="font-sans font-semibold text-text-primary">{t[`${base}.q`]}</span>
                       <ChevronDown
                         aria-hidden="true"
                         className={[
@@ -117,7 +94,7 @@ export default function Faq() {
                     </button>
                   </h3>
                   <FaqPanel open={open} buttonId={buttonId} panelId={panelId}>
-                    {item.a}
+                    {t[`${base}.a`]}
                   </FaqPanel>
                 </div>
               )

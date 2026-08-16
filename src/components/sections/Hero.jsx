@@ -4,6 +4,7 @@ import Button from '../ui/Button.jsx'
 import Container from '../ui/Container.jsx'
 import EarlyAccessForm from '../ui/EarlyAccessForm.jsx'
 import HeroStage from '../ui/HeroStage.jsx'
+import { useT } from '../../lib/i18n.js'
 
 // HeroStage is EAGER (V7 perf): the stage card is the page's LCP element —
 // it only painted after its lazy chunk fetched + mounted behind the Suspense
@@ -12,6 +13,7 @@ import HeroStage from '../ui/HeroStage.jsx'
 // at startup; route-level code-splitting is unchanged. No fallback/swap.
 
 export default function Hero() {
+  const { t } = useT()
   const navigate = useNavigate()
 
   return (
@@ -25,25 +27,24 @@ export default function Hero() {
             V7 perf: a useReveal opacity-0 start pushed LCP to FCP + reveal
             delay ≈ 2.5s. Above-the-fold content is never reveal-hidden.) */}
         <div className="flex flex-col items-start gap-6">
-          <Badge variant="live">Now live in Coimbatore</Badge>
+          <Badge variant="live">{t['hero.liveBadge']}</Badge>
 
           <h1
             id="hero-heading"
             className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-text-primary sm:text-5xl lg:text-6xl"
           >
-            One connected ecosystem for automotive care.
+            {t['hero.headline']}
           </h1>
 
           <p className="max-w-xl font-sans text-lg leading-relaxed text-text-secondary">
-            Find verified mechanics, request roadside help, source the right parts, track work
-            live, and keep your complete service history.
+            {t['hero.subtext']}
           </p>
 
           <EarlyAccessForm variant="hero" />
 
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="secondary" size="lg" onClick={() => navigate('/how-it-works')}>
-              How it works
+              {t['hero.cta']}
             </Button>
           </div>
 

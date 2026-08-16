@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer.jsx'
 import PrivacyNotice from './components/ui/PrivacyNotice.jsx'
 import RouteFallback from './components/ui/RouteFallback.jsx'
 import useGoatCounterRouteChange from './hooks/useGoatCounterRouteChange.js'
+import { useT } from './lib/i18n.js'
 
 // Route-level code-splitting (V2): each page is its own chunk, loaded on
 // first visit. Supersedes the single-page useNearViewport/DeferredSection
@@ -73,11 +74,12 @@ export function RouteFocus() {
 }
 
 export default function App() {
+  const { t } = useT()
   return (
     <BrowserRouter>
       <div id="top" className="min-h-[100dvh] bg-surface-primary text-text-primary">
         <a href="#main" className="skip-link">
-          Skip to content
+          {t['app.skipToContent']}
         </a>
         <Header />
         <main id="main">

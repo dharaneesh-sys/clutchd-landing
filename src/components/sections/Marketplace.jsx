@@ -5,16 +5,17 @@ import SectionNumeral from '../ui/SectionNumeral.jsx'
 import SectionRule from '../ui/SectionRule.jsx'
 import Badge from '../ui/Badge.jsx'
 import useReveal from '../../hooks/useReveal.js'
+import { useT } from '../../lib/i18n.js'
 
 // REAL category labels from ClutchD-App/src/lib/constants.js PRODUCT_CATEGORIES
 // (verified 2026-08-11) — the illustrative brief list is superseded.
-const CATEGORIES = [
-  { icon: Wrench, label: 'Engine Parts' },
-  { icon: Disc, label: 'Brake Parts' },
-  { icon: Zap, label: 'Electrical Components' },
-  { icon: Route, label: 'Suspension Parts' },
-  { icon: Filter, label: 'Filters' },
-  { icon: Package, label: 'Accessories' },
+const CATEGORY_KEYS = [
+  { icon: Wrench, key: 'marketplace.0.category' },
+  { icon: Disc, key: 'marketplace.1.category' },
+  { icon: Zap, key: 'marketplace.2.category' },
+  { icon: Route, key: 'marketplace.3.category' },
+  { icon: Filter, key: 'marketplace.4.category' },
+  { icon: Package, key: 'marketplace.5.category' },
 ]
 
 // V8 staggered reveal (DESIGN.md §6) — catalog strip, callout pair, and
@@ -22,6 +23,7 @@ const CATEGORIES = [
 const STAGGER = 80
 
 export default function Marketplace() {
+  const { t } = useT()
   const [ref, visible] = useReveal()
   return (
     <section
@@ -31,9 +33,9 @@ export default function Marketplace() {
     >
       <Container>
         <SectionHeading
-          eyebrow="MARKETPLACE"
-          title="Service and parts, on the same system"
-          lede="Diagnose → find the required parts → check availability → order → get it serviced → keep the record. One workflow, no hopping between apps."
+          eyebrow={t['marketplace.eyebrow']}
+          title={t['marketplace.title']}
+          lede={t['marketplace.lede']}
           id="marketplace-heading"
         />
         <div ref={ref} className="mt-12">
@@ -47,21 +49,21 @@ export default function Marketplace() {
             ].join(' ')}
           >
             <div className="hidden divide-x divide-border-default lg:grid lg:grid-cols-6">
-              {CATEGORIES.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex flex-col items-start gap-2.5 px-5 py-6">
+              {CATEGORY_KEYS.map(({ icon: Icon, key }) => (
+                <div key={key} className="flex flex-col items-start gap-2.5 px-5 py-6">
                   <Icon aria-hidden="true" className="h-5 w-5 text-accent-primary" />
                   <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-primary">
-                    {label}
+                    {t[key]}
                   </span>
                 </div>
               ))}
             </div>
             <div className="divide-y divide-border-default lg:hidden">
-              {CATEGORIES.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-3 px-1 py-3.5">
+              {CATEGORY_KEYS.map(({ icon: Icon, key }) => (
+                <div key={key} className="flex items-center gap-3 px-1 py-3.5">
                   <Icon aria-hidden="true" className="h-4 w-4 text-accent-primary" />
                   <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-primary">
-                    {label}
+                    {t[key]}
                   </span>
                 </div>
               ))}
@@ -83,11 +85,11 @@ export default function Marketplace() {
               <div className="mt-2 flex items-baseline gap-3">
                 <SectionNumeral n={1} />
                 <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
-                  Fitment check
+                  {t['marketplace.callout.0.title']}
                 </h3>
               </div>
               <p className="font-sans text-sm leading-relaxed text-text-secondary">
-                Pick your make, model, and year, and only see parts that actually fit your vehicle.
+                {t['marketplace.callout.0.body']}
               </p>
             </div>
             <div className="flex flex-col gap-3">
@@ -95,11 +97,11 @@ export default function Marketplace() {
               <div className="mt-2 flex items-baseline gap-3">
                 <SectionNumeral n={2} />
                 <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
-                  Vendor comparison
+                  {t['marketplace.callout.1.title']}
                 </h3>
               </div>
               <p className="font-sans text-sm leading-relaxed text-text-secondary">
-                Compare prices across verified suppliers before you order: no more phoning around.
+                {t['marketplace.callout.1.body']}
               </p>
             </div>
           </div>
@@ -116,15 +118,15 @@ export default function Marketplace() {
           >
             <div className="flex items-center justify-between border-b border-border-default px-5 py-3">
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-secondary">
-                Part № CD-1042
+                {t['marketplace.catalog.partNo']}
               </span>
-              <Badge variant="accent">Preview</Badge>
+              <Badge variant="accent">{t['marketplace.catalog.previewBadge']}</Badge>
             </div>
             <div className="flex flex-col gap-1.5 px-5 py-5">
               <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
-                Brake pads, front
+                {t['marketplace.catalog.title']}
               </h3>
-              <p className="font-mono text-sm text-text-secondary">from ₹1,200</p>
+              <p className="font-mono text-sm text-text-secondary">{t['marketplace.catalog.price']}</p>
             </div>
             <div className="flex items-center justify-between border-t border-border-default px-5 py-3">
               <span className="inline-flex items-center gap-1.5 border border-accent-primary px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-accent-primary">
@@ -140,11 +142,11 @@ export default function Marketplace() {
                 >
                   <path d="M4 12.5l5 5L20 6.5" />
                 </svg>
-                Fits your vehicle
+                {t['marketplace.catalog.fits']}
               </span>
               <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
                 <Star aria-hidden="true" className="h-3 w-3 fill-accent-primary text-accent-primary" />
-                4.8
+                {t['marketplace.catalog.rating']}
               </span>
             </div>
           </div>

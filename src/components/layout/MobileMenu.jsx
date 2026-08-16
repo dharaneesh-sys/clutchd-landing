@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button.jsx'
+import LanguageToggle from '../ui/LanguageToggle.jsx'
+import { useT } from '../../lib/i18n.js'
 
 // Accessible mobile disclosure panel (WAI-ARIA menu pattern).
 // - focus moves into the panel on open
@@ -9,6 +11,7 @@ import Button from '../ui/Button.jsx'
 // - closes on any anchor click
 // - reduced-motion aware (transitions are transform/opacity only)
 export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
+  const { t } = useT()
   const panelRef = useRef(null)
   const firstLinkRef = useRef(null)
   const navigate = useNavigate()
@@ -40,7 +43,7 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
       ref={panelRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Site menu"
+      aria-label={t['mobileMenu.dialogAriaLabel']}
       hidden={!open}
       className={[
         'lg:hidden',
@@ -49,7 +52,7 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
         open ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
       ].join(' ')}
     >
-      <nav aria-label="Mobile" className="mx-auto flex w-full max-w-[80rem] flex-col gap-1 px-4 py-4 sm:px-6">
+      <nav aria-label={t['mobileMenu.navAriaLabel']} className="mx-auto flex w-full max-w-[80rem] flex-col gap-1 px-4 py-4 sm:px-6">
         {items.map((item, i) => (
           <Link
             key={item.to}
@@ -58,20 +61,20 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
             onClick={onClose}
             className="rounded-xl px-3 py-3 font-sans text-base font-medium text-text-primary transition-colors duration-200 hover:bg-surface-tint hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring"
           >
-            {item.label}
+            {t[item.key]}
           </Link>
         ))}
-        <div className="px-3 pt-3">
+        <div className="flex items-center justify-between px-3 pt-3">
+          <LanguageToggle />
           <Button
             variant="primary"
             size="md"
-            fullWidth
             onClick={() => {
               onClose()
               navigate('/early-access')
             }}
           >
-            Get early access
+            {t['mobileMenu.cta']}
           </Button>
         </div>
       </nav>

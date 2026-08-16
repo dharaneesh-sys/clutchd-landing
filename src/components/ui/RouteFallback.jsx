@@ -1,4 +1,5 @@
 import Container from './Container.jsx'
+import { useT } from '../../lib/i18n.js'
 
 // RouteFallback — Suspense loading state (DESIGN.md §5).
 //
@@ -8,11 +9,12 @@ import Container from './Container.jsx'
 // fallback→page swap pushed it down (CLS 0.53 on interior routes; Home was 0
 // only by timing). No layout shift on mount → CLS 0 everywhere.
 export default function RouteFallback() {
+  const { t } = useT()
   return (
     <div aria-hidden="true" className="min-h-[calc(100dvh-4.5rem)] bg-surface-primary">
       <Container className="py-16 sm:py-20 lg:py-24">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-accent-primary">
-          Loading
+          {t['routeFallback.loading']}
         </p>
         <div className="mt-6 rounded-2xl border border-border-default bg-surface-soft p-6">
           <div className="h-8 w-2/3 rounded-lg bg-surface-cool" />

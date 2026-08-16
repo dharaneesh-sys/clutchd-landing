@@ -25,6 +25,7 @@
  */
 import { useId, useState } from 'react'
 import Button from './Button.jsx'
+import { useT } from '../../lib/i18n.js'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const FORM_NAME = 'early-access'
@@ -68,6 +69,7 @@ function rememberEmail(email) {
 }
 
 export default function EarlyAccessForm({ variant = 'section', className = '' }) {
+  const { t } = useT()
   const id = useId().replace(/:/g, '')
   const emailId = `early-email-${id}`
   const errorId = `early-email-error-${id}`
@@ -81,7 +83,7 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
     const value = email.trim()
     if (!EMAIL_RE.test(value)) {
       setStatus('error')
-      setErrorMsg('Enter a valid email address')
+      setErrorMsg(t['form.validationError'])
       return
     }
     if (getStoredEmails().includes(value.toLowerCase())) {
@@ -106,7 +108,7 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
       // Log for debugging deployed CSP/network failures (never fake success).
       console.error('EarlyAccessForm submit failed:', err)
       setStatus('error')
-      setErrorMsg('Something went wrong. Please try again.')
+      setErrorMsg(t['form.error'])
     }
   }
 
@@ -118,7 +120,7 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
     <form onSubmit={handleSubmit} noValidate className={[v.form, className].filter(Boolean).join(' ')}>
       {variant === 'section' && (
         <label htmlFor={emailId} className="font-sans text-sm font-medium text-text-primary">
-          Email address
+          {t['form.emailLabel']}
         </label>
       )}
       <div className={v.row}>
@@ -128,8 +130,8 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
           type="email"
           required
           autoComplete="email"
-          placeholder="you@example.com"
-          aria-label={variant === 'hero' ? 'Email address' : undefined}
+          placeholder={t['form.emailPlaceholder']}
+          aria-label={variant === 'hero' ? t['form.emailLabel'] : undefined}
           value={email}
           onChange={(e) => {
             setEmail(e.target.value)
@@ -155,10 +157,10 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
                 aria-hidden="true"
                 className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
               />
-              Submitting…
+              {t['form.submitting']}
             </span>
           ) : (
-            'Get early access'
+            t['form.submit']
           )}
         </Button>
       </div>
@@ -172,23 +174,23 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
         )}
         {status === 'success' && (
           <p className="mt-2 font-sans text-sm text-accent-primary">
-            You&apos;re on the list. We&apos;ll email you when ClutchD opens near you.
+            {t['form.success']}
           </p>
         )}
         {status === 'duplicate' && (
           <p className="mt-2 font-sans text-sm text-accent-primary">
-            You&apos;re already on the list. We&apos;ll email you when ClutchD opens near you.
+            {t['form.duplicate']}
           </p>
         )}
       </div>
       {/* Legal microcopy (production plan): launch-only contact + privacy pointer */}
       <p className="mt-2 font-sans text-xs leading-relaxed text-text-secondary">
-        We&apos;ll only email you about the Coimbatore launch.{' '}
+        {t['form.legal']}{' '}
         <a
           href="/privacy.html"
           className="underline decoration-accent-primary/40 underline-offset-2 transition-colors hover:text-accent-primary hover:decoration-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2"
         >
-          Privacy policy
+          {t['form.privacyLink']}
         </a>
       </p>
     </form>

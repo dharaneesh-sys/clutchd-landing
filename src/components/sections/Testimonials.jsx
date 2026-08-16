@@ -2,6 +2,7 @@ import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import EditorialQuote from '../ui/EditorialQuote.jsx'
 import useReveal from '../../hooks/useReveal.js'
+import { useT } from '../../lib/i18n.js'
 
 /**
  * Testimonials — social proof section (DESIGN.md §5 EditorialQuote + AnnotatedList).
@@ -16,35 +17,11 @@ import useReveal from '../../hooks/useReveal.js'
  */
 
 // Illustrative figures only — see plan §4 debt note. Never display as production metrics.
-const STATS = [
-  { value: '120+', label: 'Verified mechanics' },
-  { value: '35+', label: 'Partner garages' },
-  { value: '12k+', label: 'Service records' },
-  { value: '~18 min', label: 'Avg response time' },
-]
-
-const TESTIMONIALS = [
-  {
-    name: 'Ravi K',
-    role: 'Two-wheeler owner · Coimbatore',
-    quote:
-      'My bike broke down on Trichy Road: a verified mechanic was at my spot in under twenty minutes. I watched the whole thing on the live map.',
-  },
-  {
-    name: 'Mohammed Irfan',
-    role: 'Verified mechanic · Chennai',
-    quote:
-      "ClutchD brings me jobs I'd never reach on my own. Customers already know my rating before they call.",
-  },
-  {
-    name: 'Deepa Nair',
-    role: 'Garage operator · Kochi',
-    quote:
-      'Estimates, approvals, payment: it all lands in one place now. My desk stopped being a filing cabinet.',
-  },
-]
+const STAT_KEYS = ['testimonials.0', 'testimonials.1', 'testimonials.2', 'testimonials.3']
+const QUOTE_KEYS = ['testimonials.quote.0', 'testimonials.quote.1', 'testimonials.quote.2']
 
 export default function Testimonials() {
+  const { t } = useT()
   const [ref, visible] = useReveal()
   return (
     <section
@@ -54,9 +31,9 @@ export default function Testimonials() {
     >
       <Container>
         <SectionHeading
-          eyebrow="PROOF"
-          title="People on the road, in their own words"
-          lede="What drivers, mechanics and garages say about working on the ClutchD network."
+          eyebrow={t['testimonials.eyebrow']}
+          title={t['testimonials.title']}
+          lede={t['testimonials.lede']}
           id="testimonials-heading"
         />
         <div
@@ -71,16 +48,16 @@ export default function Testimonials() {
           {/* Stats strip — ruled ledger, mono numerals, illustrative label */}
           <div className="divide-y divide-border-default border border-border-default bg-surface-soft px-6 py-8">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary">
-              Launch figures pending: illustrative
+              {t['testimonials.statsLabel']}
             </p>
             <dl
-              aria-label="Illustrative launch figures, not production metrics"
+              aria-label={t['testimonials.statsAriaLabel']}
               className="grid grid-cols-1 gap-0 divide-y divide-border-default md:grid-cols-4 md:divide-x md:divide-y-0"
             >
-              {STATS.map(({ value, label }) => (
-                <div key={label} className="flex flex-col gap-1 px-0 py-4 md:px-6 md:py-0 md:first:pl-0 md:last:pr-0">
-                  <dt className="font-sans text-xs text-text-secondary">{label}</dt>
-                  <dd className="font-mono text-3xl font-semibold text-text-primary">{value}</dd>
+              {STAT_KEYS.map((base) => (
+                <div key={base} className="flex flex-col gap-1 px-0 py-4 md:px-6 md:py-0 md:first:pl-0 md:last:pr-0">
+                  <dt className="font-sans text-xs text-text-secondary">{t[`${base}.label`]}</dt>
+                  <dd className="font-mono text-3xl font-semibold text-text-primary">{t[`${base}.value`]}</dd>
                 </div>
               ))}
             </dl>
@@ -88,12 +65,12 @@ export default function Testimonials() {
 
           {/* Pull-quotes — editorial, serif, oversized opening mark */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {TESTIMONIALS.map(({ name, role, quote }) => (
+            {QUOTE_KEYS.map((base) => (
               <EditorialQuote
-                key={name}
-                quote={quote}
-                name={name}
-                role={role}
+                key={base}
+                quote={t[`${base}.quote`]}
+                name={t[`${base}.name`]}
+                role={t[`${base}.role`]}
                 className="border-t border-border-default pt-6"
               />
             ))}

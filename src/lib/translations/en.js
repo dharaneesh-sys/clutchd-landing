@@ -21,6 +21,11 @@ export default {
   // --- App shell ---
   'app.skipToContent': 'Skip to content',
 
+  // --- Brand wordmark (src/components/brand/Logo.jsx) — proper noun, kept
+  // in the map so the raw-string gate stays clean and ta.js can override. ---
+  'brand.wordmark': 'Clutch',
+  'brand.wordmarkAccent': 'D',
+
   // --- Header (src/components/layout/Header.jsx) ---
   'nav.howItWorks': 'How it works',
   'nav.marketplace': 'Marketplace',
@@ -31,6 +36,9 @@ export default {
   'nav.primaryAriaLabel': 'Primary',
   'nav.openMenuAriaLabel': 'Open menu',
   'nav.closeMenuAriaLabel': 'Close menu',
+  'nav.langAriaLabel': 'Language',
+  'nav.langEn': 'EN',
+  'nav.langTa': 'தமிழ்',
 
   // --- Mobile menu (src/components/layout/MobileMenu.jsx) ---
   'mobileMenu.dialogAriaLabel': 'Site menu',
@@ -115,6 +123,7 @@ export default {
   'ecosystem.7.node': 'Service History',
   'ecosystem.8.node': 'Vehicle Intelligence',
   'ecosystem.hint': 'Hover a node to see how it connects to the next step in the chain.',
+  'ecosystem.connectsToNext': 'Connects to next step',
 
   // --- Workflow (src/components/sections/Workflow.jsx) ---
   'workflow.eyebrow': 'HOW IT WORKS',

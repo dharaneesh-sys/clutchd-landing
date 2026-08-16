@@ -2,23 +2,25 @@ import { Fragment, useState } from 'react'
 import Container from '../ui/Container.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import useReveal from '../../hooks/useReveal.js'
+import { useT } from '../../lib/i18n.js'
 
 // 9-node connected data flow (user brief §18). Visual chain visualization —
 // not interactive controls; intentionally out of tab order. Hover (mouse)
 // highlights connections.
-const NODES = [
-  'Driver',
-  'Vehicle',
-  'Service Request',
-  'Mechanic',
-  'Garage',
-  'Parts',
-  'Payment',
-  'Service History',
-  'Vehicle Intelligence',
+const NODE_KEYS = [
+  'ecosystem.0.node',
+  'ecosystem.1.node',
+  'ecosystem.2.node',
+  'ecosystem.3.node',
+  'ecosystem.4.node',
+  'ecosystem.5.node',
+  'ecosystem.6.node',
+  'ecosystem.7.node',
+  'ecosystem.8.node',
 ]
 
 export default function Ecosystem() {
+  const { t } = useT()
   const [ref, visible] = useReveal()
   const [hovered, setHovered] = useState(null)
 
@@ -30,9 +32,9 @@ export default function Ecosystem() {
     >
       <Container>
         <SectionHeading
-          eyebrow="THE ECOSYSTEM"
-          title="Every service, connected"
-          lede="ClutchD puts drivers, mechanics, garages, fleets, parts, payments and service history on one system, so the vehicle's story never starts over."
+          eyebrow={t['ecosystem.eyebrow']}
+          title={t['ecosystem.title']}
+          lede={t['ecosystem.lede']}
           id="ecosystem-heading"
         />
         <div
@@ -45,11 +47,11 @@ export default function Ecosystem() {
           ].join(' ')}
         >
           <div className="flex flex-col items-stretch gap-2 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-x-1 md:gap-y-3">
-            {NODES.map((node, i) => {
+            {NODE_KEYS.map((nodeKey, i) => {
               const isHovered = hovered === i
               const isConnected = hovered === i - 1 || hovered === i + 1
               return (
-                <Fragment key={node}>
+                <Fragment key={nodeKey}>
                   <span
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
@@ -62,16 +64,16 @@ export default function Ecosystem() {
                           : 'border-border-default bg-surface-soft text-text-primary',
                     ].join(' ')}
                   >
-                    {node}
+                    {t[nodeKey]}
                   </span>
-                  {i < NODES.length - 1 && (
+                  {i < NODE_KEYS.length - 1 && (
                     <span
                       aria-hidden="true"
                       className="flex items-center select-none"
                     >
                       <span className="hidden md:block">
                         <svg role="img" aria-hidden="true" width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <title>Connects to next step</title>
+                          <title>{t['ecosystem.connectsNext']}</title>
                           <path
                             d="M0 6H20M20 6L16 2M20 6L16 10"
                             stroke={hovered === i || hovered === i + 1 ? "var(--accent-primary)" : "var(--border-default)"}
@@ -83,7 +85,7 @@ export default function Ecosystem() {
                       </span>
                       <span className="md:hidden">
                         <svg role="img" aria-hidden="true" width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <title>Connects to next step</title>
+                          <title>{t['ecosystem.connectsNext']}</title>
                           <path
                             d="M6 0V20M6 20L2 16M6 20L10 16"
                             stroke={hovered === i || hovered === i + 1 ? "var(--accent-primary)" : "var(--border-default)"}
@@ -100,7 +102,7 @@ export default function Ecosystem() {
             })}
           </div>
           <p className="mt-6 text-center font-sans text-sm text-text-secondary">
-            Hover a node to see how it connects to the next step in the chain.
+            {t['ecosystem.hint']}
           </p>
         </div>
       </Container>
