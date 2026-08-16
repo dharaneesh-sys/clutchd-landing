@@ -1,6 +1,7 @@
 # ClutchD Landing — Visual Improvement Plan (Wave V)
 
-**Status:** Approved direction (user-confirmed 2026-08-14) · **Scope:** `~/clutchd-landing`
+**Status:** ✅ EXECUTED (V1–V7, 2026-08-15; landed in `856a143`, live-verified in `51ee594`/`481d648`) · **Scope:** `~/clutchd-landing`
+**Superseded by:** `visual-overhaul-spec.md` (fleshed-out spec, EXECUTED V1–V8)
 **Direction:** Warm editorial · **Hero:** Interactive · **Change appetite:** Full overhaul allowed · **Imagery:** Pure CSS/SVG craft (no raster, no generated images)
 
 This plan is the executable contract for the visual overhaul. The design-system gate applies throughout: **no new token, primitive, state, or motion rule is used in code before it is added to `DESIGN.md`.** All existing quality gates stay green: Lighthouse 100 (mobile 99 accepted), a11y AA + keyboard + reduced-motion, CI build/lint/smoke, Netlify Forms, GoatCounter, security headers.

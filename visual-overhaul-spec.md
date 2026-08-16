@@ -1,6 +1,6 @@
 # ClutchD Landing — Visual Overhaul Spec (fleshed-out)
 
-**Status:** EXECUTED (V1–V7, 2026-08-15) — all waves landed + pushed; live deploy verified. Amendments below marked (V7). **Base plan:** `VISUAL-IMPROVEMENTS.md` · **Scope:** `~/clutchd-landing`
+**Status:** EXECUTED (V1–V8, 2026-08-15 → 2026-08-16) — all waves landed + pushed; live deploy verified. Amendments below marked (V7). **Base plan:** `VISUAL-IMPROVEMENTS.md` · **Scope:** `~/clutchd-landing`
 **This spec supersedes the single-page assumptions in `VISUAL-IMPROVEMENTS.md` where they conflict — the site is now a multi-page application.**
 
 ---
@@ -172,3 +172,19 @@ V1 foundation (tokens + serif + _redirects + legal sync)
 ```
 
 Dependency notes: V2 must precede V3–V6 (all page work needs the router). Each wave commits + pushes so CI (incl. the updated smoke) runs continuously. `DESIGN.md` gate updates land in the same commit as the code they enable.
+
+---
+
+## 8. V8 Record — Craft & Motion Polish (2026-08-16, commit `245fd77`)
+
+Wave VIII refined motion and interaction parity after the V1–V7 art direction landed. Scope (each item cross-references its `DESIGN.md` gate):
+
+| Item | Scope | DESIGN.md pointer |
+|---|---|---|
+| Directional route transitions | Entering page slides from the right on forward nav (PUSH/REPLACE), from the left on back/forward (POP); initial load = neutral fade | §6 page transitions + `PageTransition` in `App.jsx` |
+| Staggered reveals | Multi-element sections reveal in sequence rather than as one block | §6 reveal rules (`useReveal`, CSS transition delays) |
+| Editorial-lift interaction parity | Hover/focus/active affordances normalized across editorial components (quotes, numerals, rules) | §5 EditorialCard / SectionNumeral / SectionRule / EditorialQuote |
+| HeroStage pulse invitation cue | Mount-only soft ring on the Request state, gone after first interaction; never renders under reduced motion | §5 HeroStage (V8) |
+| Sparse grain application | Paper-grain texture applied selectively, not page-wide | §7 Paper Texture |
+
+Executed via `245fd77 feat: Wave VIII craft & motion polish`; documented in `DESIGN.md` §5/§6/§7. PRODUCTION.md carries the phase-2 production-readiness plan (Waves IX–XIII).

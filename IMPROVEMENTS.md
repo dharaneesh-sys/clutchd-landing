@@ -1,6 +1,7 @@
 # ClutchD Landing — Improvement Plan
 
-**Status:** Approved for execution · **Created:** 2026-08-13 · **Scope:** `~/clutchd-landing`
+**Status:** ✅ EXECUTED (T1–T13, 2026-08-13 → 2026-08-15; last task commit `9193271`) · **Created:** 2026-08-13 · **Scope:** `~/clutchd-landing`
+**Superseded by:** `PRODUCTION.md` (phase-2 production-readiness, approved 2026-08-16)
 
 This plan is the executable contract for improving the ClutchD landing page. Every task lists its files, acceptance criteria, and verification. The design-system gate applies throughout: **no new token, primitive, state, or motion rule is used in code before it is added to `DESIGN.md`.**
 
