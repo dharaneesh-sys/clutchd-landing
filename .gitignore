@@ -26,3 +26,7 @@ coverage
 
 # Local Netlify folder
 .netlify
+
+# Playwright artifacts (Wave IX-2)
+test-results
+playwright-report
