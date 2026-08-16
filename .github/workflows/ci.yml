@@ -26,9 +26,36 @@ jobs:
       # real browser — this app is client-rendered; those elements exist only
       # after JS runs — so they stay in lane-c verification, deliberately not
       # added as a CI dep.
-  smoke:
+  # Wave IX-3 (PRODUCTION.md IX-3): the committed test gate. build → lint → unit
+  # → e2e → smoke, all fail-closed — a broken test fails the push/PR.
+  unit:
     runs-on: ubuntu-latest
     needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test
+  e2e:
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Playwright browser + OS deps for the production-build e2e suite
+      # (playwright.config.js webServer builds dist and serves it on 4174).
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+  smoke:
+    runs-on: ubuntu-latest
+    needs: e2e
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
