@@ -43,3 +43,12 @@
 - New tests: `LanguageToggle.test.jsx` (3) — aria-pressed flip, localStorage persist, html lang flip, cross-consumer re-render via separate useT probe, `?lang=ta` deep link. Suite: **58 unit tests PASS** (9 files), e2e **56/56 PASS** (clean run; earlier failures were ERR_CONNECTION_REFUSED server-lifecycle artifacts from port-kill interleaving, confirmed via error-context), lint clean (removed unused STEP_KEYS leftover), build PASS, design-gate PASS.
 - Lighthouse re-measured: desktop **100 PASS** (hard gate); mobile **86** vs recorded 87 baseline — same-day runs on identical code measured 87/94/48/86 (48 = machine load), so 86 is TBT jitter in the 0.30-weight metric, NOT a routing regression (bundle identical; routing added no production JS weight). Mobile stays documented accepted-debt per XI-1 evidence; gate not weakened.
 - Committed as: `07fff6e` (feat: Wave XII-1b string routing + EN|தமிழ் toggle).
+
+## 2026-08-16 FINAL VERIFICATION (§3) — COMPLETE (code-side), pushed to origin/main
+- Full §3 sweep on committed XII-1b state (07fff6e + b125d52), clean working tree:
+  1. build PASS · 2. lint PASS (0 warnings) · 3. unit 58/58 (9 files) · 4. e2e 56/56 (routes, deep links, HeroStage, reduced-motion, console-zero, 390px) · 5. design-gate PASS.
+  6. lh: desktop **100 PASS** (hard gate); mobile 83–86 across runs (TBT 361–367ms) — recorded accepted-debt per XI-1 (target ≥99 unreachable without TBT ≤100ms AND LCP ≤2.0s; honest ceiling ~94–98). Gate NOT weakened; mobile stays documented debt.
+  7. Visual QA at 375/768/1280 (real screenshots inspected): LanguageToggle renders correctly in desktop header + mobile menu (EN|தமிழ் buttons, aria-pressed, pipe separator), layout clean at all viewports, no overflow/breakage, early-access form intact.
+  8. CI green on push: pushed all 10 wave commits `89868f2..b125d52` → GitHub Actions run 31950499916 **completed success** (build → lint → design-gate → unit → e2e chain). Netlify git-backed auto-deploy triggered from same push.
+- Bundle note (honest): XII-1b added ~18 kB raw / +5.6 kB gzip to the eager main bundle (54.55→72.87 kB; vendor identical 189.58 kB) — the i18n.js + en.js + LanguageToggle wiring through eagerly-imported Header. This is the approved Tamil-toggle feature cost, not accidental bloat; recorded as part of the mobile accepted-debt evidence.
+- Remaining plan items: XI-3b email notification (user dashboard step, forms capture verified working — 2 submissions) and the optional lane-c review + /review-work handoff per §5 execution order.
