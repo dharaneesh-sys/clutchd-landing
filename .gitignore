@@ -30,3 +30,6 @@ coverage
 # Playwright artifacts (Wave IX-2)
 test-results
 playwright-report
+
+# Lighthouse reports (Wave IX-4)
+.lighthouse

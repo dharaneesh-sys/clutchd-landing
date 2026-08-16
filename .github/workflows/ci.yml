@@ -15,6 +15,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      # Wave IX-5 (PRODUCTION.md IX-5): design-system gate — no raw hex
+      # outside DESIGN.md tokens, no off-base spacing, no banned families,
+      # duplicate className clusters reported. Fail-closed: a violation
+      # fails the push/PR (blocks unit/e2e/smoke via `needs`).
+      - run: npm run design-gate
       - run: npm run build
       # P6: GitHub Pages deploy removed — production deploy is now Netlify,
       # connected to this repo (build: npm run build, publish: dist). This

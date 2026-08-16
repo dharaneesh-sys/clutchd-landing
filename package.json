@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
+    "design-gate": "node scripts/design-gate.mjs",
     "preview": "vite preview",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "lh": "node scripts/lh.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
