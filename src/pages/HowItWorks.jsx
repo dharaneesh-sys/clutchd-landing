@@ -6,8 +6,8 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function HowItWorks() {
   usePageMeta(
-    'How it works — ClutchD',
-    'See how ClutchD connects you with verified mechanics in minutes — from service request to completed work, with real-time tracking at every step.',
+    'How it works: ClutchD',
+    'See how ClutchD connects you with verified mechanics in minutes: from service request to completed work, with real-time tracking at every step.',
   )
 
   return (
@@ -25,7 +25,7 @@ export default function HowItWorks() {
             How it works
           </h1>
           <p className="mt-5 max-w-2xl font-sans text-lg leading-relaxed text-text-secondary">
-            From request to completed service — see how ClutchD connects you with verified providers in minutes.
+            From request to completed service, see how ClutchD connects you with verified providers in minutes.
           </p>
         </Container>
       </section>

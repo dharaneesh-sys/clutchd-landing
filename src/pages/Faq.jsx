@@ -4,8 +4,8 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function FaqPage() {
   usePageMeta(
-    'FAQ — ClutchD',
-    'Straight answers about how ClutchD works — matching, estimates, verification, coverage, payments and what Preview means.',
+    'FAQ: ClutchD',
+    'Straight answers about how ClutchD works: matching, estimates, verification, coverage, payments and what Preview means.',
   )
 
   return (

@@ -56,12 +56,12 @@ const ETA = {
 
 // aria-live announcements — state changes ONLY (manual clicks).
 const ANNOUNCEMENTS = [
-  'Status: Request — waiting for your service request.',
-  'Status: Searching — searching for verified mechanics.',
-  'Status: Accepted — Rahul K. accepted the job. Arriving in 18 minutes.',
-  'Status: En route — mechanic arriving in 12 minutes.',
-  'Status: In progress — brake pad replacement underway. Estimated ₹1,450.',
-  'Status: Completed — service complete.',
+  'Status: Request. Waiting for your service request.',
+  'Status: Searching, searching for verified mechanics.',
+  'Status: Accepted. Rahul K. accepted the job. Arriving in 18 minutes.',
+  'Status: En route. Mechanic arriving in 12 minutes.',
+  'Status: In progress. Brake pad replacement underway. Estimated ₹1,450.',
+  'Status: Completed. Service complete.',
 ]
 
 const EASE = 'ease-[cubic-bezier(0.32,0.72,0,1)]'

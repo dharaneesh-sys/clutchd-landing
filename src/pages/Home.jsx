@@ -7,8 +7,8 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function Home() {
   usePageMeta(
-    'ClutchD — Connected automotive care',
-    'On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history — one connected automotive ecosystem, live in Coimbatore.',
+    'ClutchD: Connected automotive care',
+    'On-demand verified mechanics, roadside help, parts marketplace, real-time tracking and digital service history: one connected automotive ecosystem, live in Coimbatore.',
   )
 
   return (

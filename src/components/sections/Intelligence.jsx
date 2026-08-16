@@ -8,7 +8,7 @@ const ITEMS = [
   {
     icon: BellRing,
     title: 'Maintenance reminders',
-    body: 'Service records turn into future needs — you get told before it becomes a problem.',
+    body: 'Service records turn into future needs: you get told before it becomes a problem.',
   },
   {
     icon: Gauge,
@@ -91,7 +91,7 @@ export default function Intelligence() {
             <SectionHeading
               eyebrow="INTELLIGENCE"
               title="Maintenance that happens before things break"
-              lede="From reactive breakdowns to proactive care — ClutchD turns vehicle data into early warnings and planned service."
+              lede="From reactive breakdowns to proactive care, ClutchD turns vehicle data into early warnings and planned service."
               id="intelligence-heading"
             />
             {/* Ruled list — divide-y hairlines, serif titles, no tint squares */}

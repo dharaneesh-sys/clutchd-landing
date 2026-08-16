@@ -87,7 +87,7 @@ export default function Marketplace() {
                 </h3>
               </div>
               <p className="font-sans text-sm leading-relaxed text-text-secondary">
-                Pick your make, model, and year — and only see parts that actually fit your vehicle.
+                Pick your make, model, and year, and only see parts that actually fit your vehicle.
               </p>
             </div>
             <div className="flex flex-col gap-3">
@@ -99,7 +99,7 @@ export default function Marketplace() {
                 </h3>
               </div>
               <p className="font-sans text-sm leading-relaxed text-text-secondary">
-                Compare prices across verified suppliers before you order — no more phoning around.
+                Compare prices across verified suppliers before you order: no more phoning around.
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function Marketplace() {
             </div>
             <div className="flex flex-col gap-1.5 px-5 py-5">
               <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
-                Brake pads — front
+                Brake pads, front
               </h3>
               <p className="font-mono text-sm text-text-secondary">from ₹1,200</p>
             </div>

@@ -4,8 +4,8 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function MarketplacePage() {
   usePageMeta(
-    'Marketplace — ClutchD',
-    'Browse the ClutchD marketplace — parts categories, fitment checks and verified vendors for your vehicle, with transparent estimates.',
+    'Marketplace: ClutchD',
+    'Browse the ClutchD marketplace: parts categories, fitment checks and verified vendors for your vehicle, with transparent estimates.',
   )
 
   return (

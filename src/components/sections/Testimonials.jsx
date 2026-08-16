@@ -28,7 +28,7 @@ const TESTIMONIALS = [
     name: 'Ravi K',
     role: 'Two-wheeler owner · Coimbatore',
     quote:
-      'My bike broke down on Trichy Road — a verified mechanic was at my spot in under twenty minutes. I watched the whole thing on the live map.',
+      'My bike broke down on Trichy Road: a verified mechanic was at my spot in under twenty minutes. I watched the whole thing on the live map.',
   },
   {
     name: 'Mohammed Irfan',
@@ -40,7 +40,7 @@ const TESTIMONIALS = [
     name: 'Deepa Nair',
     role: 'Garage operator · Kochi',
     quote:
-      'Estimates, approvals, payment — it all lands in one place now. My desk stopped being a filing cabinet.',
+      'Estimates, approvals, payment: it all lands in one place now. My desk stopped being a filing cabinet.',
   },
 ]
 
@@ -71,7 +71,7 @@ export default function Testimonials() {
           {/* Stats strip — ruled ledger, mono numerals, illustrative label */}
           <div className="divide-y divide-border-default border border-border-default bg-surface-soft px-6 py-8">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary">
-              Launch figures pending — illustrative
+              Launch figures pending: illustrative
             </p>
             <dl
               aria-label="Illustrative launch figures, not production metrics"

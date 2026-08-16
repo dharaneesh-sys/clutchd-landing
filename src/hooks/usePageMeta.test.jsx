@@ -12,11 +12,11 @@ function PageMetaProbe({ title, description }) {
 
 describe('usePageMeta', () => {
   it('sets document.title and the description/OG meta tags', () => {
-    render(<PageMetaProbe title="How it works — ClutchD" description="Step-by-step guide." />)
-    expect(document.title).toBe('How it works — ClutchD')
+    render(<PageMetaProbe title="How it works: ClutchD" description="Step-by-step guide." />)
+    expect(document.title).toBe('How it works: ClutchD')
     expect(document.querySelector('meta[name="description"]').content).toBe('Step-by-step guide.')
     expect(document.querySelector('meta[property="og:title"]').content).toBe(
-      'How it works — ClutchD',
+      'How it works: ClutchD',
     )
     expect(document.querySelector('meta[property="og:description"]').content).toBe(
       'Step-by-step guide.',

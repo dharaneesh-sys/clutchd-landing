@@ -60,7 +60,7 @@ export default function PrivacyNotice() {
     >
       <div className="mx-auto flex w-full max-w-[80rem] flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6 lg:px-8">
         <p className="font-sans text-sm leading-relaxed text-text-secondary">
-          ClutchD uses GoatCounter — a cookie-free analytics tool — to count page
+          ClutchD uses GoatCounter, a cookie-free analytics tool, to count page
           views. No personal data is collected.{' '}
           <a
             href="/privacy.html"

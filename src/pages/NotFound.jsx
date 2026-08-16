@@ -4,7 +4,7 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function NotFound() {
   usePageMeta(
-    'Page not found — ClutchD',
+    'Page not found: ClutchD',
     'The page you\'re looking for doesn\'t exist or has moved. Head back home to keep exploring ClutchD.',
   )
 

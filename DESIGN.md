@@ -76,6 +76,7 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 - Headings that wrap to 4+ lines are too large — use `clamp()`.
 - Display headings use ultra-tight 1.00 line-height (coinbase signature).
 - Shipped values are authoritative (verified 2026-08-13).
+- **Eyebrow density (decision, 2026-08-16 — PRODUCTION.md XIII-4):** 9 of 9 sections use an `eyebrow=` overline. The soft-skill's mechanical rule caps this at ~1 per 3 sections, but ClutchD's eyebrow layer is the **user-confirmed editorial system** (D20 + this section), so density is a deliberate choice, not a default. **Kept as-is; no micro-trim.** Optional future trim if wanted: drop eyebrows on the two weakest sections (PROOF, EARLY ACCESS) since their headings already carry intent.
 
 ## 4. Spacing & Layout
 

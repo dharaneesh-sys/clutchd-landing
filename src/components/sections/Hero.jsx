@@ -35,8 +35,8 @@ export default function Hero() {
           </h1>
 
           <p className="max-w-xl font-sans text-lg leading-relaxed text-text-secondary">
-            Find verified mechanics, request roadside help, source the right parts, track the work
-            in real time, and keep your vehicle&apos;s complete service history in one place.
+            Find verified mechanics, request roadside help, source the right parts, track work
+            live, and keep your complete service history.
           </p>
 
           <EarlyAccessForm variant="hero" />

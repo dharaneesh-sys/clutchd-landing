@@ -20,7 +20,7 @@ const VALUE_PROPS = [
   },
   {
     title: 'Secure payments',
-    sub: 'Pay through the platform — protected and receipt-backed.',
+    sub: 'Pay through the platform: protected and receipt-backed.',
   },
 ]
 

@@ -31,7 +31,7 @@ const PRIMITIVES = [
   {
     tag: 'PAYMENTS',
     title: 'Secure payments',
-    body: 'Pay through the platform with Stripe and Razorpay — protected and receipt-backed.',
+    body: 'Pay through the platform with Stripe and Razorpay: protected and receipt-backed.',
   },
   {
     tag: 'RECORDS',

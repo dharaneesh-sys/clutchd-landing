@@ -4,8 +4,8 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function ForProviders() {
   usePageMeta(
-    'For providers — ClutchD',
-    'Grow your business with ClutchD — verified leads, transparent pricing and reliable payments for mechanics, garages and fleets.',
+    'For providers: ClutchD',
+    'Grow your business with ClutchD: verified leads, transparent pricing and reliable payments for mechanics, garages and fleets.',
   )
 
   return (

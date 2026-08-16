@@ -121,7 +121,7 @@ describe('EarlyAccessForm', () => {
     expect(fetchMock).not.toHaveBeenCalled()
   })
 
-  it('shows the error state on a non-2xx response — never fake success', async () => {
+  it('shows the error state on a non-2xx response: never fake success', async () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     stubFetch(() => Promise.resolve({ ok: false, status: 500 }))
     const user = userEvent.setup()
@@ -137,7 +137,7 @@ describe('EarlyAccessForm', () => {
     expect(errorSpy).toHaveBeenCalled()
   })
 
-  it('shows the error state on a network failure — never fake success', async () => {
+  it('shows the error state on a network failure: never fake success', async () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     stubFetch(() => Promise.reject(new Error('network down')))
     const user = userEvent.setup()

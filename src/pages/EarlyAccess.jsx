@@ -4,7 +4,7 @@ import usePageMeta from '../hooks/usePageMeta.js'
 
 export default function EarlyAccessPage() {
   usePageMeta(
-    'Early access — ClutchD',
+    'Early access: ClutchD',
     'Join the ClutchD early-access waitlist and be first in line when the app opens in your city.',
   )
 

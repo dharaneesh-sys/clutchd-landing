@@ -42,7 +42,7 @@ export default function Footer() {
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <p className="font-sans text-xs text-text-secondary" lang="ta">
-              தமிழ் விரைவில் — Tamil coming soon
+              தமிழ் விரைவில்: Tamil coming soon
             </p>
             <a
               href="/privacy.html"

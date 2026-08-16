@@ -106,7 +106,7 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
       // Log for debugging deployed CSP/network failures (never fake success).
       console.error('EarlyAccessForm submit failed:', err)
       setStatus('error')
-      setErrorMsg('Something went wrong — please try again.')
+      setErrorMsg('Something went wrong. Please try again.')
     }
   }
 
@@ -172,12 +172,12 @@ export default function EarlyAccessForm({ variant = 'section', className = '' })
         )}
         {status === 'success' && (
           <p className="mt-2 font-sans text-sm text-accent-primary">
-            You&apos;re on the list — we&apos;ll email you when ClutchD opens near you.
+            You&apos;re on the list. We&apos;ll email you when ClutchD opens near you.
           </p>
         )}
         {status === 'duplicate' && (
           <p className="mt-2 font-sans text-sm text-accent-primary">
-            You&apos;re already on the list — we&apos;ll email you when ClutchD opens near you.
+            You&apos;re already on the list. We&apos;ll email you when ClutchD opens near you.
           </p>
         )}
       </div>

@@ -141,7 +141,7 @@ export default function Audiences() {
         <SectionHeading
           eyebrow="WHO IT'S FOR"
           title="Built for everyone who keeps vehicles moving"
-          lede="One ecosystem, four perspectives — all working from the same verified network."
+          lede="One ecosystem, four perspectives: all working from the same verified network."
           id="audiences-heading"
         />
         <div
