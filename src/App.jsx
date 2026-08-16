@@ -4,6 +4,7 @@ import Header from './components/layout/Header.jsx'
 import Footer from './components/layout/Footer.jsx'
 import PrivacyNotice from './components/ui/PrivacyNotice.jsx'
 import RouteFallback from './components/ui/RouteFallback.jsx'
+import useGoatCounterRouteChange from './hooks/useGoatCounterRouteChange.js'
 
 // Route-level code-splitting (V2): each page is its own chunk, loaded on
 // first visit. Supersedes the single-page useNearViewport/DeferredSection
@@ -52,26 +53,9 @@ function PageTransition({ children }) {
   )
 }
 
-// GoatCounter (P2) polls location.hash by default — BrowserRouter pushState
-// navigation never fires a pageview (V7 live-verified: 0 beacons on SPA
-// nav). Ping count() on every route change; skip the first run because
-// count.js already counts the initial page load (would double-count).
-// No-op when the script is blocked/adblocked (window.goatcounter absent).
-function useGoatCounterRouteChange(pathname) {
-  const first = useRef(true)
-  useEffect(() => {
-    if (first.current) {
-      first.current = false
-      return
-    }
-    const gc = window.goatcounter
-    if (gc && typeof gc.count === 'function') {
-      gc.count({ path: window.location.pathname + window.location.search })
-    }
-  }, [pathname])
-}
-
-function RouteFocus() {
+// GoatCounter (P2) pings on route change — see hooks/useGoatCounterRouteChange.js.
+// Exported for the Wave IX-1 unit tests (PRODUCTION.md IX-1).
+export function RouteFocus() {
   const { pathname } = useLocation()
   useGoatCounterRouteChange(pathname)
 

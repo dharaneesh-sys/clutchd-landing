@@ -121,6 +121,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Accessibility**: real `<button>`, visible focus ring, 4.5:1 label contrast.
 - **Motion**: 200ms custom cubic-bezier(0.32, 0.72, 0, 1) on background + transform only.
 - **Layout**: inline cluster; never full-width except mobile form submit.
+- **Test contract (IX-1)**: unit tests assert the DOM/aria contract — real `<button>` with the label as accessible name; `disabled` reflects the disabled state; `aria-label` only for icon-only buttons.
 
 ### Nav (floating pill)
 - **Structure**: sticky top bar, light glass (`backdrop-blur` on this fixed element only), hairline bottom border, logo left, links center, pill CTA right.
@@ -157,6 +158,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **States**: expanded/collapsed with chevron rotation; focus ring visible.
 - **Accessibility**: proper `aria-expanded`/`aria-controls`, keyboard operable.
 - **Motion**: 250ms height/opacity via transform+opacity only.
+- **Test contract (IX-1)**: unit tests assert the DOM/aria contract — real `<button>` disclosure headers; `aria-expanded` toggles; `aria-controls` matches the panel id; keyboard operable (Enter/Space); single-open behavior.
 
 ### Testimonial Card
 - **Structure**: quote + name + role + star rating (5-star row, filled stars in accent).
@@ -179,6 +181,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Submission (Netlify Forms, P1)**: POST `FormData` to `window.location.pathname` with `Accept: application/json`; fields `form-name=early-access`, `email`, honeypot `bot-field` (empty string). Netlify detects the form via a hidden static form in `index.html` (`name="early-access"`, `data-netlify="true"`, `netlify-honeypot="bot-field"`). Non-2xx or network failure → error state — never fake success.
 - **Soft dedupe**: `localStorage['clutchd-signups']` array of lowercased emails; a repeat submit in the same browser → duplicate message. Per-browser only (Netlify Forms free tier has no read API for server-side dedupe).
 - **Accessibility**: `<label>`, `type="email"`, `required`, `aria-describedby` for error, `aria-invalid`, `aria-live="polite"` status region.
+- **Test contract (IX-1)**: unit tests assert the DOM/aria contract — idle→submitting→success/error/duplicate states; EMAIL_RE validation message "Enter a valid email address"; the `aria-live="polite"` region announces all 3 message states; `aria-invalid`/`aria-describedby` present only on error; localStorage soft-dedupe (case-insensitive, lowercased storage); fetch POST body = `form-name=early-access` + email + honeypot `bot-field`; non-2xx/network failure → error, never fake success.
 
 ### PrivacyNotice (dismissible banner)
 - **Purpose**: transparent disclosure that the page uses GoatCounter (cookie-free analytics, no personal data). Required by the production plan (D14) — informational, not a consent gate (no cookies → no legal consent requirement).
@@ -193,11 +196,13 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Variants**: `default` (cool surface, secondary text — neutral metadata); `accent` (tint surface, accent text — branded label); `live` (cool surface, navy text + pulsing accent dot — the system's one meaningful auto animation).
 - **Accessibility**: non-interactive `<span>`; the live dot is `aria-hidden="true"` (decorative).
 - **Layout**: inline cluster, wraps with text flow.
+- **Test contract (IX-1)**: unit tests assert the DOM/aria contract — non-interactive `<span>`; the live dot is `aria-hidden="true"` (decorative); label text is the accessible content.
 
 ### Container (page frame)
 - **Structure**: centered page frame — `max-w-[80rem]` (1280px max content width, DESIGN.md §4 grid), horizontal padding from the spacing scale (16px mobile → 24px ≥640px → 32px ≥1024px), `mx-auto`.
 - **Variants**: polymorphic `as` prop (default `div`; sections may pass `as="section"` etc.).
 - **Layout**: single column; never introduces horizontal scroll.
+- **Test contract (IX-1)**: unit tests assert the DOM/aria contract — renders the polymorphic `as` element (default `div`); children render inside.
 
 ### SectionHeading
 - **Structure**: eyebrow (mono overline, accent, uppercase) + `<h2>` (Section Heading scale — 30/36px, weight 600, tight tracking) + optional lede (Body scale, secondary).
@@ -230,6 +235,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Motion**: `transform`/`opacity`/`stroke-dashoffset` only — timeline fill (color/transform), SVG route draw (stroke-dashoffset), ETA chip tick (content update, opacity crossfade); 200–300ms §6 easings; GPU-composited.
 - **Invitation cue (V8 — D14 intact)**: on initial mount only, a soft expanding ring pulses around the first (Request) state button — a single ambient hint that the demo is interactive. No autoplay, no auto-advance, no looping content motion. The cue disappears on the first interaction (any state click) and is `motion-reduce`-disabled (`animation: none`). §6-gated keyframe (`herostage-pulse`).
 - **Layout**: same footprint as the static card it replaces (`max-w-sm`, `rounded-[2rem]` shell, hairline + warm surfaces).
+- **Test contract (IX-1)**: unit tests assert the DOM/aria contract — 6 states render the correct step title/ETA/estimate; state controls are real `<button>`s (keyboard operable); manual-only (no auto-advance); the `aria-live="polite"` region announces state changes only (empty on mount); `prefers-reduced-motion` → static Completed layout.
 
 ### EditorialCard (V3, 2026-08-15) — anatomy pattern, never a uniform grid
 - **Purpose**: the editorial card family replaces the uniform `rounded-2xl` + `h-11 w-11 tint square` grammar. Cards are **varied by design** — no two sections share the same card anatomy (V3 acceptance).
