@@ -3,9 +3,11 @@
  *
  * Generated with deep-translator (GoogleTranslate en→ta, 2026-08-17), then
  * hand-corrected (round 1: mechanics→physics, fleets→navies, launch→ceremony;
- * round 2: 50+ editorial fixes from a string-by-string review — wrong idioms,
- * word-choice consistency, grammar). Keys mirror src/lib/translations/en.js
- * 1:1 (flat, stable, one level only) — a pure string-map swap, no code changes.
+ * round 2: editorial fixes — wrong idioms, word-choice consistency, grammar;
+ * round 3: tone/register pass — platform=தளம், filing cabinet=கோப்பு அலமாரி,
+ * make=பிராண்ட், pass-verification=தேர்ச்சி, launch=தொடங்கும், available=கிடைக்கிறது).
+ * Keys mirror src/lib/translations/en.js 1:1 (flat, stable, one level only)
+ * — a pure string-map swap, no code changes.
  *
  * REVIEW NEEDED: machine translation is a draft. A native Tamil speaker should
  * review tone/register before launch. Until then the toggle ships with this map.
@@ -42,7 +44,7 @@ export default {
   'footer.tagline': 'ClutchD ஓட்டுனர்கள், மெக்கானிக்குகள், கேரேஜ்கள், ஃப்ளீட்கள், பாகங்கள், பணம் செலுத்துதல் மற்றும் சேவை வரலாற்றை ஒரு வாகன சுற்றுச்சூழல் அமைப்பில் இணைக்கிறது.',
   'footer.navAriaLabel': 'அடிக்குறிப்பு',
   'footer.copyright': '© 2026 ClutchD',
-  'footer.tamilComingSoon': 'தமிழ் இப்போது உள்ளது: Tamil now available',
+  'footer.tamilComingSoon': 'தமிழ் இப்போது கிடைக்கிறது: Tamil now available',
   'footer.privacy': 'தனியுரிமை',
   'footer.terms': 'விதிமுறைகள்',
   'hero.liveBadge': 'இப்போது கோயம்புத்தூரில் செயலில் உள்ளது',
@@ -125,7 +127,7 @@ export default {
   'trust.lede': 'வாகனப் பராமரிப்பை நீங்கள் நம்பக்கூடிய ஐந்து உறுதிப்பாடுகள்.',
   'trust.0.tag': 'KYC',
   'trust.0.title': 'சரிபார்க்கப்பட்ட மெக்கானிக்குகள் & கேரேஜ்கள்',
-  'trust.0.body': 'ஒவ்வொரு வழங்குநரும் நெட்வொர்க்கில் சேர்வதற்கு முன்பு அடையாளம் மற்றும் திறன் சரிபார்ப்பை (KYC) கடந்து செல்கிறார்கள்.',
+  'trust.0.body': 'ஒவ்வொரு வழங்குநரும் நெட்வொர்க்கில் சேர்வதற்கு முன்பு அடையாளம் மற்றும் திறன் சரிபார்ப்பில் (KYC) தேர்ச்சி பெறுகிறார்கள்.',
   'trust.1.tag': 'மதிப்பீடு',
   'trust.1.title': 'வெளிப்படையான மதிப்பீடுகள்',
   'trust.1.body': 'வேலை தொடங்கும் முன் விலையைப் பார்க்கவும். மதிப்பீட்டை அங்கீகரிக்கவும், பின்னர் குறடு உயர்த்தப்படும்.',
@@ -150,7 +152,7 @@ export default {
   'testimonials.eyebrow': 'ஆதாரம்',
   'testimonials.title': 'சாலையில் உள்ளவர்கள், அவர்களின் சொந்த வார்த்தைகளில்',
   'testimonials.lede': 'கிளட்ச்டி நெட்வொர்க்கில் வேலை செய்வது பற்றி டிரைவர்கள், மெக்கானிக்ஸ் மற்றும் கேரேஜ்கள் என்ன சொல்கின்றன.',
-  'testimonials.statsLabel': 'அறிமுக புள்ளிவிவரங்கள் நிலுவையில் உள்ளன: விளக்கத்திற்காக',
+  'testimonials.statsLabel': 'அறிமுக புள்ளிவிவரங்கள் நிலுவையில் உள்ளன: எடுத்துக்காட்டுக்காக',
   'testimonials.statsAriaLabel': 'விளக்கப்பட வெளியீட்டு புள்ளிவிவரங்கள், உற்பத்தி அளவீடுகள் அல்ல',
   'testimonials.0.value': '120+',
   'testimonials.0.label': 'சரிபார்க்கப்பட்ட மெக்கானிக்குகள்',
@@ -168,10 +170,10 @@ export default {
   'testimonials.quote.1.quote': 'ClutchD நான் சொந்தமாக அடைய முடியாத வேலைகளை எனக்கு வழங்குகிறது. வாடிக்கையாளர்கள் அழைப்பதற்கு முன்பே எனது மதிப்பீட்டை அறிந்திருக்கிறார்கள்.',
   'testimonials.quote.2.name': 'தீபா நாயர்',
   'testimonials.quote.2.role': 'கேரேஜ் நடத்துபவர் · கொச்சி',
-  'testimonials.quote.2.quote': 'மதிப்பீடுகள், ஒப்புதல்கள், பணம் செலுத்துதல்: எல்லாம் இப்போது ஒரே இடத்தில். என் மேசை இனி கோப்பு அமைச்சரவை அல்ல.',
+  'testimonials.quote.2.quote': 'மதிப்பீடுகள், ஒப்புதல்கள், பணம் செலுத்துதல்: எல்லாம் இப்போது ஒரே இடத்தில். என் மேசை இனி கோப்பு அலமாரி அல்ல.',
   'marketplace.eyebrow': 'சந்தை',
   'marketplace.title': 'சேவை மற்றும் பாகங்கள், ஒரே அமைப்பில்',
-  'marketplace.lede': 'கண்டறிதல் → தேவையான பாகங்களைக் கண்டறிதல் → கிடைப்பதைச் சரிபார்த்தல் → ஆர்டர் → சேவையைப் பெறுதல் → பதிவை வைத்திருத்தல். ஒரு பணிப்பாய்வு, ஆப்களுக்கு இடையே மாற வேண்டியதில்லை.',
+  'marketplace.lede': 'கண்டறிதல் → தேவையான பாகங்களைக் கண்டுபிடித்தல் → கிடைப்பதைச் சரிபார்த்தல் → ஆர்டர் → சேவையைப் பெறுதல் → பதிவை வைத்திருத்தல். ஒரு பணிப்பாய்வு, ஆப்களுக்கு இடையே மாற வேண்டியதில்லை.',
   'marketplace.0.category': 'எஞ்சின் பாகங்கள்',
   'marketplace.1.category': 'பிரேக் பாகங்கள்',
   'marketplace.2.category': 'மின் கூறுகள்',
@@ -179,7 +181,7 @@ export default {
   'marketplace.4.category': 'வடிப்பான்கள்',
   'marketplace.5.category': 'துணைக்கருவிகள்',
   'marketplace.callout.0.title': 'பொருத்துதல் சோதனை',
-  'marketplace.callout.0.body': 'உங்கள் தயாரிப்பு, மாடல் மற்றும் ஆண்டைத் தேர்ந்தெடுத்து, உங்கள் வாகனத்திற்கு உண்மையில் பொருந்தக்கூடிய பாகங்களை மட்டும் பார்க்கவும்.',
+  'marketplace.callout.0.body': 'உங்கள் வாகனத்தின் பிராண்ட், மாடல் மற்றும் ஆண்டைத் தேர்ந்தெடுத்து, உங்கள் வாகனத்திற்கு உண்மையில் பொருந்தக்கூடிய பாகங்களை மட்டும் பார்க்கவும்.',
   'marketplace.callout.1.title': 'விற்பனையாளர் ஒப்பீடு',
   'marketplace.callout.1.body': 'நீங்கள் ஆர்டர் செய்வதற்கு முன் சரிபார்க்கப்பட்ட சப்ளையர்கள் அனைவரின் விலைகளையும் ஒப்பிடுங்கள்: இனி ஃபோன் அலைச்சல் இல்லை.',
   'marketplace.catalog.partNo': 'பாகம் № CD-1042',
@@ -189,7 +191,7 @@ export default {
   'marketplace.catalog.fits': 'உங்கள் வாகனத்திற்கு பொருந்தும்',
   'marketplace.catalog.rating': '4.8',
   'intelligence.eyebrow': 'நுண்ணறிவு',
-  'intelligence.title': 'விஷயங்கள் உடைவதற்கு முன் நடக்கும் பராமரிப்பு',
+  'intelligence.title': 'வாகனம் பழுதடைவதற்கு முன் செய்யப்படும் பராமரிப்பு',
   'intelligence.lede': 'எதிர்வினை முறிவுகள் முதல் முன்முயற்சி பராமரிப்பு வரை, ClutchD ஆனது வாகனத் தரவை முன்கூட்டிய எச்சரிக்கைகள் மற்றும் திட்டமிடப்பட்ட சேவையாக மாற்றுகிறது.',
   'intelligence.0.title': 'பராமரிப்பு நினைவூட்டல்கள்',
   'intelligence.0.body': 'சேவைப் பதிவுகள் எதிர்காலத் தேவைகளாக மாறும்: இது ஒரு சிக்கலாக மாறுவதற்கு முன்பு உங்களுக்குச் சொல்லப்படும்.',
@@ -223,7 +225,7 @@ export default {
   'faq.4.q': 'என்ன கட்டண முறைகள் ஆதரிக்கப்படுகின்றன?',
   'faq.4.a': 'ஸ்ட்ரைப் மற்றும் ரேஸர்பே மூலம் பாதுகாப்பாக பணம் செலுத்துங்கள்.',
   'faq.5.q': '"முன்னோட்டம்" என்றால் என்ன?',
-  'faq.5.a': 'இந்தப் பக்கத்தில் உள்ள சில திரைகள் மற்றும் புள்ளிவிவரங்கள் தயாரிப்பின் விளக்கமான முன்னோட்டங்கள்; ClutchD வெளிவரும்போது உண்மையான எண்கள் புதுப்பிக்கப்படும்.',
+  'faq.5.a': 'இந்தப் பக்கத்தில் உள்ள சில திரைகள் மற்றும் புள்ளிவிவரங்கள் தயாரிப்பின் எடுத்துக்காட்டு முன்னோட்டங்கள்; ClutchD வெளிவரும்போது உண்மையான எண்கள் புதுப்பிக்கப்படும்.',
   'earlyAccess.eyebrow': 'முன்கூட்டிய அணுகல்',
   'earlyAccess.title': 'ClutchD கோயம்புத்தூரில் வெளிவருகிறது',
   'earlyAccess.lede': 'வாகனப் பராமரிப்புக்கான இணைக்கப்பட்ட சுற்றுச்சூழல் அமைப்பை முதலில் முயற்சிப்பவர்களில் ஒருவராக இருங்கள்.',
@@ -233,7 +235,7 @@ export default {
   'form.submitting': 'சமர்ப்பிக்கிறது…',
   'form.validationError': 'சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்',
   'form.error': 'ஏதோ தவறாகிவிட்டது. மீண்டும் முயற்சிக்கவும்.',
-  'form.success': 'நீங்கள் பட்டியலில் உள்ளீர்கள். உங்களுக்கு அருகில் ClutchD திறக்கும் போது உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.',
+  'form.success': 'நீங்கள் பட்டியலில் உள்ளீர்கள். உங்களுக்கு அருகில் ClutchD தொடங்கும் போது உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.',
   'form.duplicate': 'நீங்கள் ஏற்கனவே பட்டியலில் உள்ளீர்கள். உங்களுக்கு அருகில் ClutchD திறக்கும் போது உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.',
   'form.legal': 'கோயம்புத்தூர் அறிமுகம் குறித்து மட்டுமே உங்களுக்கு மின்னஞ்சல் அனுப்புவோம்.',
   'form.privacyLink': 'தனியுரிமைக் கொள்கை',
@@ -260,7 +262,7 @@ export default {
   'meta.faq.description': 'ClutchD எவ்வாறு செயல்படுகிறது என்பது பற்றிய நேரடியான பதில்கள்: பொருத்தம், மதிப்பீடுகள், சரிபார்ப்பு, கவரேஜ், பணம் செலுத்துதல் மற்றும் முன்னோட்டம் என்றால் என்ன.',
   'meta.earlyAccess.title': 'முன்கூட்டிய அணுகல்: ClutchD',
   'meta.earlyAccess.description': 'ClutchD முன்கூட்டிய அணுகல் காத்திருப்புப் பட்டியலில் சேர்ந்து, உங்கள் நகரத்தில் ஆப்ஸ் திறக்கப்படும்போது வரிசையில் முதலாவதாக இருங்கள்.',
-  'page.howItWorks.eyebrow': 'மேடை',
+  'page.howItWorks.eyebrow': 'தளம்',
   'page.howItWorks.title': 'இது எப்படி வேலை செய்கிறது',
   'page.howItWorks.body': 'கோரிக்கை முதல் நிறைவு செய்யப்பட்ட சேவை வரை, ClutchD உங்களைச் சரிபார்க்கப்பட்ட வழங்குநர்களுடன் நிமிடங்களில் எவ்வாறு இணைக்கிறது என்பதைப் பார்க்கவும்.',
   'page.marketplace.eyebrow': 'சந்தை',

@@ -56,7 +56,7 @@ export default {
     'ClutchD connects drivers, mechanics, garages, fleets, parts, payments and service history into one automotive ecosystem.',
   'footer.navAriaLabel': 'Footer',
   'footer.copyright': '© 2026 ClutchD',
-  'footer.tamilComingSoon': 'தமிழ் இப்போது உள்ளது: Tamil now available',
+  'footer.tamilComingSoon': 'தமிழ் இப்போது கிடைக்கிறது: Tamil now available',
   'footer.privacy': 'Privacy',
   'footer.terms': 'Terms',
 
