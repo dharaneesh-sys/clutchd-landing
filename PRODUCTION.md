@@ -19,41 +19,44 @@ between what the verification protocols *require* and what is actually *committe
 
 ---
 
-## 0. Current State (verified 2026-08-16)
+## 0. Current State (verified 2026-08-17)
 
 | Check | Result |
 |---|---|
 | Stack | Vite 8 + React 19 + Tailwind 4, React Router 7, Fraunces/Geist latin self-hosted |
-| `npm run build` | ✅ passes — 871ms, vendor 189 kB gz / entry 54 kB gz / Home 17 kB gz |
-| `npm run lint` (oxlint) | ✅ passes |
-| Live deploy | ✅ https://clutchd-193.netlify.app — all routes 200, git-integrated deploys, OG card served |
+| `npm run build` | ✅ passes — 850ms; vendor 189.58 kB gz / entry 72.87 kB gz (incl. i18n wiring, +5.6 kB gz vs V8) / Home 15.33 kB gz |
+| `npm run lint` (oxlint) | ✅ passes, 0 warnings |
+| `npm run test` | ✅ Vitest + RTL — 58/58 unit/component tests (a11y + DOM contract per §1 IX-1) |
+| `npm run test:e2e` | ✅ Playwright (chromium) — 56/56: routes, deep links, HeroStage, reduced-motion, console-zero, 390px |
+| `npm run design-gate` | ✅ fail-closed grep gate — no raw hex outside tokens, no off-base spacing, no banned families (Wave IX-5) |
+| `npm run lh` | ✅ runnable script (Wave IX-4, real Chrome) — **desktop 100 PASS**; mobile 83–94 across runs (TBT jitter; honest ceiling ~94–98, see §4 + XI-1 evidence) |
+| CI | ✅ build → lint → design-gate → unit → e2e → smoke, all fail-closed on push/PR |
+| Live deploy | ✅ https://clutchd-193.netlify.app — all routes 200, **git-integrated auto-deploys** (repo-linked, verified end-to-end), OG card served |
 | Analytics | ✅ GoatCounter, SPA route-change pings live (V7-verified) |
-| Forms | ✅ Netlify Forms — real POST, honeypot, soft dedupe, aria-live states |
-| Legal + security | ✅ privacy.html/terms.html, `_headers` CSP/HSTS, `_redirects` SPA fallback |
-| CI | ✅ lint + build + HTTP-level smoke (P11) — **no DOM/browser tests** |
-| Test infrastructure | ❌ **zero** — no Vitest, no Playwright, no test files, no `test` script |
-| Lighthouse | ✅ 100 desktop / 99 mobile (documented) — but **no runnable script/config**; `lighthouse` devDep unused |
-| Docs | ✅ DESIGN.md current through V8; ❌ PRODUCTION.md missing; ❌ V8 absent from `visual-overhaul-spec.md` |
-| Git | clean tree, 36 commits, origin = `dharaneesh-sys/clutchd-landing` |
+| Forms | ✅ Netlify Forms enabled (XI-3 resolved) — real POST, honeypot, soft dedupe, aria-live; **email hook configured** (XI-3b resolved, 4 verified test submissions) |
+| Legal + security | ✅ privacy.html/terms.html, `_headers` CSP/HSTS, `_redirects` SPA fallback, real `robots.txt` |
+| i18n | ✅ EN\|தமிழ் toggle shipped (Wave XII-1b) — string routing, `?lang=ta`, localStorage, `<html lang>` flip; ⚠️ `ta.js` is a placeholder awaiting the user's Tamil string map + Tamil font stack |
+| Docs | ✅ DESIGN.md current (V8 + Wave XIII eyebrow decision), PRODUCTION.md maintained, IMPROVEMENTS/VISUAL-IMPROVEMENTS marked EXECUTED, V8 + XII records in spec/issues |
+| Git | clean tree, 49 commits, origin = `dharaneesh-sys/clutchd-landing` |
 
 **Strengths to preserve:** token discipline (no orphan hex), honest "Preview" labels, the
 design-system gate in DESIGN.md, macro-whitespace editorial rhythm, a11y AA + keyboard +
-reduced-motion discipline, self-hosted fonts + inline CSS (F2), route-level code splitting.
+reduced-motion discipline, self-hosted fonts + inline CSS (F2), route-level code splitting,
+committed test gate (unit + e2e + lh + design-gate runnable in one command each).
 
-**Gaps this plan closes:**
-1. Verification protocol (IMPROVEMENTS.md §3, VISUAL-IMPROVEMENTS.md §5, spec §5) is
-   manual/ephemeral — "Playwright interaction test", "keyboard walk", "Lighthouse via real
-   Chrome" were run ad-hoc, never committed. This is the #1 gap: **the gate the docs demand
-   does not exist in the repo.**
-2. `PRODUCTION.md` referenced by README but never written.
-3. Wave VIII (directional transitions, stagger, interaction parity, herostage-pulse cue)
-   is in DESIGN.md + commits only — no plan-doc record.
-4. Mobile perf 87–93 (throttled) — documented exit ("revisit with prerender") never actioned.
-5. Footer promises "Tamil coming soon" — no i18n scope.
-6. Custom domain deferred; site stuck on `clutchd-193.netlify.app`.
-7. Form notifications (Netlify dashboard → email/Slack) not configured.
-8. Design-taste audit (2026-08-16) surfaced 2 skill hard-ban violations in shipped copy:
-   ~25 visible em-dashes and a raw `scroll` listener in Header — **Wave XIII**.
+**Gaps this plan closed (Waves IX–XIII):**
+1. ✅ Verification protocol committed: `npm run test` / `test:e2e` / `lh` / `design-gate` replace the ad-hoc protocol; CI runs the full fail-closed chain.
+2. ✅ `PRODUCTION.md` written (this file) + maintained.
+3. ✅ Wave VIII recorded in `visual-overhaul-spec.md` + DESIGN.md.
+4. ✅ Mobile perf investigated (XI-1): prerender measured honestly (87 → 94) and reverted — TBT 156ms caps the score at ~98 even with everything perfect; accepted debt with evidence (§4).
+5. ✅ i18n scoped and shipped (XII-1b); remaining is the user-supplied `ta.js` string map.
+6. ➖ Custom domain still deferred (D2 — no domain owned); XI-2 checklist ready.
+7. ✅ Form notifications resolved via API email hook (XI-3b) — no dashboard step needed.
+8. ✅ Design-taste hard bans fixed (XIII): ~25 visible em-dashes → clean punctuation, raw `scroll` listener → IntersectionObserver sentinel, hero subtext trimmed.
+
+**Open tail (execution order §5):** lane-c accessibility review + `/review-work` handoff
+(optional final step); XI-3b inbox confirmation (email hook has no delivery-status API);
+Tamil strings + font stack (user-supplied).
 
 ---
 
