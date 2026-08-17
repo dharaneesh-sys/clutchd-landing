@@ -28,9 +28,9 @@
   --depth-navy-2: #111869;
 
   /* Typography — DESIGN.md §3 (self-hosted via @fontsource-variable) */
-  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
-  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+  --font-display: 'Fraunces Variable', 'Noto Sans Tamil', 'Nirmala UI', 'Latha', 'Tamil Sangam MN', ui-serif, Georgia, serif;
+  --font-sans: 'Geist Variable', 'Noto Sans Tamil', 'Nirmala UI', 'Latha', 'Tamil Sangam MN', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Noto Sans Tamil', 'Nirmala UI', 'Latha', 'Tamil Sangam MN', ui-monospace, monospace;
 }
 
 /* Tailwind v4 namespace — semantic tokens → utilities (inline: values

@@ -49,6 +49,7 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 - **Display:** `Fraunces Variable` via `@fontsource-variable/fraunces` — characterful warm serif, multi-axis (wght 100–900 / opsz / SOFT / WONK), latin-only self-hosted. **Display-only: never body copy.** (V-overhaul D18, 2026-08-15)
 - **Primary:** `Geist Variable` via `@fontsource-variable/geist` — premium sans, weight axis 100–900. Maps coinbase's Display/Sans/Text roles onto one variable family. The soft-skill banned generic fonts (Inter, Roboto, Arial, Open Sans, Helvetica) are excluded.
 - **Mono (labels only):** `Geist Mono` via `@fontsource-variable/geist-mono` — eyebrow tags, overline, small metadata.
+- **Tamil fallbacks (Wave XII, 2026-08-17):** Fraunces/Geist are Latin-only, so all three tokens append a Tamil-capable system stack for `lang="ta"` text: `'Noto Sans Tamil', 'Nirmala UI', 'Latha', 'Tamil Sangam MN'`. Latin glyphs still resolve from the first family (Fraunces/Geist); only Tamil glyphs fall through to the system stack. No new font files are shipped (system fonts, zero weight); Tamil display text renders in the sans stack (Tamil has no serif in this system set).
 
 ### Scale
 

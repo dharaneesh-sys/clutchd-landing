@@ -14,7 +14,7 @@
  * and restored in afterEach.
  */
 import { renderHook, act } from '@testing-library/react'
-import { useT, T, setHtmlLang, EN, LANGUAGES, LANG_STORAGE_KEY } from './i18n.js'
+import { useT, T, setHtmlLang, EN, TA, LANG_STORAGE_KEY } from './i18n.js'
 
 const REAL_LOCATION = window.location
 
@@ -54,15 +54,15 @@ describe('useT', () => {
     expect(localStorage.getItem(LANG_STORAGE_KEY)).toBe('ta')
   })
 
-  it('setLang("ta") persists to localStorage and falls back to EN for missing keys', () => {
+  it('setLang("ta") persists to localStorage and switches to the Tamil map', () => {
     const { result } = renderHook(() => useT())
     act(() => result.current.setLang('ta'))
     expect(result.current.lang).toBe('ta')
     expect(localStorage.getItem(LANG_STORAGE_KEY)).toBe('ta')
-    // ta is the {} placeholder — every key resolves to the EN string
-    expect(result.current.t['hero.headline']).toBe(EN['hero.headline'])
-    expect(result.current.t['faq.0.q']).toBe(EN['faq.0.q'])
-    expect(result.current.t['nav.howItWorks']).toBe(EN['nav.howItWorks'])
+    // real Tamil strings, not the EN fallback
+    expect(result.current.t['hero.headline']).toBe(TA['hero.headline'])
+    expect(result.current.t['faq.0.q']).toBe(TA['faq.0.q'])
+    expect(result.current.t['nav.howItWorks']).toBe(TA['nav.howItWorks'])
   })
 
   it('setLang("en") persists and switches back', () => {
@@ -74,12 +74,10 @@ describe('useT', () => {
     expect(result.current.t).toEqual(EN)
   })
 
-  it('falls back to the EN string for a missing key in the active map', () => {
+  it('never renders a raw key: a key absent from both maps is undefined', () => {
     const { result } = renderHook(() => useT())
     act(() => result.current.setLang('ta'))
-    // key exists in EN but not in the (empty) ta map → EN string, never a raw key
-    expect(result.current.t['trust.3.body']).toBe(EN['trust.3.body'])
-    expect(result.current.t['marketplace.2.category']).toBe(EN['marketplace.2.category'])
+    expect(result.current.t['no.such.key.anywhere']).toBeUndefined()
   })
 
   it('syncs document.documentElement.lang via effect', () => {
@@ -107,16 +105,19 @@ describe('T helper', () => {
     expect(T('footer.tagline')).toBe(EN['footer.tagline'])
   })
 
-  it('honors the ?lang=ta URL param with EN fallback', () => {
+  it('honors the ?lang=ta URL param and returns the Tamil string', () => {
     setSearch('?lang=ta')
-    expect(T('hero.headline')).toBe(EN['hero.headline'])
+    expect(T('hero.headline')).toBe(TA['hero.headline'])
   })
 })
 
 describe('LANGUAGES registry', () => {
-  it('exposes en as the EN map and ta as a null placeholder', () => {
-    expect(LANGUAGES.en).toBe(EN)
-    expect(LANGUAGES.ta).toBeNull()
+  it('mirrors the EN key set 1:1 with non-empty values (pure string-map swap)', () => {
+    expect(Object.keys(TA).sort()).toEqual(Object.keys(EN).sort())
+    for (const key of Object.keys(EN)) {
+      expect(typeof TA[key]).toBe('string')
+      expect(TA[key].length).toBeGreaterThan(0)
+    }
   })
 })
 

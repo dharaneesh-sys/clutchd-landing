@@ -25,17 +25,18 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import EN from './translations/en.js'
+import TA from './translations/ta.js'
 
 export const LANG_STORAGE_KEY = 'clutchd-lang'
 export const VALID_LANGS = ['en', 'ta']
 
-/** Re-export the flat-key English baseline (tests + registry consumers). */
-export { EN }
+/** Re-export the flat-key maps (tests + registry consumers). */
+export { EN, TA }
 
-/** Language registry. `ta` is a null placeholder until the user supplies
- *  src/lib/translations/ta.js; `useT()` falls back to EN for any language
- *  whose map is missing. */
-export const LANGUAGES = { en: EN, ta: null }
+/** Language registry. `ta` ships the machine-translated draft map (Wave XII-1,
+ *  deep-translator + hand corrections — see ta.js header); `useT()` falls back
+ *  to EN for any language whose map is missing or for empty values. */
+export const LANGUAGES = { en: EN, ta: TA }
 
 /** Coerce any input to a known language ('en' | 'ta'), defaulting to 'en'. */
 export function normalizeLang(lang) {

@@ -35,7 +35,7 @@ between what the verification protocols *require* and what is actually *committe
 | Analytics | ✅ GoatCounter, SPA route-change pings live (V7-verified) |
 | Forms | ✅ Netlify Forms enabled (XI-3 resolved) — real POST, honeypot, soft dedupe, aria-live; **email hook configured** (XI-3b resolved, 4 verified test submissions) |
 | Legal + security | ✅ privacy.html/terms.html, `_headers` CSP/HSTS, `_redirects` SPA fallback, real `robots.txt` |
-| i18n | ✅ EN\|தமிழ் toggle shipped (Wave XII-1b) — string routing, `?lang=ta`, localStorage, `<html lang>` flip; ⚠️ `ta.js` is a placeholder awaiting the user's Tamil string map + Tamil font stack |
+| i18n | ✅ EN\|தமிழ் toggle shipped (Wave XII-1b) — string routing, `?lang=ta`, localStorage, `<html lang>` flip; ✅ `ta.js` filled (Wave XII-2, deep-translator en→ta + hand corrections — **machine-translated draft, native review pending**); Tamil system font fallbacks in the §3 font tokens |
 | Docs | ✅ DESIGN.md current (V8 + Wave XIII eyebrow decision), PRODUCTION.md maintained, IMPROVEMENTS/VISUAL-IMPROVEMENTS marked EXECUTED, V8 + XII records in spec/issues |
 | Git | clean tree, 49 commits, origin = `dharaneesh-sys/clutchd-landing` |
 
@@ -56,7 +56,7 @@ committed test gate (unit + e2e + lh + design-gate runnable in one command each)
 
 **Open tail (execution order §5):** lane-c accessibility review + `/review-work` handoff
 (optional final step); XI-3b inbox confirmation (email hook has no delivery-status API);
-Tamil strings + font stack (user-supplied).
+Tamil machine-translation draft needs a native-speaker review before launch.
 
 ---
 
