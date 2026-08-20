@@ -18,7 +18,8 @@
  */
 const TEETH_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315]
 
-export default function LogoMark({ className = '', ...rest }) {
+export default function LogoMark({ className = '', variant = 'light', ...rest }) {
+  const isDark = variant === 'dark'
   return (
     <svg
       viewBox="0 0 48 48"
@@ -26,7 +27,7 @@ export default function LogoMark({ className = '', ...rest }) {
       className={`inline-block h-8 w-8 ${className}`}
       {...rest}
     >
-      {/* Gear teeth — eight rounded bites around the plate (currentColor = navy in context) */}
+      {/* Gear teeth — eight rounded bites around the plate (currentColor = navy in light, white in dark) */}
       {TEETH_ANGLES.map((deg) => (
         <rect
           key={deg}
@@ -39,14 +40,14 @@ export default function LogoMark({ className = '', ...rest }) {
           fill="currentColor"
         />
       ))}
-      {/* Clutch plate — machined disc (currentColor = navy in context) */}
+      {/* Clutch plate — machined disc (currentColor) */}
       <circle cx="24" cy="24" r="16" fill="currentColor" />
       {/* Engagement core — the brand blue, always present */}
-      <circle cx="24" cy="24" r="10" fill="var(--accent-primary)" />
-      {/* Shift gate — H-pattern rows + neutral rail, tint for contrast on the core */}
+      <circle cx="24" cy="24" r="10" fill={isDark ? 'var(--accent-on-dark)' : 'var(--accent-primary)'} />
+      {/* Shift gate — H-pattern rows + neutral rail */}
       <g
         fill="none"
-        stroke="var(--surface-tint)"
+        stroke={isDark ? 'var(--gate-on-dark)' : 'var(--surface-tint)'}
         strokeWidth="2"
         strokeLinecap="round"
       >

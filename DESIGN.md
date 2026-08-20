@@ -18,14 +18,22 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 | Role | Token | Value | Usage |
 |------|-------|-------|-------|
-| Surface/primary | `--surface-primary` | `#FCFAF6` | Main background — subtle cream paper (V-overhaul D5, 2026-08-15) |
-| Surface/soft | `--surface-soft` | `#F8F5EE` | Alternating section fields — warm soft step above cream |
-| Surface/cool | `--surface-cool` | `#F2EFE8` | Secondary button bg, subtle panels — warm cool step |
-| Surface/tint | `--surface-tint` | `#F0EFF7` | Very light warm blue-tint — tint of the primary hue, warm-adjusted from `#F0F1F9` |
-| Text/primary | `--text-primary` | `#0A0E3D` | Deep navy headlines + body (primary hue, L14%) — unchanged |
-| Text/secondary | `--text-secondary` | `#5B616E` | Captions, hints — unchanged (contrast re-verified on warm surfaces, §8) |
-| Text/ink | `--text-ink` | `#26211C` | Warm near-black — editorial pull-quotes, ledes, hero subheadline ONLY (D17, 2026-08-15) |
-| Border/default | `--border-default` | `rgba(38,33,28,0.18)` | Card borders, dividers — warm ink hairline (effective 1.434:1 on cream, no regression vs prior 1.333:1) |
+| Surface/primary | `--surface-primary` | `#F8FAFC` | Main background — cool white (Stripe-overhaul F1, 2026-08-20) |
+| Surface/soft | `--surface-soft` | `#F1F5F9` | Alternating section fields — slate-100 |
+| Surface/cool | `--surface-cool` | `#E2E8F0` | Secondary button bg, subtle panels — slate-200 |
+| Surface/tint | `--surface-tint` | `#E0E7FF` | Accent tint — indigo-100, bridges to glass |
+| Text/primary | `--text-primary` | `#0F172A` | Deep slate headlines + body (slate-900) |
+| Text/secondary | `--text-secondary` | `#475569` | Captions, hints — slate-600 (re-verified on cool surfaces, §8) |
+| Text/ink | `--text-ink` | `#1E293B` | Cool near-black — editorial pull-quotes, ledes, hero subheadline ONLY |
+| Border/default | `--border-default` | `rgba(15,23,42,0.10)` | Card borders, dividers — cool hairline (visible on cool-white surfaces) |
+| Gradient/hero | `--gradient-hero` | `linear-gradient(135deg, var(--surface-primary), var(--surface-tint), #DBEAFE)` | Hero section bg — gradient mesh |
+| Gradient/glass | `--gradient-glass` | `linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3))` | Glass panel surface fill |
+| Gradient/card | `--gradient-card` | `linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5))` | Artifact card surfaces |
+| Glass/dark-bg | `--glass-dark-bg` | `rgba(15,23,42,0.85)` | Dark glass surface (footer, mobile menu) |
+| Glass/light-border | `--glass-light-border` | `rgba(255,255,255,0.5)` | Glass-on-light panel border |
+| Glass/dark-border | `--glass-dark-border` | `rgba(255,255,255,0.1)` | Glass-on-dark panel border |
+| Accent/on-dark | `--accent-on-dark` | `#60A5FA` | Lighter blue for readability on dark glass surfaces |
+| Gate/on-dark | `--gate-on-dark` | `rgba(15,23,42,0.6)` | LogoMark gate strokes on dark surfaces |
 | Accent/primary | `--accent-primary` | `#1E29B6` | CTAs, links, focus — **user-pinned 2026-08-11** |
 | Accent/hover | `--accent-hover` | `#192295` | Hover state — same hue, darker (derived, L34%) |
 | Accent/active | `--accent-active` | `#131B76` | Active/pressed state — same hue, darker (derived, L27%) |
@@ -303,9 +311,9 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - Only animate `transform` and `opacity` (and `filter` for blur). Never layout properties.
 - Every interactive element has hover + active + focus states.
 - Scroll-triggered reveals use `IntersectionObserver`, never scroll listeners.
-- `backdrop-blur` only on fixed/sticky elements (nav, overlays) — never on scrolling content.
+- `backdrop-blur` is preferred on fixed/sticky elements (nav, overlays). Two named exceptions: (1) HeroComposition frame (one instance, above-fold, minimal scroll exposure) and (2) glass-on-dark footer (bottom of page, no competing scroll content). All other scrolling content must not use `backdrop-blur` — use translucent fill + border + shadow instead (Stripe-overhaul §6 Amendment A, 2026-08-20).
 - `prefers-reduced-motion`: disable non-essential animation.
-- Slop animation is forbidden — motion only where it signals interaction or state.
+- Slop animation is forbidden — motion only where it signals interaction or state. No infinite ambient loops (gradient-shift, node-pulse, line-flow are removed from the motion catalog). Entrance, hover, and scroll-reveal animations are permitted (Stripe-overhaul §6 Amendment B, 2026-08-20).
 - **Directional route transitions (V8)**: forward navigation (PUSH/REPLACE) slides content in from the right; back/forward-button (POP) from the left; initial page load = neutral fade. 400ms §6 Emphasis. `transform`/`opacity` only; `prefers-reduced-motion` = no transition (V8).
 - **Staggered reveals (V8)**: card grids may stagger children on entry — 60–80ms per child via `transition-delay`, total ≤ 400ms. Entry-only (never on above-the-fold load-critical content); `prefers-reduced-motion` = no delay (all children appear instantly).
 - **backdrop-entrance (Wave IX)**: for HeroComposition only — subtle scale-up + fade (scale 0.98→1.0, opacity 0→1) on mount, 600ms §6 Emphasis easing. `transform`/`opacity` only (GPU-composited). `prefers-reduced-motion` = no animation (composition paints static). Only the right column (composition) animates; the left column (copy + form) paints immediately to preserve LCP.
@@ -336,6 +344,34 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 - **Rules:** static only — never animated, never scroll-coupled, never GPU-animated (texture is a background, not a composited layer). Never applied to text-bearing containers where it could lower contrast below AA (grain opacity ≤ ~3–4%). Applied on alternating surfaces (primary/soft/cool) for the printed-paper feel.
 - **Tokens:** no texture token needed — the data-URI lives in the `.grain` utility (src/index.css) and is applied via class.
 - **Application (V8)**: keep the grain sparse — soft surfaces only (Trust, Audiences, Intelligence). The tactile register reads as a system when it is sparing; do not over-apply to `--surface-primary` sections or artifact cards.
+
+### Glass Morphism (Stripe-overhaul F2, 2026-08-20)
+
+Glass panels use a consistent recipe: translucent fill + backdrop-blur (where permitted by §6) + subtle border + shadow. Section artifacts use translucent fill only — no blur.
+
+**Glass-on-light (hero frame — §6 Amendment A exception):**
+- `background: var(--gradient-glass)` (or `rgba(255,255,255,0.6)`)
+- `backdrop-filter: blur(16px) saturate(180%)`
+- `border: 1px solid rgba(255,255,255,0.5)`
+- `box-shadow: var(--shadow-elevated)`
+- `border-radius: 24px`
+
+**Glass-on-dark (footer, mobile menu — footer is §6 Amendment A exception; mobile menu is an overlay):**
+- `background: rgba(15,23,42,0.85)`
+- `backdrop-filter: blur(20px) saturate(180%)`
+- `border: 1px solid rgba(255,255,255,0.1)`
+
+**Translucent fill (section artifacts — NO backdrop-blur):**
+- `background: rgba(255,255,255,0.6)` (or `var(--gradient-card)`)
+- `border: 1px solid var(--border-default)`
+- `box-shadow: var(--shadow-elevated)`
+- `border-radius: 16px`
+
+**Rules:**
+- Exactly 4 elements use `backdrop-blur`: hero frame, header, footer, mobile menu. All others = translucent fill only.
+- `@supports not (backdrop-filter: blur(1px))` fallback: solid translucent bg, no blur.
+- `prefers-reduced-motion`: glass keeps translucency but loses blur.
+- Glass surfaces must pass AA contrast for any text rendered on them.
 
 ## 8. Accessibility Constraints & Accepted Debt
 

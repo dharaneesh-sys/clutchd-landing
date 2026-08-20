@@ -7,15 +7,26 @@
    value used in components traces to a token.
    ============================================================ */
 :root {
-  /* Color — DESIGN.md §2 (warm palette, V-overhaul 2026-08-15) */
-  --surface-primary: #fcfaf6;
-  --surface-soft: #f8f5ee;
-  --surface-cool: #f2efe8;
-  --surface-tint: #f0eff7;
-  --text-primary: #0a0e3d;
-  --text-secondary: #5b616e;
-  --text-ink: #26211c;
-  --border-default: rgba(38, 33, 28, 0.18);
+  /* Color — DESIGN.md §2 (cool-white palette, Stripe-overhaul F1 2026-08-20) */
+  --surface-primary: #f8fafc;
+  --surface-soft: #f1f5f9;
+  --surface-cool: #e2e8f0;
+  --surface-tint: #e0e7ff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-ink: #1e293b;
+  --border-default: rgba(15, 23, 42, 0.10);
+  /* Gradient tokens — DESIGN.md §2 (Stripe-overhaul F1) */
+  --gradient-hero: linear-gradient(135deg, var(--surface-primary), var(--surface-tint), #dbeafe);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
+  --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+  /* Glass tokens — DESIGN.md §7 Glass Morphism (Stripe-overhaul F2) */
+  --glass-dark-bg: rgba(15, 23, 42, 0.85);
+  --glass-light-border: rgba(255, 255, 255, 0.5);
+  --glass-dark-border: rgba(255, 255, 255, 0.1);
+  /* Dark-surface accent — lighter blue for readability on dark glass */
+  --accent-on-dark: #60a5fa;
+  --gate-on-dark: rgba(15, 23, 42, 0.6);
   --accent-primary: #1e29b6;
   --accent-hover: #192295;
   --accent-active: #131b76;
@@ -61,9 +72,11 @@
 
 /* Paper grain (DESIGN.md §7) — static inline SVG noise data-URI, applied to
    section surfaces. Never animated, never scroll-coupled, never on
-   text-bearing containers where it could drop contrast below AA. */
+   text-bearing containers where it could drop contrast below AA.
+   Opacity 0.025 (reduced from 0.035 for cool-white palette — Stripe-overhaul F1).
+   On tint surfaces (indigo-100), the cool base amplifies noise visibility. */
 .grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
 }
 
 /* Page transitions (DESIGN.md §6 Emphasis — "Page transition") — V6.
@@ -238,5 +251,41 @@
   .nav-link-indicator:hover::after,
   .nav-link-indicator:focus-visible::after {
     transform: scaleY(1);
+  }
+
+  /* Stripe-overhaul F2: Glass morphism — DESIGN.md §7 Glass Morphism.
+     Exactly 4 elements use backdrop-blur; others use translucent fill only.
+     @supports fallback for browsers without backdrop-filter. */
+  .glass-light {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--glass-light-border);
+    box-shadow: var(--shadow-elevated);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-light {
+      background: rgba(255, 255, 255, 0.85);
+    }
+  }
+  .glass-dark {
+    background: var(--glass-dark-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-dark-border);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-dark {
+      background: rgba(15, 23, 42, 0.95);
+    }
+  }
+  .glass-fill {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-elevated);
+  }
+  /* Reduced motion: glass keeps translucency but loses blur */
+  @media (prefers-reduced-motion: reduce) {
+    .glass-light, .glass-dark {
+      backdrop-filter: none;
+    }
   }
 }

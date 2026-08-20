@@ -15,30 +15,30 @@ const LEGAL_NAV = [
 ]
 
 const LINK_CLASS =
-  'font-sans text-sm text-text-secondary transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-soft'
+  'font-sans text-sm text-slate-300 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--glass-dark-bg)]'
 
 export default function Footer() {
   const { t } = useT()
   return (
-    <footer className="border-t border-border-default bg-surface-soft">
+    <footer className="glass-dark border-t border-white/10">
       <div className="mx-auto w-full max-w-[80rem] px-4 py-16 sm:px-6 lg:px-8">
         {/* 3-column editorial layout on desktop, 1-col stack on mobile */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           {/* Left column — logo, tagline, accent rule */}
           <div className="flex flex-col gap-4">
-            <Logo />
+            <Logo variant="dark" />
             <span
               aria-hidden="true"
               className="h-px w-16 bg-accent-primary"
             />
-            <p className="max-w-xs font-sans text-sm leading-relaxed text-text-secondary">
+            <p className="max-w-xs font-sans text-sm leading-relaxed text-slate-400">
               {t['footer.tagline']}
             </p>
           </div>
 
           {/* Center column — Product nav */}
           <div className="flex flex-col gap-3">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-text-primary">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
               Product
             </span>
             <nav aria-label={t['footer.navAriaLabel']} className="flex flex-col gap-2.5">
@@ -52,7 +52,7 @@ export default function Footer() {
 
           {/* Right column — Legal nav + ghost numeral */}
           <div className="relative flex flex-col gap-3">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-text-primary">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
               Legal
             </span>
             <nav className="flex flex-col gap-2.5">
@@ -71,7 +71,7 @@ export default function Footer() {
             {/* Ghost numeral — decorative, editorial flair */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-2 right-0 font-display text-[5rem] font-light italic leading-none text-text-primary opacity-[0.04] max-md:hidden"
+              className="pointer-events-none absolute -bottom-2 right-0 font-display text-[5rem] font-light italic leading-none text-white opacity-[0.06] max-md:hidden"
             >
               Nº
             </span>
@@ -80,11 +80,11 @@ export default function Footer() {
 
         {/* Bottom row — copyright, tamil, unchanged */}
         <div className="mt-12 flex flex-col gap-4 border-t border-border-default pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">
             {t['footer.copyright']}
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <p className="font-sans text-xs text-text-secondary" lang="ta">
+            <p className="font-sans text-xs text-slate-400" lang="ta">
               {t['footer.tamilComingSoon']}
             </p>
           </div>

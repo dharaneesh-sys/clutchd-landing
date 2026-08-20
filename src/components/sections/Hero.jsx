@@ -76,8 +76,7 @@ export default function Hero() {
           {/* Layer 2 (middle): elevated composition frame — dimensional
               product window with elevated shadow, border, and gradient bg. */}
           <div
-            className="backdrop-entrance relative w-full max-w-lg rounded-3xl border border-border-default bg-gradient-to-br from-surface-tint to-surface-soft p-1"
-            style={{ boxShadow: 'var(--shadow-elevated)' }}
+            className="backdrop-entrance glass-light relative w-full max-w-lg rounded-3xl p-1"
           >
             {/* Layer 1 (front): HeroStage — fills the frame at full width */}
             <HeroStage />

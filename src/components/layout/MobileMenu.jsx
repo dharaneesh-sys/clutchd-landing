@@ -47,7 +47,7 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
       hidden={!open}
       className={[
         'lg:hidden',
-        'border-t border-border-default bg-surface-primary',
+        'border-t border-white/10 glass-dark',
         'transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)]',
         open ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
       ].join(' ')}
@@ -59,7 +59,7 @@ export default function MobileMenu({ id, open, items, triggerRef, onClose }) {
             ref={i === 0 ? firstLinkRef : null}
             to={item.to}
             onClick={onClose}
-            className="rounded-xl px-3 py-3 font-sans text-base font-medium text-text-primary transition-colors duration-200 hover:bg-surface-tint hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring"
+            className="rounded-xl px-3 py-3 font-sans text-base font-medium text-slate-200 transition-colors duration-200 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-focus-ring"
           >
             {t[item.key]}
           </Link>
