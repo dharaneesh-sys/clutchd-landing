@@ -27,9 +27,18 @@ export default function Testimonials() {
     <section
       id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="scroll-mt-20 bg-surface-primary py-20 lg:py-28"
+      className="relative scroll-mt-20 bg-surface-tint py-16 lg:py-20"
     >
-      <Container>
+      {/* Ghost numeral Nº03 — DESIGN.md §5 Display Statement. Decorative,
+          aria-hidden, positioned behind the heading at display scale. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-8 top-8 font-display font-light italic leading-none text-text-primary opacity-[0.04] max-md:hidden"
+        style={{ fontSize: 'clamp(8rem, 14vw, 14rem)' }}
+      >
+        Nº03
+      </span>
+      <Container className="relative">
         <SectionHeading
           eyebrow={t['testimonials.eyebrow']}
           title={t['testimonials.title']}
@@ -57,7 +66,7 @@ export default function Testimonials() {
               {STAT_KEYS.map((base) => (
                 <div key={base} className="flex flex-col gap-1 px-0 py-4 md:px-6 md:py-0 md:first:pl-0 md:last:pr-0">
                   <dt className="font-sans text-xs text-text-secondary">{t[`${base}.label`]}</dt>
-                  <dd className="font-mono text-3xl font-semibold text-text-primary">{t[`${base}.value`]}</dd>
+                  <dd className="font-display text-5xl font-semibold tracking-tight text-text-primary lg:text-6xl">{t[`${base}.value`]}</dd>
                 </div>
               ))}
             </dl>

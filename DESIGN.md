@@ -55,10 +55,10 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 
 | Level | Font | Size | Weight | Line Height | Tracking | Usage |
 |-------|------|------|--------|-------------|----------|-------|
-| Display Hero | Fraunces | 60px / 3.75rem | 600 | 1.00 | -0.02em | Hero headline (serif) |
+| Display Hero | Fraunces | 72px / clamp(2.25rem, 4.5vw+1rem, 5rem) | 600 | 1.00 | -0.03em | Hero headline (serif) — Wave IX scale-up |
 | Display Secondary | Fraunces | 64px / 4rem | 400 | 1.00 | -0.02em | Sub-hero, section intro (serif) |
 | Display Third | Fraunces | 52px / 3.25rem | 400 | 1.00 | -0.015em | Third-tier display (serif) |
-| Section Heading | Fraunces | 36px / 2.25rem | 600 | 1.11 | -0.01em | Feature sections (serif) |
+| Section Heading | Fraunces | 44px / clamp(1.75rem, 2.5vw+0.5rem, 3rem) | 600 | 1.10 | -0.01em | Feature sections (serif) — Wave IX scale-up |
 | Card Title | Fraunces | 32px / 2rem | 400 | 1.13 | 0 | Card headings (serif) |
 | Feature Title | Geist | 18px / 1.125rem | 600 | 1.33 | 0 | Feature emphasis |
 | Body | Geist | 18px / 1.125rem | 400 | 1.56 | 0 | Standard reading |
@@ -67,6 +67,7 @@ A calm, institutional-grade service marketplace that feels like a bank you trust
 | Caption | Geist | 14px / 0.875rem | 600 | 1.50 | 0 | Metadata |
 | Small | Geist Mono | 13px / 0.8125rem | 600 | 1.23 | +0.08em | Tags |
 | Overline | Geist Mono | 10px / 0.625rem | 600 | 1.30 | +0.2em | Eyebrow badges, uppercase (soft-skill) |
+| Display Statement | Fraunces | 120–200px | 300 italic | 1.00 | 0 | Ghost backdrop numerals (Nº), aria-hidden — Wave IX |
 
 ### Rules
 
@@ -137,7 +138,17 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **States**: form field focus ring `--accent-focus-ring`; submit button loading state.
 - **Accessibility**: `min-h-[100dvh]`, semantic `<h1>`, labeled email input.
 - **Motion**: entry fade-up `translate-y-16 blur-md → 0` over 800ms+ (soft-skill), staggered.
-- **Layout**: grid; collapses to single column below 768px (text on top, visual below).
+- **Layout**: asymmetric grid `lg:grid-cols-[1fr_1.1fr]` (Stripe-style — visual column wider); collapses to single column below 768px (text on top, visual below).
+
+### HeroComposition (Wave IX) — the anchor visual
+- **Purpose**: the hero's right column is a layered dimensional composition that replaces the flat `max-w-sm` card — this is the page's "big visual moment" (VISUAL-RICHNESS.md Wave A).
+- **Anatomy (3 visual layers, front to back):**
+  1. **Inner stage** — HeroStage at `w-full` (no max-w constraint), filling the frame.
+  2. **Outer frame** — `rounded-3xl` (24px) border panel with `shadow-elevated` (`0 12px 40px rgba(13,18,79,0.10)`), `border-border-default`, background gradient from `--surface-tint` to `--surface-soft`. Serves as the dimensional "product window."
+  3. **Backdrop motif** — a 280×280px CSS/SVG geometric grid pattern (echoing HeroStage's existing `herostage-grid` map language), `aria-hidden`, opacity 0.06–0.08, positioned absolute behind the frame. This is the page's ambient visual weight — a large, soft, dimensional backdrop.
+- **Entrance**: `backdrop-entrance` animation on mount (§6) — only the right column (composition) animates; left column (copy + form) paints immediately, preserving the LCP element (header brand span).
+- **Layout**: `lg:grid-cols-[1fr_1.1fr]` — the composition column is 10% wider than the copy column (Stripe-style asymmetry).
+- **Reduced motion**: `backdrop-entrance` disabled; composition paints static.
 
 ### Trust Bar
 - **Structure**: 3 value props in a horizontal row directly below the hero (lazyweb grammar).
@@ -167,6 +178,13 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - **Surface**: tonal-shift surface (`--surface-soft` / `--surface-cool`) with hairline border (`--border-default`).
 - **Spacing**: `--space-6` padding.
 - **Layout**: grid; 1-column stack below 768px.
+
+### Stats Band (Wave IX) — display-scale stats strip
+- **Structure**: full-bleed tinted band carrying large mono numerals. AnnotatedList layout with display-scale numbers (48–64px mono) and small labels — the Stripe register contrast.
+- **Numerals**: serif for stats strip (magazine feel, §3); labels at `text-xs` mono.
+- **Surface**: `--surface-tint` (blue-tint) — the "featured data moment" band.
+- **Spacing**: `--space-8` between items.
+- **Layout**: responsive row → 1-column stack below 768px.
 
 ### Stats Strip
 - **Structure**: number + label pairs in a horizontal row (lazyweb trust grammar).
@@ -290,6 +308,7 @@ Base unit **4px**; scale follows coinbase's 8px-based steps (all multiples of 4)
 - Slop animation is forbidden — motion only where it signals interaction or state.
 - **Directional route transitions (V8)**: forward navigation (PUSH/REPLACE) slides content in from the right; back/forward-button (POP) from the left; initial page load = neutral fade. 400ms §6 Emphasis. `transform`/`opacity` only; `prefers-reduced-motion` = no transition (V8).
 - **Staggered reveals (V8)**: card grids may stagger children on entry — 60–80ms per child via `transition-delay`, total ≤ 400ms. Entry-only (never on above-the-fold load-critical content); `prefers-reduced-motion` = no delay (all children appear instantly).
+- **backdrop-entrance (Wave IX)**: for HeroComposition only — subtle scale-up + fade (scale 0.98→1.0, opacity 0→1) on mount, 600ms §6 Emphasis easing. `transform`/`opacity` only (GPU-composited). `prefers-reduced-motion` = no animation (composition paints static). Only the right column (composition) animates; the left column (copy + form) paints immediately to preserve LCP.
 
 ## 7. Depth & Surface
 
@@ -305,6 +324,7 @@ Coinbase's depth comes from color contrast between sections with a minimal shado
 |-------|-------|-------|
 | Subtle | `0 1px 2px rgba(13,18,79,0.04)` | Cards at rest |
 | Default | `0 2px 8px rgba(13,18,79,0.08)` | Floating pill nav, dropdowns |
+| Elevated | `0 12px 40px rgba(13,18,79,0.10)` | HeroStage composition frame, key artifact cards (≤5 instances) |
 | Prominent | `0 8px 24px rgba(13,18,79,0.12)` | Modals, overlays |
 
 - **Double-bezel** (soft-skill): major cards and the hero visual use an outer shell (hairline border, `p-1.5`, `rounded-[2rem]`) wrapping an inner core (own background, inset highlight `inset 0 1px 1px rgba(255,255,255,0.15)`, concentric radius).

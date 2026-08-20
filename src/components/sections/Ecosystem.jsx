@@ -46,7 +46,7 @@ export default function Ecosystem() {
               : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
           ].join(' ')}
         >
-          <div className="flex flex-col items-stretch gap-2 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-x-1 md:gap-y-3">
+          <div className="flex flex-col items-stretch gap-3 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-x-2 md:gap-y-4">
             {NODE_KEYS.map((nodeKey, i) => {
               const isHovered = hovered === i
               const isConnected = hovered === i - 1 || hovered === i + 1
@@ -56,9 +56,9 @@ export default function Ecosystem() {
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
                     className={[
-                      'rounded-full border px-4 py-2 text-center font-sans text-sm font-medium outline-none transition-colors',
+                      'rounded-full border px-5 py-2.5 text-center font-sans text-sm font-medium outline-none transition-all duration-200',
                       isHovered
-                        ? 'border-accent-primary bg-surface-tint text-accent-primary ring-2 ring-accent-primary'
+                        ? 'border-accent-primary bg-surface-tint text-accent-primary shadow-elevated ring-2 ring-accent-primary'
                         : isConnected
                           ? 'border-accent-primary bg-surface-soft text-text-primary'
                           : 'border-border-default bg-surface-soft text-text-primary',
@@ -72,10 +72,10 @@ export default function Ecosystem() {
                       className="flex items-center select-none"
                     >
                       <span className="hidden md:block">
-                        <svg role="img" aria-hidden="true" width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg role="img" aria-hidden="true" width="32" height="16" viewBox="0 0 32 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <title>{t['ecosystem.connectsNext']}</title>
                           <path
-                            d="M0 6H20M20 6L16 2M20 6L16 10"
+                            d="M0 8H26M26 8L21 3M26 8L21 13"
                             stroke={hovered === i || hovered === i + 1 ? "var(--accent-primary)" : "var(--border-default)"}
                             strokeWidth="1.5"
                             strokeLinecap="round"
@@ -84,10 +84,10 @@ export default function Ecosystem() {
                         </svg>
                       </span>
                       <span className="md:hidden">
-                        <svg role="img" aria-hidden="true" width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg role="img" aria-hidden="true" width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <title>{t['ecosystem.connectsNext']}</title>
                           <path
-                            d="M6 0V20M6 20L2 16M6 20L10 16"
+                            d="M8 0V26M8 26L3 21M8 26L13 21"
                             stroke={hovered === i || hovered === i + 1 ? "var(--accent-primary)" : "var(--border-default)"}
                             strokeWidth="1.5"
                             strokeLinecap="round"

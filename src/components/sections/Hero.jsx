@@ -22,7 +22,7 @@ export default function Hero() {
       aria-labelledby="hero-heading"
       className="relative overflow-hidden bg-gradient-to-b from-surface-tint to-surface-primary"
     >
-      <Container className="relative grid grid-cols-1 items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+      <Container className="relative grid grid-cols-1 items-center gap-12 py-20 lg:grid-cols-[1fr_1.1fr] lg:gap-16 lg:py-28">
         {/* Left: copy — paints immediately (above the fold, LCP-critical;
             V7 perf: a useReveal opacity-0 start pushed LCP to FCP + reveal
             delay ≈ 2.5s. Above-the-fold content is never reveal-hidden.) */}
@@ -31,12 +31,13 @@ export default function Hero() {
 
           <h1
             id="hero-heading"
-            className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-text-primary sm:text-5xl lg:text-6xl"
+            className="font-display font-semibold leading-[1.00] tracking-[-0.03em] text-text-primary"
+            style={{ fontSize: 'clamp(2.25rem, 4.5vw + 1rem, 5rem)' }}
           >
             {t['hero.headline']}
           </h1>
 
-          <p className="max-w-xl font-sans text-lg leading-relaxed text-text-secondary">
+          <p className="max-w-lg text-xl leading-relaxed text-text-ink">
             {t['hero.subtext']}
           </p>
 
@@ -50,9 +51,37 @@ export default function Hero() {
 
         </div>
 
-        {/* Right: interactive product demo — eager (LCP element, above fold) */}
-        <div className="flex justify-center lg:justify-end">
-          <HeroStage />
+        {/* Right: HeroComposition — the page's visual anchor moment (Wave IX).
+            Three layers: backdrop motif → elevated frame → HeroStage.
+            Only this column animates (backdrop-entrance); left column paints
+            immediately to preserve LCP. */}
+        <div className="relative flex justify-center lg:justify-end">
+          {/* Layer 3 (back): geometric grid backdrop — echoes HeroStage's
+              herostage-grid map language at a larger scale. aria-hidden,
+              pointer-events-none, purely decorative. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-8 -top-8 h-[280px] w-[280px] opacity-[0.06]"
+          >
+            <svg viewBox="0 0 280 280" className="h-full w-full">
+              <defs>
+                <pattern id="hero-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M20 0H0V20" fill="none" stroke="var(--text-secondary)" strokeWidth="1" />
+                </pattern>
+              </defs>
+              <rect width="280" height="280" fill="url(#hero-grid)" rx="24" />
+            </svg>
+          </div>
+
+          {/* Layer 2 (middle): elevated composition frame — dimensional
+              product window with elevated shadow, border, and gradient bg. */}
+          <div
+            className="backdrop-entrance relative w-full max-w-lg rounded-3xl border border-border-default bg-gradient-to-br from-surface-tint to-surface-soft p-1"
+            style={{ boxShadow: 'var(--shadow-elevated)' }}
+          >
+            {/* Layer 1 (front): HeroStage — fills the frame at full width */}
+            <HeroStage />
+          </div>
         </div>
       </Container>
     </section>

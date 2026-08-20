@@ -16,16 +16,16 @@ const ITEM_KEYS = [
 // Labeled illustrative Preview card — mock data is not a product claim.
 function HealthCard({ t }) {
   return (
-    <div className="flex max-w-sm flex-col border border-border-default bg-surface-primary">
-      <div className="flex items-center justify-between border-b border-border-default px-5 py-3">
+    <div className="flex max-w-md flex-col border border-border-default bg-surface-primary shadow-elevated">
+      <div className="flex items-center justify-between border-b border-border-default px-6 py-4">
         <h3 className="font-display text-lg font-semibold text-text-primary">{t['intelligence.healthCard.title']}</h3>
         <Badge variant="accent">{t['intelligence.healthCard.previewBadge']}</Badge>
       </div>
       <dl className="flex flex-col">
-        <div className="flex items-center justify-between border-b border-border-default px-5 py-4">
+        <div className="flex items-center justify-between border-b border-border-default px-6 py-5">
           <dt className="font-sans text-sm text-text-secondary">{t['intelligence.healthCard.battery']}</dt>
           <dd className="flex items-center gap-3">
-            <span className="relative h-1.5 w-16 overflow-hidden rounded-full bg-surface-cool">
+            <span className="relative h-1.5 w-24 overflow-hidden rounded-full bg-surface-cool">
               <span className="absolute inset-y-0 left-0 rounded-full bg-accent-primary" style={{ width: '78%' }} />
             </span>
             <span className="font-mono text-xs text-text-primary">{t['intelligence.healthCard.batteryValue']}</span>
@@ -35,17 +35,17 @@ function HealthCard({ t }) {
             </span>
           </dd>
         </div>
-        <div className="flex items-center justify-between border-b border-border-default px-5 py-4">
+        <div className="flex items-center justify-between border-b border-border-default px-6 py-5">
           <dt className="font-sans text-sm text-text-secondary">{t['intelligence.healthCard.brakeWear']}</dt>
           <dd className="flex items-center gap-3">
-            <span className="relative h-1.5 w-16 overflow-hidden rounded-full bg-surface-cool">
+            <span className="relative h-1.5 w-24 overflow-hidden rounded-full bg-surface-cool">
               <span className="absolute inset-y-0 left-0 rounded-full bg-accent-active" style={{ width: '62%' }} />
             </span>
             <span className="font-mono text-xs text-text-primary">{t['intelligence.healthCard.brakeWearValue']}</span>
             <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">{t['intelligence.healthCard.brakeWearStatus']}</span>
           </dd>
         </div>
-        <div className="flex items-center justify-between px-5 py-4">
+        <div className="flex items-center justify-between px-6 py-5">
           <dt className="font-sans text-sm text-text-secondary">{t['intelligence.healthCard.nextService']}</dt>
           <dd className="font-mono text-xs text-text-primary">{t['intelligence.healthCard.nextServiceValue']}</dd>
         </div>
@@ -61,9 +61,17 @@ export default function Intelligence() {
     <section
       id="intelligence"
       aria-labelledby="intelligence-heading"
-      className="grain scroll-mt-20 bg-surface-soft py-20 lg:py-28"
+      className="grain relative scroll-mt-20 bg-surface-soft py-24 lg:py-32"
     >
-      <Container>
+      {/* Ghost numeral Nº02 — behind the heading, decorative. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-8 top-8 font-display font-light italic leading-none text-text-primary opacity-[0.04] max-md:hidden"
+        style={{ fontSize: 'clamp(8rem, 14vw, 14rem)' }}
+      >
+        Nº02
+      </span>
+      <Container className="relative">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div
             ref={ref}

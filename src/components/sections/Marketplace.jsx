@@ -110,26 +110,26 @@ export default function Marketplace() {
           <div
             style={{ transitionDelay: visible ? `${STAGGER * 2}ms` : '0ms' }}
             className={[
-              'mt-10 max-w-sm border border-border-default bg-surface-primary transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]',
+              'mt-10 max-w-md border border-border-default bg-surface-primary shadow-elevated transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]',
               visible
                 ? 'translate-y-0 opacity-100'
                 : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
             ].join(' ')}
           >
-            <div className="flex items-center justify-between border-b border-border-default px-5 py-3">
+            <div className="flex items-center justify-between border-b border-border-default px-6 py-4">
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-text-secondary">
                 {t['marketplace.catalog.partNo']}
               </span>
               <Badge variant="accent">{t['marketplace.catalog.previewBadge']}</Badge>
             </div>
-            <div className="flex flex-col gap-1.5 px-5 py-5">
+            <div className="flex flex-col gap-2 px-6 py-6">
               <h3 className="font-display text-xl font-semibold tracking-tight text-text-primary">
                 {t['marketplace.catalog.title']}
               </h3>
               <p className="font-mono text-sm text-text-secondary">{t['marketplace.catalog.price']}</p>
             </div>
-            <div className="flex items-center justify-between border-t border-border-default px-5 py-3">
-              <span className="inline-flex items-center gap-1.5 border border-accent-primary px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-accent-primary">
+            <div className="flex items-center justify-between border-t border-border-default px-6 py-4">
+              <span className="inline-flex items-center gap-1.5 rounded border border-accent-primary bg-accent-primary/10 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-accent-primary">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"

@@ -27,9 +27,17 @@ export default function Trust() {
     <section
       id="trust"
       aria-labelledby="trust-heading"
-      className="grain scroll-mt-20 bg-surface-soft py-20 lg:py-28"
+      className="grain relative scroll-mt-20 bg-surface-soft py-24 lg:py-32"
     >
-      <Container>
+      {/* Ghost numeral Nº01 — behind the heading, decorative. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-8 top-8 font-display font-light italic leading-none text-text-primary opacity-[0.04] max-md:hidden"
+        style={{ fontSize: 'clamp(8rem, 14vw, 14rem)' }}
+      >
+        Nº01
+      </span>
+      <Container className="relative">
         <SectionHeading
           eyebrow={t['trust.eyebrow']}
           title={t['trust.title']}
@@ -69,21 +77,30 @@ export default function Trust() {
             ))}
           </ol>
 
-          {/* Estimate document — drawn paper artifact, labeled Preview */}
-          <div
-            style={{ transitionDelay: visible ? `${PRIMITIVE_KEYS.length * STAGGER}ms` : '0ms' }}
-            className={[
-              'rounded-lg border border-border-default bg-surface-primary p-6 shadow-[0_8px_24px_rgba(13,18,79,0.08)] transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:p-7 md:self-start',
-              visible
-                ? 'translate-y-0 opacity-100'
-                : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
-            ].join(' ')}
-          >
-            <div className="flex items-start justify-between gap-4 border-b border-border-default pb-4">
-              <h3 className="font-display text-2xl font-semibold text-text-primary">{t['trust.estimate.title']}</h3>
+          {/* Estimate document — drawn paper artifact with stacked-sheet edge, labeled Preview */}
+          <div className="relative md:self-start">
+            {/* Stacked-sheet edge (pure CSS, DESIGN.md §7 elevated shadow) */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 translate-x-1 translate-y-1 rounded-lg border border-border-default bg-surface-soft"
+            />
+            <div
+              style={{ transitionDelay: visible ? `${PRIMITIVE_KEYS.length * STAGGER}ms` : '0ms' }}
+              className={[
+                'relative rounded-lg border border-border-default bg-surface-primary p-8 shadow-elevated transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] sm:p-9',
+                visible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+              ].join(' ')}
+            >
+            <div className="flex items-start justify-between gap-4 border-b border-border-default pb-5">
+              <div className="flex flex-col gap-1">
+                <h3 className="font-display text-2xl font-semibold text-text-primary">{t['trust.estimate.title']}</h3>
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">ClutchD-2026-0847</span>
+              </div>
               <Badge variant="accent">{t['trust.estimate.previewBadge']}</Badge>
             </div>
-            <dl className="mt-2 flex flex-col">
+            <dl className="mt-3 flex flex-col">
               <div className="flex items-baseline justify-between py-3">
                 <dt className="font-sans text-sm text-text-secondary">{t['trust.estimate.labour']}</dt>
                 <dd className="font-mono text-sm font-medium text-text-primary">{t['trust.estimate.labourValue']}</dd>
@@ -97,10 +114,11 @@ export default function Trust() {
                 <dd className="font-mono text-sm font-semibold text-text-primary">{t['trust.estimate.totalValue']}</dd>
               </div>
             </dl>
-            <div className="mt-4 flex justify-end border-t border-border-default pt-4">
-              <span className="rotate-[-6deg] rounded border-2 border-accent-primary px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-accent-primary">
+            <div className="mt-5 flex justify-end border-t border-border-default pt-5">
+              <span className="rotate-[-8deg] rounded border-2 border-accent-primary px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-accent-primary ring-4 ring-accent-primary/10">
                 {t['trust.estimate.approved']}
               </span>
+            </div>
             </div>
           </div>
         </div>

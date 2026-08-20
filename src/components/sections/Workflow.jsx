@@ -22,9 +22,13 @@ const STEPS = [
   { n: 6, titleKey: 'workflow.5.title', bodyKey: 'workflow.5.body', labelKey: 'workflow.5.label' },
 ]
 
-function Step({ step, t }) {
+function Step({ step, t, variant }) {
+  const isCard = variant === 'card'
   return (
-    <div className="flex flex-col items-center gap-3 text-center">
+    <div className={[
+      'flex flex-col items-center gap-3 text-center',
+      isCard ? 'rounded-2xl border border-border-default bg-surface-primary px-4 py-6' : '',
+    ].join(' ')}>
       <SectionNumeral n={step.n} className="font-display text-lg italic text-text-primary" />
       <h3 className="font-display text-lg font-semibold text-text-primary">{t[step.titleKey]}</h3>
       <p className="font-sans text-sm leading-relaxed text-text-secondary">{t[step.bodyKey]}</p>
@@ -62,12 +66,11 @@ export default function Workflow() {
               : 'translate-y-12 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
           ].join(' ')}
         >
-          {/* Desktop: horizontal rail with finer hairline */}
+          {/* Desktop: horizontal rail — card treatment per step */}
           <div className="relative hidden md:block">
-            <div aria-hidden="true" className="absolute left-0 right-0 top-4 h-px bg-border-default" />
             <div className="relative grid grid-cols-6 gap-4">
               {STEPS.map((s) => (
-                <Step key={s.n} step={s} t={t} />
+                <Step key={s.n} step={s} t={t} variant="card" />
               ))}
             </div>
           </div>

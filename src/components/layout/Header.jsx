@@ -68,7 +68,7 @@ export default function Header() {
                 to={item.to}
                 className={({ isActive }) =>
                   [
-                    'font-sans text-sm font-medium transition-colors duration-200 hover:text-accent-primary',
+                    'nav-link-indicator font-sans text-sm font-medium transition-colors duration-200 hover:text-accent-primary',
                     isActive ? 'text-accent-primary' : 'text-text-secondary',
                   ].join(' ')
                 }

@@ -12,7 +12,7 @@ export default function EarlyAccess() {
     <section
       id="early-access"
       aria-labelledby="early-access-heading"
-      className="scroll-mt-20 bg-surface-primary py-20 lg:py-28"
+      className="scroll-mt-20 bg-surface-tint py-24 lg:py-32"
     >
       <Container>
         <div className="mx-auto flex max-w-2xl flex-col items-start gap-6">

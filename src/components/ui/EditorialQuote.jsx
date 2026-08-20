@@ -7,10 +7,10 @@ export default function EditorialQuote({ quote, name, role, align = 'left', clas
   const wrap = align === 'center' ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'
   return (
     <figure className={`${wrap} ${className}`}>
-      <span aria-hidden="true" className="font-display text-6xl leading-none text-accent-primary">
+      <span aria-hidden="true" className="font-display text-8xl leading-none text-accent-primary">
         “
       </span>
-      <blockquote className="font-display text-2xl font-medium leading-snug text-text-ink sm:text-[1.75rem]">
+      <blockquote className="font-display text-3xl font-medium leading-snug text-text-ink sm:text-4xl">
         {quote}
       </blockquote>
       <figcaption className="mt-4 flex flex-col gap-1">

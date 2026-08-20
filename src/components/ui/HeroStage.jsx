@@ -77,14 +77,14 @@ export default function HeroStage() {
   const completed = active === STEPS.length - 1
 
   return (
-    <div className="w-full max-w-sm rounded-[2rem] border border-border-default bg-surface-primary p-5 shadow-[0_8px_24px_rgba(13,18,79,0.12)]">
+    <div className="w-full rounded-2xl border border-border-default bg-surface-primary p-5">
       {/* Screen-reader status — state changes only (manual clicks) */}
       <div aria-live="polite" className="sr-only">
         {announcement}
       </div>
 
       {/* Step rail — one real button per state */}
-      <fieldset className="m-0 flex min-w-0 items-center gap-2 border-0 p-0">
+      <fieldset className="m-0 flex min-w-0 items-center gap-3 border-0 p-0">
         <legend className="sr-only">{t['heroStage.legend']}</legend>
         {STEPS.map((s, i) => (
           <Fragment key={s.key}>
@@ -98,7 +98,7 @@ export default function HeroStage() {
                 .replace('{title}', t[s.titleKey])
                 .replace('{n}', String(i + 1))}
               className={[
-                'relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
+                'relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold',
                 'transition-[transform,background-color,color] duration-200',
                 EASE,
                 'motion-reduce:transition-none',
@@ -152,7 +152,7 @@ export default function HeroStage() {
 
       {/* ETA chip (Accepted → In progress) / success chip (Completed) */}
       {eta && (
-        <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface-tint px-4 py-3">
+        <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface-tint px-5 py-4">
           <Clock className="h-5 w-5 text-accent-primary" />
           <div>
             <p className="font-sans text-xs text-text-secondary">{eta.label}</p>
@@ -161,7 +161,7 @@ export default function HeroStage() {
         </div>
       )}
       {completed && (
-        <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface-tint px-4 py-3">
+        <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface-tint px-5 py-4">
           <CheckCircle2 className="h-5 w-5 text-accent-primary" />
           <div>
             <p className="font-sans text-xs text-text-secondary">{t['heroStage.serviceComplete']}</p>
@@ -172,7 +172,7 @@ export default function HeroStage() {
 
       {/* Mechanic card (Accepted onward) */}
       {active >= 2 && (
-        <div className="mt-4 flex items-center gap-3 rounded-2xl border border-border-default bg-surface-soft px-4 py-3">
+        <div className="mt-4 flex items-center gap-3 rounded-2xl border border-border-default bg-surface-soft px-5 py-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-primary text-sm font-semibold text-white">
             {t['heroStage.mechanicInitials']}
           </div>
@@ -190,7 +190,7 @@ export default function HeroStage() {
       )}
 
       {/* CSS map motif — route draws via stroke-dashoffset per state */}
-      <div className="relative mt-4 h-24 overflow-hidden rounded-2xl border border-border-default bg-surface-cool">
+      <div className="relative mt-4 h-32 overflow-hidden rounded-2xl border border-border-default bg-surface-cool">
         <svg viewBox="0 0 320 96" className="h-full w-full" aria-hidden="true">
           <defs>
             <pattern id="herostage-grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -232,7 +232,7 @@ export default function HeroStage() {
 
       {/* Estimate card (In progress onward) — carries the honest-mock Preview badge */}
       {active >= 4 && (
-        <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-surface-soft px-4 py-3">
+        <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-surface-soft px-5 py-4">
           <div className="flex items-center gap-2">
             <Wrench className="h-4 w-4 text-text-secondary" />
             <div>

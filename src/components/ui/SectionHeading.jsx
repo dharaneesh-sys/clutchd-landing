@@ -30,7 +30,8 @@ export default function SectionHeading({ eyebrow, title, lede, align = 'left', i
       {rule && <SectionRule variant="short" className="mt-3" />}
       <h2
         id={id}
-        className="mt-3 font-display text-3xl font-semibold leading-[1.11] tracking-tight text-text-primary sm:text-4xl"
+        className="mt-3 font-display font-semibold leading-[1.10] tracking-tight text-text-primary"
+        style={{ fontSize: 'clamp(1.75rem, 2.5vw + 0.5rem, 3rem)' }}
       >
         {title}
       </h2>

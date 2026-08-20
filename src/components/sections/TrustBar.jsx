@@ -15,7 +15,7 @@ export default function TrustBar() {
   const { t } = useT()
   const items = [0, 1, 2]
   return (
-    <div className="border-y border-border-default bg-surface-primary">
+    <div className="border-y border-border-default bg-surface-primary py-12 lg:py-16">
       <Container>
         <ol className="grid grid-cols-1 divide-y divide-border-default md:grid-cols-3 md:divide-x md:divide-y-0">
           {items.map((i) => (
